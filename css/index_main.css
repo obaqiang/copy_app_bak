@@ -1,0 +1,116 @@
+.main_head{
+	background: #cb2920;
+}
+.main_head_icon{
+	width: 86px;
+	height: 22px;
+	margin-top: 10px;
+	margin-left: 16px;
+}
+.main_head_pay{
+	float: right;
+	margin-right: 14px;
+	margin-top: 5px;
+	text-align: center;
+}
+.main_head_pay img{
+	width:20px;
+	height: 20px;
+	
+}
+.main_head_pay span{
+	font-size: 8px;
+	line-height: 8px;
+	color: #fff;
+	display: block;
+}
+.main_head_sao{
+	float: right;
+	/*margin-right: 14px;*/
+	margin-top: 5px;	
+	text-align: center;
+}
+.main_head_sao img{
+	width:20px;
+	height: 20px;
+}
+.main_head_sao span{
+	display: block;
+	font-size: 8px;
+	line-height: 8px;
+	color: #FFF;
+}
+.main_no_icon:before{
+	display: none;
+}
+.kabao_icon{
+	width:24px;
+	height: 24px;
+}
+.kabao_text{
+	font-size: 9px;
+	color: #CB2920;
+}
+.message_icon{
+	width: 24px;
+	height: 24px;
+}
+.message_text{
+	font-size: 9px;
+	color: #7d7c82;
+}
+.mine_icon{
+	width: 24px;
+	height: 24px;
+}
+.mine_text{
+	font-size: 9px;
+	color: #7d7c82;
+}
+.set_icon{
+	width: 24px;
+	height: 24px;
+}
+.set_text{
+	font-size: 9px;
+	color: #7d7c82;
+}
+.service_area{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);  
+	z-index: 10;
+}
+.icon_close{
+	float: left;
+	width: 27px;
+	height: 27px;
+}
+.icon_b{
+	width: 49px;
+	height: 49px;
+	line-height: 70px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+.area_text{
+	display: inline-block;
+	font-size: 12px;
+	color: #fff;
+	font-weight: bold;
+	position: relative;
+	top:-20px;
+	left: 5px;
+}
+.use_now{
+	display: inline-block;
+	border: 1px solid #fff;
+	border-radius: 5px;
+	padding:10px;
+	color: #fff;
+	float: right;
+	margin-top: 15px;
+	margin-right: 20px;
+}

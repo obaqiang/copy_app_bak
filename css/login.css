@@ -1,0 +1,132 @@
+.login_vip {
+	background: #cb2920;
+}
+
+.login_vip h1 {
+	color: #fff;
+}
+
+.no_login_mask {
+	background: #dcdcdc;
+	width: 81px;
+	height: 81px;
+	border-radius: 50%;
+	margin: 37px auto 74px;
+}
+
+.bg_login {
+	background: #fff;
+}
+
+.no_line:before {
+	display: none;
+}
+
+.no_line:after {
+	display: none;
+}
+
+.new_line {
+	border-bottom: 1px solid #dcdcdc;
+	margin-left: 20px;
+	margin-right: 20px;
+	height: 45px !important;
+}
+
+.login_tel_icon {
+	width: 20px;
+	height: 25px;
+}
+
+.login_lock_icon {
+	width: 20px;
+	height: 25px;
+}
+
+.login_text {
+	font-size: 16px;
+	width: 85% !important;
+}
+
+.login_label {
+	padding: 8px 10px !important;
+	width: 10% !important;
+}
+
+.login_btn {
+	margin: 20px !important;
+}
+
+.login_btn_no {
+	background: #dedfe0;
+	border: none;
+}
+
+.login_btn_ok {
+	background: #cb2920;
+	border: none;
+}
+
+.login_nohook_icon {
+	width: 17px;
+	height: 17px;
+	float: left;
+	margin-left: 10px;
+	display: inline-block;
+}
+
+.login_agree {
+	color: #777777;
+	font-size: 12px;
+	display: inline-block;
+	float: left;
+	margin-left: 5px;
+}
+
+.login_service {
+	color: #ff9517;
+	font-size: 12px;
+	display: inline-block;
+	float: left;
+	margin-left: 10px;
+}
+
+.login_forget_pwd {
+	color: #777777;
+	font-size: 12px;
+	display: inline-block;
+	float: right;
+	margin-left: 10px;
+}
+
+.login_bottom_line {
+	background: #cfcfd2;
+	height: 1px;
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+.weixin_login {
+	position: absolute;
+	bottom: -20px;
+	text-align: center;
+	width: 100%;
+	
+}
+.weixin_po{
+	width: 150px;
+	/*height: 100px;*/
+	background: #fff;
+	text-align: center;
+	margin: auto;
+}
+.weixin_icon {
+	width: 48px;
+	height: 48px;
+}
+
+.weixin_text {
+	display: block;
+	color: #6c6c6c;
+	font-size: 12px;
+}
