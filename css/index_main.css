@@ -114,3 +114,12 @@
 	margin-top: 15px;
 	margin-right: 20px;
 }
+.main_nav{
+	background: #cb2920;
+}
+.main_nav h1{
+	color: #FFFFFF;
+}
+.main_nav a{
+	color: #FFFFFF;
+}
