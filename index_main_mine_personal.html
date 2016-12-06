@@ -34,7 +34,7 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
-						<a class="mui-navigate-right mine_list_head personal_name">
+						<a class="mui-navigate-right mine_list_head personal_name" id="personal_name">
 							<span>姓名</span>
 							<span class="personal_name_text">张晓晓</span>
 						</a>
@@ -53,7 +53,7 @@
 //			var w = plus.webview.create( "index_main_mine_personal_change.html" );
 //			w.show(); // 显示窗口
 //		})
-		$('.personal_name').click(function(){
+		document.getElementById('personal_name').addEventListener('tap', function() {
 			var w = plus.webview.create( "index_main_mine_personal_change.html" );
 			w.show(); // 显示窗口
 		})

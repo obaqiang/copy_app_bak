@@ -34,31 +34,31 @@
 			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
 			<!--<h1 id="title" class="mui-title">我的卡包</h1>-->
 		</header>
-		<!--<header class="mui-bar mui-bar-nav main_nav" style="display: none;">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<header class="mui-bar mui-bar-nav main_nav" style="display: none;">
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
 			<h1 class="mui-title">个人中心</h1>
-		</header>-->
+		</header>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active">
+			<a id="defaultTab" class="mui-tab-item mui-active" href="index_main_card.html">
 				<span class="mui-icon mui-icon-home main_no_icon">
 					<img class="kabao_icon" src="images/48px_48px_card_red.png" alt="" />
 				</span>
 				<span class="mui-tab-label kabao_text">卡包</span>
 			</a>
-			<a class="mui-tab-item" >
+			<a class="mui-tab-item" href="index_main_message.html">
 				<span class="mui-icon mui-icon-email main_no_icon">
 					<img class="message_icon" src="images/48px_48px_news_gray.png" alt="" />
 					<span class="mui-badge">9</span>
 				</span>
 				<span class="mui-tab-label message_text">消息</span>
 			</a>
-			<a class="mui-tab-item" >
+			<a class="mui-tab-item" href="index_main_mine.html">
 				<span class="mui-icon mui-icon-contact main_no_icon">
 					<img class="mine_icon" src="images/48px_48px_me_gray.png" alt="图片不存在" />
 				</span>
 				<span class="mui-tab-label mine_text">我的</span>
 			</a>
-			<a class="mui-tab-item" >
+			<a class="mui-tab-item" href="index_main_setting.html">
 				<span class="mui-icon mui-icon-gear main_no_icon">
 					<img class="set_icon" src="images/48px_48px_set_gray.png" alt="图片不存在" />
 				</span>
@@ -66,7 +66,7 @@
 			</a>
 		</nav>
 		<div class="service_area" style="display: none;">
-			<img class="icon_close" src="images/55px_55px_X.png" alt="图片不存在" />
+			<img class="icon_close" id="icon_close" src="images/55px_55px_X.png" alt="图片不存在" />
 			<img class="icon_b" src="images/98px_98px_logo.png" alt="图片不存在" />
 			<div class="area_text">
 				<span>优惠信息实时共享</span><br />
@@ -118,50 +118,56 @@
 				}
 				var label_name = this.querySelector('.mui-tab-label').innerHTML;
 				if(label_name == '卡包') {
-
+					$('.main_head').show();
+					$('.main_nav').hide();
 					$('.kabao_icon').attr('src', 'images/48px_48px_card_red.png');
 					$('.message_icon').attr('src', 'images/48px_48px_news_gray.png');
 					$('.mine_icon').attr('src', 'images/48px_48px_me_gray.png');
 					$('.set_icon').attr('src', 'images/48px_48px_set_gray.png');
 					$('.mui-tab-label').css('color', '#7d7c82');
 					$('.kabao_text').css('color', '#cb2920');
-					var w = plus.webview.create( "index_main_card.html" );
-					w.show(); // 显示窗口
+					//					var w = plus.webview.create( "index_main_card.html" );
+					//					w.show(); // 显示窗口
 				} else if(label_name == '消息') {
-
+					$('.main_head').show();
+					$('.main_nav').hide();
 					$('.kabao_icon').attr('src', 'images/48px_48px_card_gray.png');
 					$('.message_icon').attr('src', 'images/48px_48px_news_red.png');
 					$('.mine_icon').attr('src', 'images/48px_48px_me_gray.png');
 					$('.set_icon').attr('src', 'images/48px_48px_set_gray.png');
 					$('.mui-tab-label').css('color', '#7d7c82');
 					$('.message_text').css('color', '#cb2920');
-					var w = plus.webview.create( "index_main_message.html" );
-					w.show(); // 显示窗口
+					//					var w = plus.webview.create( "index_main_message.html" );
+					//					w.show(); // 显示窗口
 				} else if(label_name == '我的') {
-
+					$('.mui-title').text('个人中心');
+					$('.main_head').hide();
+					$('.main_nav').show();
 					$('.kabao_icon').attr('src', 'images/48px_48px_card_gray.png');
 					$('.message_icon').attr('src', 'images/48px_48px_news_gray.png');
 					$('.mine_icon').attr('src', 'images/48px_48px_me_red.png');
 					$('.set_icon').attr('src', 'images/48px_48px_set_gray.png');
 					$('.mui-tab-label').css('color', '#7d7c82');
 					$('.mine_text').css('color', '#cb2920');
-					
-//					mui.openWindow({
-//					    url:'index_main_mine.html',
-//					    id:'index_main_mine.html'
-//					});
-					var w = plus.webview.create( "index_main_mine.html" );
-					w.show(); // 显示窗口
-				} else if(label_name == '设置') {
 
+					//					mui.openWindow({
+					//					    url:'index_main_mine.html',
+					//					    id:'index_main_mine.html'
+					//					});
+					//					var w = plus.webview.create( "index_main_mine.html" );
+					//					w.show(); // 显示窗口
+				} else if(label_name == '设置') {
+					$('.mui-title').text('设置');
+					$('.main_head').hide();
+					$('.main_nav').show();
 					$('.kabao_icon').attr('src', 'images/48px_48px_card_gray.png');
 					$('.message_icon').attr('src', 'images/48px_48px_news_gray.png');
 					$('.mine_icon').attr('src', 'images/48px_48px_me_gray.png');
 					$('.set_icon').attr('src', 'images/48px_48px_set_red.png');
 					$('.mui-tab-label').css('color', '#7d7c82');
 					$('.set_text').css('color', '#cb2920');
-					var w = plus.webview.create( "index_main_setting.html" );
-					w.show(); // 显示窗口
+					//					var w = plus.webview.create( "index_main_setting.html" );
+					//					w.show(); // 显示窗口
 				}
 				//更换标题
 				//				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
@@ -198,10 +204,12 @@
 		<script>
 			//		页面部分逻辑
 			//		@author:SQ
-			$('.icon_close').click(function() {
+//			$('.icon_close').click(function() {
+//				$('.service_area').hide();
+//			});
+			document.getElementById('icon_close').addEventListener('tap', function() {
 				$('.service_area').hide();
-			});
-
+			})
 		</script>
 	</body>
 
