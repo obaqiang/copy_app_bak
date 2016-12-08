@@ -1,0 +1,13 @@
+.photo_list{
+	margin-top: 0.05rem;
+	background: #fff;
+}
+.photo_list_title{
+	margin-top: 0.05rem;
+}
+.photo_list_title_left{
+	float: left;
+}
+.photo_list_title_right{
+	float: right;
+}
