@@ -59,6 +59,7 @@
 }
 .card_detail_name span:nth-child(2){
 	float: right;
+	color: #a4a4a4;
 }
 /*.coupon_area{
 	overflow-x: scroll;
@@ -160,11 +161,36 @@
 }
 .shop_area{
 	background: #fff;
+	overflow: hidden;
 }
 .area_data_1{
 	display: inline-block;
 	width: 60%;
+	padding-left: 4%;
+	float: left;
 }
 .area_data_1 span{
 	display: block;
+}
+.area_data_1 span:nth-child(1){
+	font-size: 0.14rem;
+	line-height: 0.3rem;
+}
+.area_data_1 span:nth-child(2){
+	font-size: 0.11rem;
+	color: #a4a4a4;
+}
+.area_data_1 span:nth-child(3){
+	font-size: 0.11rem;
+	color: #a4a4a4;
+}
+.area_data_2{
+	display: inline-block;
+	float: left;
+	width: 40%;
+}
+.area_data_2 img{
+	width: 0.28rem;
+	margin-left: 0.3rem;
+	margin-top: 0.2rem;
 }
