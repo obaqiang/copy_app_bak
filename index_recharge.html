@@ -10,7 +10,7 @@
 
 		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" href="css/global.css" />
-		<link rel="stylesheet" href="css/index_photo.css" />
+		<link rel="stylesheet" href="css/index_recharge.css" />
 		<link rel="stylesheet" href="css/swiper.min.css">
 		<style>
 			html,
@@ -30,7 +30,7 @@
 		<div class="mui-content">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">交易拍照记录</h1>
+				<h1 class="mui-title">充值记录</h1>
 			</header>
 
 			<div class="record_nav of_h">
@@ -49,40 +49,45 @@
 
 			</div>
 
-			<div class="photo_list of_h">
-
-				<div class="photo_list_title">
-					<div class="photo_list_title_left">
-						<div class="title_left_time">
-							2016-07-27 17:30
+			<div class="recharge_list ">
+				<div class="recharge_list_content of_h">
+					<div class="recharge_list_left">
+						<div class="recharge_list_left_head">
+							测试商品100x2份
 						</div>
-						<div class="title_left_content">
-							我们的花卉绝对新鲜耐看
+						<div class="recharge_list_left_body">
+							20.00元
 						</div>
 					</div>
-					<div class="photo_list_title_right">
-						<div class="confirm_ok">
-							等待确认
+					<div class="recharge_list_right">
+						<div class="recharge_list_right_head">
+							2016-05-06 12:55
+						</div>
+						<div class="recharge_list_right_body">
+							已确认
 						</div>
 					</div>
 				</div>
 
-			</div>
-			<!-- Swiper -->
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
+				<div class="recharge_list_content of_h">
+					<div class="recharge_list_left">
+						<div class="recharge_list_left_head">
+							测试商品100x2份
+						</div>
+						<div class="recharge_list_left_body">
+							20.00元
+						</div>
 					</div>
-					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
-					</div>
-					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
+					<div class="recharge_list_right">
+						<div class="recharge_list_right_head">
+							2016-05-06 12:55
+						</div>
+						<div class="recharge_list_right_body">
+							已确认
+						</div>
 					</div>
 				</div>
-				<!-- Add Pagination -->
-				<div class="swiper-pagination"></div>
+
 			</div>
 
 		</div>
@@ -100,14 +105,6 @@
 			paginationClickable: true,
 
 			slidesPerView: 3.5,
-
-		});
-	</script>
-	<script>
-		var swiper = new Swiper('.swiper-container', {
-			pagination: '.swiper-pagination',
-			paginationClickable: true,
-			slidesPerView: 3
 
 		});
 	</script>

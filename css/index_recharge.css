@@ -1,0 +1,29 @@
+.recharge_list{
+	background: #fff;
+	margin-top: 0.1rem;
+}
+.recharge_list_left{
+	float: left;
+	font-size: 0.13rem;
+	color: #666666;
+}
+.recharge_list_left div{
+	line-height: 0.3rem;
+}
+.recharge_list_right{
+	float: right;
+	font-size: 0.13rem;
+	margin-right: 0.11rem;
+	color: #666666;
+	text-align: right;
+}
+.recharge_list_right div{
+	line-height: 0.3rem;
+}
+.recharge_list_content{
+	margin-left: 0.11rem;
+	border-bottom: 1px solid #d0d0d0;
+}
+.recharge_list_right_head{
+	color: #aaaaaa;
+}

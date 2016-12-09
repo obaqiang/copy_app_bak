@@ -24,6 +24,7 @@
 	width: 33%;
 	float: left;
 	text-align: center;
+	position: relative;
 }
 .record_list img{
 	width: 0.17rem;
@@ -36,4 +37,7 @@
 .list_mid{
 	border-left: 1px solid #d0d0d0;
 	border-right:1px solid #d0d0d0;
+}
+.mui-bar-nav{
+	box-shadow: none !important;
 }

@@ -10,12 +10,14 @@
 
 		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" href="css/global.css" />
-		<link rel="stylesheet" href="css/index_photo.css" />
+		<link rel="stylesheet" href="css/index_coupon_detail.css" />
+		<!--<link rel="stylesheet" href="css/index_recharge.css" />-->
+		<link rel="stylesheet" href="css/index_coupon.css" />
 		<link rel="stylesheet" href="css/swiper.min.css">
 		<style>
 			html,
 			body {
-				background-color: #fff;
+				background-color: #efeff4;
 			}
 			
 			.title {
@@ -30,60 +32,48 @@
 		<div class="mui-content">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">交易拍照记录</h1>
+				<h1 class="mui-title">优惠券详情</h1>
 			</header>
 
-			<div class="record_nav of_h">
-				<div class="record_list">
-					<img src="images/34px_34px_icon1.png" alt="" />
-					<span>等待确认</span>
-				</div>
-				<div class="record_list list_mid">
-					<img src="images/34px_34px_icon2.png" alt="" />
-					<span>已确认</span>
-				</div>
-				<div class="record_list">
-					<img src="images/34px_34px_icon3.png" alt="" />
-					<span>已取消</span>
-				</div>
-
+			<div class="coupon_detail_head of_h">
+				<img class="coupon_detail_img" src="images/yuantiao.jpg" alt="" />	
 			</div>
-
-			<div class="photo_list of_h">
-
-				<div class="photo_list_title">
-					<div class="photo_list_title_left">
-						<div class="title_left_time">
-							2016-07-27 17:30
-						</div>
-						<div class="title_left_content">
-							我们的花卉绝对新鲜耐看
-						</div>
+			<div class="coupon_list of_h">
+				<div class="coupon_list_left">
+					<div class="coupon_list_left_prize">
+						20 元秒杀优惠券
 					</div>
-					<div class="photo_list_title_right">
-						<div class="confirm_ok">
-							等待确认
-						</div>
+					<div class="coupon_list_left_time">
+						使用期限 2016-05-05 13:85
+					</div>
+					<div class="coupon_list_left_time">
+						限定以下产品满￥100可用
 					</div>
 				</div>
-
+				<img class="coupon_list_img" src="images/180px_180px_1.png" alt="" />
+				<div class="coupon_list_num">￥10.00</div>
 			</div>
-			<!-- Swiper -->
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
-					</div>
-					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
-					</div>
-					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
-					</div>
+			
+			<div class="coupon_detail_title">
+				限定消费以下产品
+			</div>
+			
+			<div class="coupon_detail_goods">
+				<div class="coupon_detail_goods_list">
+					靖江猪肉干
 				</div>
-				<!-- Add Pagination -->
-				<div class="swiper-pagination"></div>
+				<div class="coupon_detail_goods_list">
+					靖江猪肉干
+				</div>
+				<div class="coupon_detail_goods_list">
+					靖江猪肉干
+				</div>
+				<div class="coupon_detail_goods_list">
+					靖江猪肉干
+				</div>
 			</div>
+			
+			
 
 		</div>
 	</body>
@@ -100,14 +90,6 @@
 			paginationClickable: true,
 
 			slidesPerView: 3.5,
-
-		});
-	</script>
-	<script>
-		var swiper = new Swiper('.swiper-container', {
-			pagination: '.swiper-pagination',
-			paginationClickable: true,
-			slidesPerView: 3
 
 		});
 	</script>

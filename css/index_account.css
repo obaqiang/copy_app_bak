@@ -1,0 +1,33 @@
+.account_head{
+	background: #CB2920;
+	margin-top: 44px;
+	text-align: center;
+	color: #fff;
+}
+.title_num{
+	font-size: 0.23rem;
+}
+.title_unit{
+	font-size: 0.11rem;
+}
+.account_head_title{
+	padding-top: 0.2rem;
+}
+.content_left{
+	width: 50%;
+	float: left;
+}
+.account_head_content{
+	padding-top: 0.2rem;
+	padding-bottom: 0.1rem;
+}
+.content_right{
+	width: 50%;
+	float: left;
+}
+.content_num{
+	font-size: 0.15rem;
+}
+.content_des{
+	font-size: 0.11rem;
+}
