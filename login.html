@@ -134,7 +134,7 @@
 					<a id='forgetPassword'>忘记密码</a>-->
 				</div>
 			</div>
-			<div class="mui-content-padded oauth-area">
+			<!--<div class="mui-content-padded oauth-area">
 				<div class="login_bottom_line">
 				</div>
 				<div class="weixin_login">
@@ -145,12 +145,15 @@
 
 				</div>
 
+			</div>-->
+			<div class="mui-content-padded oauth-area">
+
 			</div>
 
 		</div>
 		<script src="js/mui.min.js"></script>
-		<!--<script src="js/mui.enterfocus.js"></script>-->
-		<!--<script src="js/app.js"></script>-->
+		<script src="js/mui.enterfocus.js"></script>
+		<script src="js/app.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
@@ -165,22 +168,22 @@
 						"url": 'main.html'
 					});
 					var main_loaded_flag = false;
-					mainPage.addEventListener("loaded", function() {
+					mainPage.addEventListener("loaded",function () {
 						main_loaded_flag = true;
 					});
 					var toMain = function() {
 						//使用定时器的原因：
 						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
-						var id = setInterval(function() {
-							if(main_loaded_flag) {
+						var id = setInterval(function () {
+							if(main_loaded_flag){
 								clearInterval(id);
 								$.fire(mainPage, 'show', null);
 								mainPage.show("pop-in");
 							}
-						}, 20);
+						},20);
 					};
 					//检查 "登录状态/锁屏状态" 开始
-					if(settings.autoLogin && state.token && settings.gestures) {
+					if (settings.autoLogin && state.token && settings.gestures) {
 						$.openWindow({
 							url: 'unlock.html',
 							id: 'unlock',
@@ -191,7 +194,7 @@
 								autoShow: false
 							}
 						});
-					} else if(settings.autoLogin && state.token) {
+					} else if (settings.autoLogin && state.token) {
 						toMain();
 					} else {
 						app.setState(null);
@@ -200,10 +203,10 @@
 						var auths = {};
 						var oauthArea = doc.querySelector('.oauth-area');
 						plus.oauth.getServices(function(services) {
-							for(var i in services) {
+							for (var i in services) {
 								var service = services[i];
 								auths[service.id] = service;
-								if(~authBtns.indexOf(service.id)) {
+								if (~authBtns.indexOf(service.id)) {
 									var isInstalled = app.isInstalled(service.id);
 									var btn = document.createElement('div');
 									//如果微信未安装，则为不启用状态
@@ -214,7 +217,7 @@
 								}
 							}
 							$(oauthArea).on('tap', '.oauth-btn', function() {
-								if(this.classList.contains('disabled')) {
+								if (this.classList.contains('disabled')) {
 									plus.nativeUI.toast('您尚未安装微信客户端');
 									return;
 								}
@@ -260,7 +263,7 @@
 							password: passwordBox.value
 						};
 						app.login(loginInfo, function(err) {
-							if(err) {
+							if (err) {
 								plus.nativeUI.toast(err);
 								return;
 							}
@@ -318,7 +321,7 @@
 					var backButtonPress = 0;
 					$.back = function(event) {
 						backButtonPress++;
-						if(backButtonPress > 1) {
+						if (backButtonPress > 1) {
 							plus.runtime.quit();
 						} else {
 							plus.nativeUI.toast('再按一次退出应用');

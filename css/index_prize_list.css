@@ -1,0 +1,20 @@
+.prize_list{
+	margin-top: 44px;
+}
+.prize_list_right_body{
+	color: #aaaaaa !important;
+}
+.prize_list_right_head{
+	border: 1px solid #ffbe60;
+	border-radius: 0.05rem;
+	display: inline-block;
+	line-height: 0.2rem !important;
+	color: #fb7115;	
+	margin-top: 0.05rem;
+	padding-left: 0.05rem;
+	padding-right: 0.05rem;
+}
+.prize_list_left_head{
+	color: #000000;
+	background: #fffaef;
+}
