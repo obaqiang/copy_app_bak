@@ -143,7 +143,7 @@
 						"default": "", /*必选，320x480，iPhone3启动图片*/
 						"retina35": "",/*必选，640x960，3.5英寸设备(iPhone4)启动图片*/
 						"retina40": "",
-						"retina47": "C:/Users/Administrator/Desktop/启动页切图/1.png"
+						"retina47": "C:/Users/Administrator/Desktop/BD_app/启动页切图/1.png"
 					},
 					"ipad": {
 						"portrait": "", /*可选，768x1004，需支持iPad时必选，iPad竖屏启动图片*/
