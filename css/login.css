@@ -58,13 +58,25 @@
 }
 
 .login_btn_no {
+	font-size: 18px;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
 	background: #dedfe0;
 	border: none;
+	padding: 10px;
+	color: #fff;
 }
 
 .login_btn_ok {
-	background: #cb2920;
+	font-size: 18px;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+	background: #CB2920;
 	border: none;
+	padding: 10px;
+	color: #fff;
 }
 
 .login_nohook_icon {
@@ -129,4 +141,30 @@
 	display: block;
 	color: #6c6c6c;
 	font-size: 12px;
+}
+.login_alert{
+	z-index: 11;
+	background: #fff;
+	position: fixed;
+	line-height: 44px;
+}
+.login_alert img{
+	width: 0.2rem;
+	margin-top:0.13rem;
+	margin-left: 0.1rem;
+	float: left;
+}
+.login_alert span{
+	font-size: 0.14rem;
+	margin-left: 0.1rem;
+}
+button:enabled:active{
+	color: #fff;
+	background: #CB2920;
+}
+.identify_img{
+	width: 0.57rem;
+	position: absolute;
+	right: 0.1rem;
+	top: 0.1rem;
 }
