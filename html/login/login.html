@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
 		<title></title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
@@ -120,7 +121,7 @@
 						<img class="login_lock_icon" src="../../images/40px_50px_yanzhengma.png" alt="图片不存在" />
 					</label>
 					<input id='identify_code' type="text" required="required" class="mui-input-clear mui-input login_text" placeholder="请输入验证码">
-					<img class="identify_img" src="../../images/114px_40px.png" alt="" />
+					<img id="identify_img" class="identify_img" src="" alt="" />
 				</div>
 			</form>
 			<!--<form class="mui-input-group">
@@ -140,6 +141,7 @@
 					<!--<span class="login_agree">我已阅读并同意</span>
 					<span class="login_service">服务信息</span>-->
 					<span class="login_forget_pwd">忘记密码？</span>
+					<!--<img src="https://api.bdvip.net/api/member/verifycode?phone=13776336512" alt="" />-->
 					<!--<a id='reg'>注册账号</a>
 					<span class="spliter">|</span> 
 					<a id='forgetPassword'>忘记密码</a>-->
@@ -164,194 +166,283 @@
 		</div>
 		<script src="../../js/config/web_config.js"></script>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.jsonp.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
 		<script src="../../js/app.js"></script>
 		<script src="../../js/jquery-1.11.3.js"></script>
+		<script src="../../js/common/bdapp.js"></script>
+		<script src="../../js/config/web_config.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
 					statusBarBackground: '#f7f7f7'
 				});
-//				$.plusReady(function() {
-//					plus.screen.lockOrientation("portrait-primary");
-//					var settings = app.getSettings();
-//					var state = app.getState();
-//					var mainPage = $.preload({
-//						"id": 'main',
-//						"url": 'main.html'
-//					});
-//					var main_loaded_flag = false;
-//					mainPage.addEventListener("loaded", function() {
-//						main_loaded_flag = true;
-//					});
-//					var toMain = function() {
-//						//使用定时器的原因：
-//						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
-//						var id = setInterval(function() {
-//							if(main_loaded_flag) {
-//								clearInterval(id);
-//								$.fire(mainPage, 'show', null);
-//								mainPage.show("pop-in");
-//							}
-//						}, 20);
-//					};
-//					//检查 "登录状态/锁屏状态" 开始
-//					if(settings.autoLogin && state.token && settings.gestures) {
-//						$.openWindow({
-//							url: 'unlock.html',
-//							id: 'unlock',
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							waiting: {
-//								autoShow: false
-//							}
-//						});
-//					} else if(settings.autoLogin && state.token) {
-//						toMain();
-//					} else {
-//						app.setState(null);
-//						//第三方登录
-//						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
-//						var auths = {};
-//						var oauthArea = doc.querySelector('.oauth-area');
-//						plus.oauth.getServices(function(services) {
-//							for(var i in services) {
-//								var service = services[i];
-//								auths[service.id] = service;
-//								if(~authBtns.indexOf(service.id)) {
-//									var isInstalled = app.isInstalled(service.id);
-//									var btn = document.createElement('div');
-//									//如果微信未安装，则为不启用状态
-//									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
-//									btn.authId = service.id;
-//									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
-//									oauthArea.appendChild(btn);
-//								}
-//							}
-//							$(oauthArea).on('tap', '.oauth-btn', function() {
-//								if(this.classList.contains('disabled')) {
-//									plus.nativeUI.toast('您尚未安装微信客户端');
-//									return;
-//								}
-//								var auth = auths[this.authId];
-//								var waiting = plus.nativeUI.showWaiting();
-//								auth.login(function() {
-//									waiting.close();
-//									plus.nativeUI.toast("登录认证成功");
-//									auth.getUserInfo(function() {
-//										plus.nativeUI.toast("获取用户信息成功");
-//										var name = auth.userInfo.nickname || auth.userInfo.name;
-//										app.createState(name, function() {
-//											toMain();
-//										});
-//									}, function(e) {
-//										plus.nativeUI.toast("获取用户信息失败：" + e.message);
-//									});
-//								}, function(e) {
-//									waiting.close();
-//									plus.nativeUI.toast("登录认证失败：" + e.message);
-//								});
-//							});
-//						}, function(e) {
-//							oauthArea.style.display = 'none';
-//							plus.nativeUI.toast("获取登录认证失败：" + e.message);
-//						});
-//					}
-//					// close splash
-//					setTimeout(function() {
-//						//关闭 splash
-//						plus.navigator.closeSplashscreen();
-//					}, 600);
-//					//检查 "登录状态/锁屏状态" 结束
-//					var loginButton = doc.getElementById('login');
-//					var accountBox = doc.getElementById('account');
-//					var passwordBox = doc.getElementById('password');
-//					var autoLoginButton = doc.getElementById("autoLogin");
-//					var regButton = doc.getElementById('reg');
-//					var forgetButton = doc.getElementById('forgetPassword');
-//					loginButton.addEventListener('tap', function(event) {
-//						var loginInfo = {
-//							account: accountBox.value,
-//							password: passwordBox.value
-//						};
-//						app.login(loginInfo, function(err) {
-//							if(err) {
-//								plus.nativeUI.toast(err);
-//								return;
-//							}
-//							toMain();
-//						});
-//					});
-//					$.enterfocus('#login-form input', function() {
-//						$.trigger(loginButton, 'tap');
-//					});
-//					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
-//					autoLoginButton.addEventListener('toggle', function(event) {
-//						setTimeout(function() {
-//							var isActive = event.detail.isActive;
-//							settings.autoLogin = isActive;
-//							app.setSettings(settings);
-//						}, 50);
-//					}, false);
-//					regButton.addEventListener('tap', function(event) {
-//						$.openWindow({
-//							url: 'reg.html',
-//							id: 'reg',
-//							preload: true,
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							styles: {
-//								popGesture: 'hide'
-//							},
-//							waiting: {
-//								autoShow: false
-//							}
-//						});
-//					}, false);
-//					forgetButton.addEventListener('tap', function(event) {
-//						$.openWindow({
-//							url: 'forget_password.html',
-//							id: 'forget_password',
-//							preload: true,
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							styles: {
-//								popGesture: 'hide'
-//							},
-//							waiting: {
-//								autoShow: false
-//							}
-//						});
-//					}, false);
-//					//
-//					window.addEventListener('resize', function() {
-//						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
-//					}, false);
-//					//
-//					var backButtonPress = 0;
-//					$.back = function(event) {
-//						backButtonPress++;
-//						if(backButtonPress > 1) {
-//							plus.runtime.quit();
-//						} else {
-//							plus.nativeUI.toast('再按一次退出应用');
-//						}
-//						setTimeout(function() {
-//							backButtonPress = 0;
-//						}, 1000);
-//						return false;
-//					};
-//				});
+				//				$.plusReady(function() {
+				//					plus.screen.lockOrientation("portrait-primary");
+				//					var settings = app.getSettings();
+				//					var state = app.getState();
+				//					var mainPage = $.preload({
+				//						"id": 'main',
+				//						"url": 'main.html'
+				//					});
+				//					var main_loaded_flag = false;
+				//					mainPage.addEventListener("loaded", function() {
+				//						main_loaded_flag = true;
+				//					});
+				//					var toMain = function() {
+				//						//使用定时器的原因：
+				//						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
+				//						var id = setInterval(function() {
+				//							if(main_loaded_flag) {
+				//								clearInterval(id);
+				//								$.fire(mainPage, 'show', null);
+				//								mainPage.show("pop-in");
+				//							}
+				//						}, 20);
+				//					};
+				//					//检查 "登录状态/锁屏状态" 开始
+				//					if(settings.autoLogin && state.token && settings.gestures) {
+				//						$.openWindow({
+				//							url: 'unlock.html',
+				//							id: 'unlock',
+				//							show: {
+				//								aniShow: 'pop-in'
+				//							},
+				//							waiting: {
+				//								autoShow: false
+				//							}
+				//						});
+				//					} else if(settings.autoLogin && state.token) {
+				//						toMain();
+				//					} else {
+				//						app.setState(null);
+				//						//第三方登录
+				//						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
+				//						var auths = {};
+				//						var oauthArea = doc.querySelector('.oauth-area');
+				//						plus.oauth.getServices(function(services) {
+				//							for(var i in services) {
+				//								var service = services[i];
+				//								auths[service.id] = service;
+				//								if(~authBtns.indexOf(service.id)) {
+				//									var isInstalled = app.isInstalled(service.id);
+				//									var btn = document.createElement('div');
+				//									//如果微信未安装，则为不启用状态
+				//									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
+				//									btn.authId = service.id;
+				//									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
+				//									oauthArea.appendChild(btn);
+				//								}
+				//							}
+				//							$(oauthArea).on('tap', '.oauth-btn', function() {
+				//								if(this.classList.contains('disabled')) {
+				//									plus.nativeUI.toast('您尚未安装微信客户端');
+				//									return;
+				//								}
+				//								var auth = auths[this.authId];
+				//								var waiting = plus.nativeUI.showWaiting();
+				//								auth.login(function() {
+				//									waiting.close();
+				//									plus.nativeUI.toast("登录认证成功");
+				//									auth.getUserInfo(function() {
+				//										plus.nativeUI.toast("获取用户信息成功");
+				//										var name = auth.userInfo.nickname || auth.userInfo.name;
+				//										app.createState(name, function() {
+				//											toMain();
+				//										});
+				//									}, function(e) {
+				//										plus.nativeUI.toast("获取用户信息失败：" + e.message);
+				//									});
+				//								}, function(e) {
+				//									waiting.close();
+				//									plus.nativeUI.toast("登录认证失败：" + e.message);
+				//								});
+				//							});
+				//						}, function(e) {
+				//							oauthArea.style.display = 'none';
+				//							plus.nativeUI.toast("获取登录认证失败：" + e.message);
+				//						});
+				//					}
+				//					// close splash
+				//					setTimeout(function() {
+				//						//关闭 splash
+				//						plus.navigator.closeSplashscreen();
+				//					}, 600);
+				//					//检查 "登录状态/锁屏状态" 结束
+				//					var loginButton = doc.getElementById('login');
+				//					var accountBox = doc.getElementById('account');
+				//					var passwordBox = doc.getElementById('password');
+				//					var autoLoginButton = doc.getElementById("autoLogin");
+				//					var regButton = doc.getElementById('reg');
+				//					var forgetButton = doc.getElementById('forgetPassword');
+				//					loginButton.addEventListener('tap', function(event) {
+				//						var loginInfo = {
+				//							account: accountBox.value,
+				//							password: passwordBox.value
+				//						};
+				//						app.login(loginInfo, function(err) {
+				//							if(err) {
+				//								plus.nativeUI.toast(err);
+				//								return;
+				//							}
+				//							toMain();
+				//						});
+				//					});
+				//					$.enterfocus('#login-form input', function() {
+				//						$.trigger(loginButton, 'tap');
+				//					});
+				//					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
+				//					autoLoginButton.addEventListener('toggle', function(event) {
+				//						setTimeout(function() {
+				//							var isActive = event.detail.isActive;
+				//							settings.autoLogin = isActive;
+				//							app.setSettings(settings);
+				//						}, 50);
+				//					}, false);
+				//					regButton.addEventListener('tap', function(event) {
+				//						$.openWindow({
+				//							url: 'reg.html',
+				//							id: 'reg',
+				//							preload: true,
+				//							show: {
+				//								aniShow: 'pop-in'
+				//							},
+				//							styles: {
+				//								popGesture: 'hide'
+				//							},
+				//							waiting: {
+				//								autoShow: false
+				//							}
+				//						});
+				//					}, false);
+				//					forgetButton.addEventListener('tap', function(event) {
+				//						$.openWindow({
+				//							url: 'forget_password.html',
+				//							id: 'forget_password',
+				//							preload: true,
+				//							show: {
+				//								aniShow: 'pop-in'
+				//							},
+				//							styles: {
+				//								popGesture: 'hide'
+				//							},
+				//							waiting: {
+				//								autoShow: false
+				//							}
+				//						});
+				//					}, false);
+				//					//
+				//					window.addEventListener('resize', function() {
+				//						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
+				//					}, false);
+				//					//
+				//					var backButtonPress = 0;
+				//					$.back = function(event) {
+				//						backButtonPress++;
+				//						if(backButtonPress > 1) {
+				//							plus.runtime.quit();
+				//						} else {
+				//							plus.nativeUI.toast('再按一次退出应用');
+				//						}
+				//						setTimeout(function() {
+				//							backButtonPress = 0;
+				//						}, 1000);
+				//						return false;
+				//					};
+				//				});
 			}(mui, document));
 		</script>
+
 		<script>
+//		测试post接口
+//			mui.ajax('https://api.bdvip.net/api/Store/AddStoreShopInfo', {
+//				data: {
+//					location_lat: '31.4295480538',
+//					location_lng: '120.9792681189',
+//					shop_address:'\U5965\U6377\U8def',
+//					shop_id:0,
+//					shop_name:'\U5206\U5e971',
+//					shop_tel:'15377640161',
+//					store_id:842
+//			
+//				},
+//				dataType: 'json', //服务器返回json格式数据
+//				type: 'post', //HTTP请求类型
+//				timeout: 10000, //超时时间设置为10秒；
+//				headers: {
+//					'Content-Type': 'application/json'
+//				},
+//				success: function(data) {
+//					//服务器返回响应，根据响应结果，分析是否登录成功；
+//					console.log(JSON.stringify(data));
+//				},
+//				error: function(xhr, type, errorThrown) {
+//					//异常处理；
+//					console.log(type);
+//				}
+//			});
+			//			登陆接口测试
+			//			var data_list = {
+			//				account: '13032119695',
+			//				pwd: '123456'
+			//					//jsonp:loginResult
+			//			}
+			//			var data_need;
+			//			BD_getJson('http://localhost/api/member/login',data_list,'get',data_need);
+			//			lala();
+			//			console.log(data_need);
+			//			mui.ajax('http://localhost/api/member/login', {
+			//				data: {
+			//					account: '13032119695',
+			//					pwd: '123456'
+			//						//jsonp:loginResult
+			//				},
+			//				dataType: 'json', //服务器返回json格式数据
+			//				type: 'get', //HTTP请求类型
+			//				timeout: 10000, //超时时间设置为10秒；
+			//				headers: {
+			//					'Content-Type': 'application/json',
+			//					'Access-Control-Allow-Origin': '*'
+			//				},
+			//				success: function(data) {
+			//					//服务器返回响应，根据响应结果，分析是否登录成功；
+			//					console.log(data);
+			//				},
+			//				error: function(xhr, type, errorThrown) {
+			//					//异常处理；
+			//					console.log(type);
+			//				}
+			//			});
+
+			//			var status_data;
+			//			function Login(data_account,data_pwd) {
+			//				var data_user = {
+			//					account: data_account,
+			//					pwd: data_pwd
+			//				};
+			//			mui.getJSONP("http://192.168.1.192/api/member/login", data_user, function(data) {
+			//				//服务器返回响应，根据响应结果，分析是否登录成功；
+			//				status_data = data;
+			//				alert(status_data);
+			//				return status_data
+			//			});
+			//			}
+
 			//			用户名手机密码验证
 			//文本框失去焦点后
 			var account = 'false';
 			var pwd = 'false';
+			var identify;
+
+			//			点击图片刷新验证码方法
+			//			function img_Re() {
+			//				document.getElementById('#identify_img').addEventListener('tap', function() {
+			//					var tel = $('#account').val();
+			//					var tel_url = 'https://api.bdvip.net/api/member/verifycode?deviceToken=&phone=';
+			//					var identify_url = tel_url + tel + new Date().getTime();
+			//					$('.identify_img').attr('src', identify_url);
+			//				});
+			//			}
 
 			$('form :input').blur(function() {
 				//验证用户名
@@ -367,7 +458,7 @@
 						account = 'true';
 					}
 				}
-				//验证邮件
+				//验证密码
 				if($(this).is('#password')) {
 					if(this.value == "") {
 						var errorMsg = '密码不能为空';
@@ -381,15 +472,15 @@
 				//验证验证码
 				if($(this).is('#identify_code')) {
 					if(this.value == "") {
-						var errorMsg = '验证码不能为空';
+						var errorMsg = '我的验证码不能为空';
 						//						console.log(errorMsg);
 						$('.login_alert span').text(errorMsg);
-						pwd = 'false';
+						identify = 'false';
 					} else {
 						identify = 'true';
+
 					}
 				}
-				
 
 			}).keyup(function() {
 				$(this).triggerHandler("blur");
@@ -403,31 +494,111 @@
 				$('.login_vip').fadeIn();
 			}
 
+			function loginAlert() {
+				$('.login_alert').fadeIn();
+				$('.login_vip').fadeOut();
+				setTimeout("alertHide()", 2000);
+			}
+
 			//			给登陆按钮绑定事件
 			document.getElementById('login').addEventListener('tap', function() {
-				if(account == 'false') {
-					var errorMsg = '用户名不能为空';
-					$('.login_alert span').text(errorMsg);
-					$('.login_alert').fadeIn();
-					$('.login_vip').fadeOut();
-					setTimeout("alertHide()", 2000);
-				} else if(pwd == 'false') {
-					var errorMsg = '密码不能为空';
-					$('.login_alert span').text(errorMsg);
-					$('.login_alert').fadeIn();
-					$('.login_vip').fadeOut();
-					setTimeout("alertHide()", 2000);
-				}else if(identify_code=='false'){
-					var errorMsg = '验证码不能为空';
-					$('.login_alert span').text(errorMsg);
-					$('.login_alert').fadeIn();
-					$('.login_vip').fadeOut();
-					setTimeout("alertHide()", 2000);
-				}else { //这里请求接口
+					if(account == 'false') {
+						var errorMsg = '用户名不能为空';
+						$('.login_alert span').text(errorMsg);
+						loginAlert();
+					} else if(pwd == 'false') {
+						var errorMsg = '密码不能为空';
+						$('.login_alert span').text(errorMsg);
+						loginAlert();
+					} else if(identify == 'false') {
+						alert(11);
+						var errorMsg = '验证码不能为空';
+						$('.login_alert span').text(errorMsg);
+						loginAlert();
+					} else { //这里请求接口
+						//					先判断是否断网
+						if(!navigator.onLine) { //如果断网
+							//						alert('断网了');
+							return;
+						}
 
-				}
-				//				var t=setTimeout("alert('5 seconds!')",5000)
-			})
+						var data_list = {};
+						data_list.account = $('#account').val();
+						data_list.pwd = $('#password').val();
+						data_list.VerifyCode = $('#identify_code').val();
+						//					console.log('需要的' + data_list.VerifyCode);
+						var url_login = test_url + '/api/member/LoginVerify';
+						console.log(data_list);
+						mui.get(url_login, data_list, function(data) {
+							console.log(JSON.stringify(data.Member));
+							if(data.ErrorCode == 4) { //此时需要输入验证码
+								var errorMsg = data.ErrorMessage;
+								$('.login_alert span').text(errorMsg);
+								loginAlert();
+								$('#identify').show();
+								var tel = $('#account').val();
+								var tel_url = 'https://api.bdvip.net/api/member/verifycode?deviceToken=&phone=';
+								var identify_url = tel_url + tel + '&' + new Date().getTime();
+								$('#identify_img').attr('src', identify_url);
+							} else if(data.ErrorCode == 0) { //正常登陆跳转首页
+
+							} else { //账号密码错误
+								var errorMsg = data.ErrorMessage;
+								$('.login_alert span').text(errorMsg);
+								loginAlert();
+							}
+
+						}, 'json');
+						//					bdGetJson(url, data_list, 'jsonp', function(data) {
+						//						console.log(data);
+						//						if(data.ErrorCode == 4) { //此时需要输入验证码
+						//							var errorMsg = data.ErrorMessage;
+						//							$('.login_alert span').text(errorMsg);
+						//							loginAlert();
+						//							$('#identify').show();
+						//
+						//							var tel = $('#account').val();
+						//							var tel_url = 'https://api.bdvip.net/api/member/verifycode?deviceToken=&phone=';
+						//							var identify_url = tel_url + tel + '&' + new Date().getTime();
+						//							//							console.log(identify_url);
+						//							//							alert(22);
+						//							//							img_Re();
+						//							alert(11);
+						//							$('#identify_img').attr('src', identify_url);
+						//
+						//							//							identify='false';
+						//							//							if($('#identify').val()==''){
+						//							//								var errorMsg = '验证码不能为空';
+						//							//								$('.login_alert span').text(errorMsg);
+						//							//							}else{//再次请求登陆接口
+						//							//								data_list.VerifyCode=$('#identify').val();
+						//							//								bdGetJson(url, data_list, 'jsonp', function(data){
+						//							//									console.log('有验证码的'+data);
+						//							//								})
+						//							//							}
+						//
+						//						} else if(data.ErrorCode == 0) { //正常登陆跳转首页
+						//							//							正常登陆跳转首页
+						//
+						//						} else { //账号密码错误
+						//							var errorMsg = data.ErrorMessage;
+						//							$('.login_alert span').text(errorMsg);
+						//							loginAlert();
+						//						}
+						//
+						//					});
+
+					}
+				})
+				//			$('#identify_img').click(function() {
+				//				var tel = $('#account').val();
+				//				var tel_url = 'https://testapi.bdvip.net/api/member/verifycode?deviceToken=&phone=';
+				//
+				//				var identify_url = tel_url + tel + new Date().getTime();
+				//				//									var identify_url = tel_url + tel;
+				//				console.log(identify_url);
+				//				$('.identify_img').attr('src', identify_url);
+				//			})
 		</script>
 		<script>
 			//各个屏幕大小适配

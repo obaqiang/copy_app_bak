@@ -168,3 +168,6 @@ button:enabled:active{
 	right: 0.1rem;
 	top: 0.1rem;
 }
+.mui-icon-clear{
+	display: none !important;
+}
