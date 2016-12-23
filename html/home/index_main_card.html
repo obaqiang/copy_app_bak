@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/index_main_card.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<img class="card_head" src="../../images/750px_174px_banner.png" alt="" />
+			<img class="card_body" src="../../images/750px_362px_card1.png" alt="" />
+			<img class="card_body" src="../../images/750px_362px_card1.png" alt="" />
+			<img class="card_body" src="../../images/750px_362px_card1.png" alt="" />
+
+		</div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/config/web_config.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		var self = plus.webview.currentWebview();
+		var name = self.member_id;
+		alert(1);
+		console.log('获取到的member_id:' + member_id);
+		alert(2);
+		//		首页获取用户所有的会员卡接口
+		var getvips_url = test_url + '/api/member/GetVips';
+
+		function GetVips(getvips_url, getvips_member_id, getvips_page_num, getvips_page_size) {
+			mui.ajax(getvips_url, {
+				data: {
+					member_id: getvips_member_id,
+					page_num: getvips_page_num,
+					page_size: getvips_page_size
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				success: function(data) {
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+				}
+			});
+		}
+	</script>
+	<script>
+		//各个屏幕大小适配
+		(function(doc, win) {
+			var docEl = doc.documentElement,
+				resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+				recalc = function() {
+					var clientWidth = docEl.clientWidth;
+					if(!clientWidth) return;
+					docEl.style.fontSize = 100 * (clientWidth / 375) + 'px';
+				};
+
+			if(!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false);
+		})(document, window);
+	</script>
+
+</html>

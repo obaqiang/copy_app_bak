@@ -354,33 +354,33 @@
 		</script>
 
 		<script>
-//		测试post接口
-//			mui.ajax('https://api.bdvip.net/api/Store/AddStoreShopInfo', {
-//				data: {
-//					location_lat: '31.4295480538',
-//					location_lng: '120.9792681189',
-//					shop_address:'\U5965\U6377\U8def',
-//					shop_id:0,
-//					shop_name:'\U5206\U5e971',
-//					shop_tel:'15377640161',
-//					store_id:842
-//			
-//				},
-//				dataType: 'json', //服务器返回json格式数据
-//				type: 'post', //HTTP请求类型
-//				timeout: 10000, //超时时间设置为10秒；
-//				headers: {
-//					'Content-Type': 'application/json'
-//				},
-//				success: function(data) {
-//					//服务器返回响应，根据响应结果，分析是否登录成功；
-//					console.log(JSON.stringify(data));
-//				},
-//				error: function(xhr, type, errorThrown) {
-//					//异常处理；
-//					console.log(type);
-//				}
-//			});
+			//		测试post接口
+			//			mui.ajax('https://api.bdvip.net/api/Store/AddStoreShopInfo', {
+			//				data: {
+			//					location_lat: '31.4295480538',
+			//					location_lng: '120.9792681189',
+			//					shop_address:'\U5965\U6377\U8def',
+			//					shop_id:0,
+			//					shop_name:'\U5206\U5e971',
+			//					shop_tel:'15377640161',
+			//					store_id:842
+			//			
+			//				},
+			//				dataType: 'json', //服务器返回json格式数据
+			//				type: 'post', //HTTP请求类型
+			//				timeout: 10000, //超时时间设置为10秒；
+			//				headers: {
+			//					'Content-Type': 'application/json'
+			//				},
+			//				success: function(data) {
+			//					//服务器返回响应，根据响应结果，分析是否登录成功；
+			//					console.log(JSON.stringify(data));
+			//				},
+			//				error: function(xhr, type, errorThrown) {
+			//					//异常处理；
+			//					console.log(type);
+			//				}
+			//			});
 			//			登陆接口测试
 			//			var data_list = {
 			//				account: '13032119695',
@@ -530,7 +530,8 @@
 						var url_login = test_url + '/api/member/LoginVerify';
 						console.log(data_list);
 						mui.get(url_login, data_list, function(data) {
-							console.log(JSON.stringify(data.Member));
+							console.log(JSON.stringify(data));
+							console.log(data.Data.Member.id);
 							if(data.ErrorCode == 4) { //此时需要输入验证码
 								var errorMsg = data.ErrorMessage;
 								$('.login_alert span').text(errorMsg);
@@ -541,6 +542,12 @@
 								var identify_url = tel_url + tel + '&' + new Date().getTime();
 								$('#identify_img').attr('src', identify_url);
 							} else if(data.ErrorCode == 0) { //正常登陆跳转首页
+								var webview = mui.openWindow({
+									url: '../home/index_main.html',
+									extras: {
+										member_id: data.Data.Member.id 
+									}
+								});
 
 							} else { //账号密码错误
 								var errorMsg = data.ErrorMessage;
