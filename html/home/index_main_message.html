@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title>Hello MUI</title>
@@ -7,19 +8,22 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		<link rel="stylesheet" href="css/mui.min.css">
-		<link rel="stylesheet" href="css/index_main_message.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/index_main_message.css" />
 		<style>
-			html,body {
+			html,
+			body {
 				background-color: #efeff4;
 			}
-			.title{
+			
+			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
 			}
 		</style>
 	</head>
+
 	<body>
 		<div class="mui-content of_h">
 			<div class="message_head">
@@ -37,7 +41,7 @@
 			<div class="message_time">
 				<span>7月13日 上午11:50</span>
 			</div>
-			
+
 			<div class="message_square">
 				<div class="square_head">
 					等待确认
@@ -62,17 +66,16 @@
 						<span>:</span>
 						<span>2015-06-22  10:23</span>
 					</div>
-					
-					
+
 				</div>
-				
+
 				<div class="square_detial">
 					<span>查看详情</span>
 					<img src="images/16px_26px_V.png" alt="" />
 				</div>
-				
+
 			</div>
-			
+
 			<div class="message_time">
 				<span>7月13日 上午11:50</span>
 			</div>
@@ -100,23 +103,37 @@
 						<span>:</span>
 						<span>2015-06-22  10:23</span>
 					</div>
-					
-					
+
 				</div>
-				
+
 				<div class="square_detial">
 					<span>查看详情</span>
 					<img src="images/16px_26px_V.png" alt="" />
 				</div>
-				
+
 			</div>
-			
+
 		</div>
 	</body>
-	<script src="js/mui.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
 	<script>
 		mui.init({
-			swipeBack:true //启用右滑关闭功能
+			swipeBack: true //启用右滑关闭功能
+		});
+
+		mui.plusReady(function() {
+			window.addEventListener('index_main_message_data', function(event) {
+				//获得事件参数
+
+				console.log('message传值啦：');
+				var member_id = event.detail.member_id;
+				console.log('从index_main页面传来的member_id:' + member_id);
+				var token = event.detail.token;
+				console.log('从index_main页面传来的token:' + token);
+				//根据id向服务器请求新闻详情
+			})
+
 		});
 	</script>
+
 </html>

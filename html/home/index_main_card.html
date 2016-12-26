@@ -31,6 +31,9 @@
 			<img class="card_body" src="../../images/750px_362px_card1.png" alt="" />
 
 		</div>
+		<a id='tel'>
+			13032119695
+		</a>
 	</body>
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/config/web_config.js"></script>
@@ -38,36 +41,78 @@
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
-		var self = plus.webview.currentWebview();
-		var name = self.member_id;
-		alert(1);
-		console.log('获取到的member_id:' + member_id);
-		alert(2);
-		//		首页获取用户所有的会员卡接口
+
 		var getvips_url = test_url + '/api/member/GetVips';
 
-		function GetVips(getvips_url, getvips_member_id, getvips_page_num, getvips_page_size) {
-			mui.ajax(getvips_url, {
-				data: {
-					member_id: getvips_member_id,
-					page_num: getvips_page_num,
-					page_size: getvips_page_size
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'post', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(type);
-				}
-			});
-		}
+		var getstoreshopinfo_url = test_url + '/api/Store/GetStoreShopInfo';
+		//获取未读消息接口
+		var getunreadcount_url = test_url + '/api/member/GetUnreadCount';
+		var member_id;
+		var token;
+		var page_num = 1;
+		var page_size = 10;
+		var store_id = '621';
+		//		首页获取用户所有的会员卡接口
+		function GetVips() {
+			mui.get(getvips_url, {
+				member_id: member_id,
+				page_num: page_num,
+				page_size: page_size,
+				token: token
+			}, function(data) {
+				//获得服务器响应
+				console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
+			}, 'json');
+		};
+
+		//		获取分店信息接口
+		function GetStoreShopInfo() {
+			mui.get(getstoreshopinfo_url, {
+				store_id: store_id,
+				token: token
+			}, function(data) {
+				//获得服务器响应
+//				console.log('获取分店信息接口返回数据:' + JSON.stringify(data));
+			}, 'json');
+		};
+
+		//		获取未读消息接口
+		function GetUnreadCount() {
+			mui.get(getunreadcount_url, {
+				member_id: member_id,
+				token: token
+			}, function(data) {
+				//获得服务器响应
+//				console.log('获取未读消息接口返回数据:' + JSON.stringify(data));
+			}, 'json');
+		};
+
+		mui.plusReady(function() {
+//			GetVips();
+//			GetStoreShopInfo();
+//			GetUnreadCount();
+//			document.getElementById('tel').addEventListener('tap', function() {
+//					plus.device.dial('13032119695', true);
+//			}
+			//添加newId自定义事件监听
+			window.addEventListener('index_main_card_data', function(event) {
+				//获得事件参数
+				
+				console.log('card传值啦：');
+				member_id= event.detail.member_id;
+				console.log('从index_main页面传来的member_id:'+member_id);
+				token= event.detail.token;
+				console.log('从index_main页面传来的token:'+token);
+				//根据id向服务器请求新闻详情
+				GetVips();
+			})
+			
+//			获取用户所有的会员卡接口
+			
+			
+			
+			
+		});
 	</script>
 	<script>
 		//各个屏幕大小适配

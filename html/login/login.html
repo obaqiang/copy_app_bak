@@ -354,80 +354,6 @@
 		</script>
 
 		<script>
-			//		测试post接口
-			//			mui.ajax('https://api.bdvip.net/api/Store/AddStoreShopInfo', {
-			//				data: {
-			//					location_lat: '31.4295480538',
-			//					location_lng: '120.9792681189',
-			//					shop_address:'\U5965\U6377\U8def',
-			//					shop_id:0,
-			//					shop_name:'\U5206\U5e971',
-			//					shop_tel:'15377640161',
-			//					store_id:842
-			//			
-			//				},
-			//				dataType: 'json', //服务器返回json格式数据
-			//				type: 'post', //HTTP请求类型
-			//				timeout: 10000, //超时时间设置为10秒；
-			//				headers: {
-			//					'Content-Type': 'application/json'
-			//				},
-			//				success: function(data) {
-			//					//服务器返回响应，根据响应结果，分析是否登录成功；
-			//					console.log(JSON.stringify(data));
-			//				},
-			//				error: function(xhr, type, errorThrown) {
-			//					//异常处理；
-			//					console.log(type);
-			//				}
-			//			});
-			//			登陆接口测试
-			//			var data_list = {
-			//				account: '13032119695',
-			//				pwd: '123456'
-			//					//jsonp:loginResult
-			//			}
-			//			var data_need;
-			//			BD_getJson('http://localhost/api/member/login',data_list,'get',data_need);
-			//			lala();
-			//			console.log(data_need);
-			//			mui.ajax('http://localhost/api/member/login', {
-			//				data: {
-			//					account: '13032119695',
-			//					pwd: '123456'
-			//						//jsonp:loginResult
-			//				},
-			//				dataType: 'json', //服务器返回json格式数据
-			//				type: 'get', //HTTP请求类型
-			//				timeout: 10000, //超时时间设置为10秒；
-			//				headers: {
-			//					'Content-Type': 'application/json',
-			//					'Access-Control-Allow-Origin': '*'
-			//				},
-			//				success: function(data) {
-			//					//服务器返回响应，根据响应结果，分析是否登录成功；
-			//					console.log(data);
-			//				},
-			//				error: function(xhr, type, errorThrown) {
-			//					//异常处理；
-			//					console.log(type);
-			//				}
-			//			});
-
-			//			var status_data;
-			//			function Login(data_account,data_pwd) {
-			//				var data_user = {
-			//					account: data_account,
-			//					pwd: data_pwd
-			//				};
-			//			mui.getJSONP("http://192.168.1.192/api/member/login", data_user, function(data) {
-			//				//服务器返回响应，根据响应结果，分析是否登录成功；
-			//				status_data = data;
-			//				alert(status_data);
-			//				return status_data
-			//			});
-			//			}
-
 			//			用户名手机密码验证
 			//文本框失去焦点后
 			var account = 'false';
@@ -500,8 +426,26 @@
 				setTimeout("alertHide()", 2000);
 			}
 
-			//			给登陆按钮绑定事件
-			document.getElementById('login').addEventListener('tap', function() {
+			mui.plusReady(function() {
+
+				if(UserInfo.has_login()==true) {//判断是否已经登陆过
+					console.log('方法中的已经登陆过');
+					//				如果已经登陆过,则直接跳转到首页,并将member_id和token传给首页
+					var token = UserInfo.token();
+					console.log('需要的token:'+token);
+					
+					var member_id = UserInfo.member_id();
+					console.log('需要的member_id：'+member_id);
+					var webview = mui.openWindow({
+						url: '../home/index_main.html',
+						extras: {
+							member_id: member_id,
+							token: token
+						}
+					});
+				}
+
+				document.getElementById('login').addEventListener('tap', function() {
 					if(account == 'false') {
 						var errorMsg = '用户名不能为空';
 						$('.login_alert span').text(errorMsg);
@@ -532,7 +476,11 @@
 						mui.get(url_login, data_list, function(data) {
 							console.log(JSON.stringify(data));
 							console.log(data.Data.Member.id);
+							console.log('需要的Token：' + data.Data.Token);
+
 							if(data.ErrorCode == 4) { //此时需要输入验证码
+								//								
+
 								var errorMsg = data.ErrorMessage;
 								$('.login_alert span').text(errorMsg);
 								loginAlert();
@@ -542,10 +490,16 @@
 								var identify_url = tel_url + tel + '&' + new Date().getTime();
 								$('#identify_img').attr('src', identify_url);
 							} else if(data.ErrorCode == 0) { //正常登陆跳转首页
+								UserInfo.username(data_list.account);
+								UserInfo.password(data_list.pwd);
+								UserInfo.member_id(data.Data.Member.id);
+								UserInfo.token(data.Data.Token);
+
 								var webview = mui.openWindow({
 									url: '../home/index_main.html',
 									extras: {
-										member_id: data.Data.Member.id 
+										member_id: data.Data.Member.id,
+										token: data.Data.Token
 									}
 								});
 
@@ -556,56 +510,13 @@
 							}
 
 						}, 'json');
-						//					bdGetJson(url, data_list, 'jsonp', function(data) {
-						//						console.log(data);
-						//						if(data.ErrorCode == 4) { //此时需要输入验证码
-						//							var errorMsg = data.ErrorMessage;
-						//							$('.login_alert span').text(errorMsg);
-						//							loginAlert();
-						//							$('#identify').show();
-						//
-						//							var tel = $('#account').val();
-						//							var tel_url = 'https://api.bdvip.net/api/member/verifycode?deviceToken=&phone=';
-						//							var identify_url = tel_url + tel + '&' + new Date().getTime();
-						//							//							console.log(identify_url);
-						//							//							alert(22);
-						//							//							img_Re();
-						//							alert(11);
-						//							$('#identify_img').attr('src', identify_url);
-						//
-						//							//							identify='false';
-						//							//							if($('#identify').val()==''){
-						//							//								var errorMsg = '验证码不能为空';
-						//							//								$('.login_alert span').text(errorMsg);
-						//							//							}else{//再次请求登陆接口
-						//							//								data_list.VerifyCode=$('#identify').val();
-						//							//								bdGetJson(url, data_list, 'jsonp', function(data){
-						//							//									console.log('有验证码的'+data);
-						//							//								})
-						//							//							}
-						//
-						//						} else if(data.ErrorCode == 0) { //正常登陆跳转首页
-						//							//							正常登陆跳转首页
-						//
-						//						} else { //账号密码错误
-						//							var errorMsg = data.ErrorMessage;
-						//							$('.login_alert span').text(errorMsg);
-						//							loginAlert();
-						//						}
-						//
-						//					});
 
 					}
 				})
-				//			$('#identify_img').click(function() {
-				//				var tel = $('#account').val();
-				//				var tel_url = 'https://testapi.bdvip.net/api/member/verifycode?deviceToken=&phone=';
-				//
-				//				var identify_url = tel_url + tel + new Date().getTime();
-				//				//									var identify_url = tel_url + tel;
-				//				console.log(identify_url);
-				//				$('.identify_img').attr('src', identify_url);
-				//			})
+
+			})
+
+			//			给登陆按钮绑定事件
 		</script>
 		<script>
 			//各个屏幕大小适配
