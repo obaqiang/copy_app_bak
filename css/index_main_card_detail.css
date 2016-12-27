@@ -151,6 +151,7 @@
 }
 .vip_area .mui-media-body{
 	font-size: 0.15rem !important;
+	line-height: 0.15rem !important;
 }
 .vip_area li img{
 	width: 32px;

@@ -38,7 +38,7 @@
 
 			<div class="main_head_search">
 				<img src="../../images/26px_26px_iconQ.png" alt="" />
-				<input type="text" />
+				<input id="search" type="text" />
 			</div>
 			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
 			<!--<h1 id="title" class="mui-title">我的卡包</h1>-->
@@ -268,7 +268,7 @@
 
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/config/web_config.js"></script>
-		<script src="../../js/common/bd_port.js"></script>
+		<!--<script src="../../js/common/bd_port.js"></script>-->
 		<script type="text/javascript" charset="utf-8">
 			//mui初始化
 			mui.init({
@@ -307,22 +307,43 @@
 				var getvips_url = test_url + '/api/member/GetVips';
 				var getstoreshopinfo_url = test_url + '/api/Store/GetStoreShopInfo';
 				var getunreadcount_url = test_url + '/api/member/GetUnreadCount';
+				var getvipdiminfo_url = yehongbing_url + '/api/member/GetVipDimInfo';
 				var page_num = 1;
 				var page_size = 10;
 				var store_id = 693;
 				var lala;
 
+				//				搜索功能
+				$('#search').change(function() {
+					console.log('搜索监听事件');
+				})
+
 				//				首页获取用户所有的会员卡接口
 				function GetVips(getvips_url, member_id, page_num, page_size, token) {
-					mui.get(getvips_url, {
-						member_id: member_id,
-						page_num: page_num,
-						page_size: page_size,
-						token: token
-					}, function(data) {
-						//获得服务器响应
-						console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
-					}, 'json');
+					//					mui.get(getvips_url, {
+					//						member_id: member_id,
+					//						page_num: page_num,
+					//						page_size: page_size,
+					//						token: token
+					//					}, function(data) {
+					//						//获得服务器响应
+					//						console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
+					//					}, 'json');
+					mui.ajax(getvips_url, {
+						data: {
+							member_id: member_id,
+							page_num: page_num,
+							page_size: page_size,
+							token: token
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						success: function(data) {
+							//获得服务器响应
+							console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
+						}
+					});
+
 				};
 				GetVips(getvips_url, member_id, page_num, page_size, token);
 
@@ -349,6 +370,22 @@
 					}, 'json');
 				};
 				GetUnreadCount(member_id, token);
+
+				var member_name = '我了个区啊';
+
+
+//				搜索功能接口
+
+				function GetVipDimInfo(member_id, member_name) {
+					mui.get(getvipdiminfo_url, {
+						member_id: member_id,
+						member_name: member_name
+					}, function(data) {
+						//获得服务器响应
+						console.log('获取搜索接口返回数据:' + JSON.stringify(data));
+					}, 'json');
+				};
+				GetVipDimInfo(member_id, member_name);
 
 			});
 

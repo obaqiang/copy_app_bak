@@ -33,3 +33,15 @@ function GetUnreadCount() {
 		console.log('获取未读消息接口返回数据:' + JSON.stringify(data));
 	}, 'json');
 };
+
+
+//首页搜索功能接口接口
+function GetVipDimInfo() {
+	mui.get(getvipdiminfo_url, {
+		member_id: member_id,
+		member_name: member_name
+	}, function(data) {
+		//获得服务器响应
+		console.log('获取搜索接口返回数据:' + JSON.stringify(data));
+	}, 'json');
+};
