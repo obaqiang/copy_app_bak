@@ -47,13 +47,13 @@
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right mine_list_head card_detail_name">
 						<span>余额</span>
-						<span class="detail_name_text">￥100.00</span>
+						<span class="detail_name_text" id='balance'>￥0.00</span>
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right mine_list_head card_detail_name">
 						<span>积分兑换</span>
-						<span class="detail_name_text">1000.00</span>
+						<span class="detail_name_text" id='points'>0.00</span>
 					</a>
 				</li>
 
@@ -198,20 +198,20 @@
 				</li>
 
 			</ul>
-			
+
 			<div class="shop_area">
 				<div class="area_data_1">
-					<span>食味香</span>
-					<span>营业时间 00:00-00:00</span>
-					<span>江苏省苏州市说大话几点回家开发</span>
+					<span id='store_name'>店铺名字</span>
+					<span id="store_time">营业时间 00:00-00:00</span>
+					<span id="address">商家地址</span>
 				</div>
 				<div class="area_data_2">
-					<img src="../../../images/56px_56px_ditu.png" alt="" />
-					<img src="../../../images/56px_56px_dianhua.png" alt="" />
-					
+					<img id="map" src="../../../images/56px_56px_ditu.png" alt="" />
+					<img id="tel" src="../../../images/56px_56px_dianhua.png" alt="" />
+
 				</div>
 			</div>
-			
+
 			<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted card_detail_bg">
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right mine_list_head card_detail_name">
@@ -221,15 +221,67 @@
 
 			</ul>
 			<img style="width: 100%;" src="../../../images/750px_187px_background.png" alt="" />
-			
+
 		</div>
 	</body>
 	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/config/web_config.js"></script>
 	<script src="../../../js/plugin/swiper.min.js"></script>
+	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script>
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
+
+		mui.plusReady(function() {
+
+//			var self = plus.webview.currentWebview();
+//			var vip_id = self.vip_id;
+//			var token = self.token;
+			console.log(1);
+			var getvipinfo_url = test_url + '/api/member/getvipinfo';
+			var vip_id = 828;
+			var token = '607f97b46dfb46aa9f157537e57df907';
+
+
+//			会员卡详情接口
+			function getvipinfo(vip_id, token) {
+				mui.get(getvipinfo_url, {
+					vip_id: vip_id,
+					token: token
+				}, function(data) {
+					//获得服务器响应
+					console.log('获取会员卡详情接口接口返回数据:' + JSON.stringify(data));
+					var balance='￥'+data.Data.Vip.end_money;//余额
+					
+					var points = data.Data.Vip.end_integral;//剩余积分
+					$('#balance').text(balance);
+					$('#points').text(points);
+					
+					var store_name = data.Data.Store.store_name;//店家名称
+					var open_time = data.Data.Store.open_time;
+					var close_time = data.Data.Store.close_time;
+					var store_time = '营业时间'+open_time+'——'+close_time;
+					var address = data.Data.Store.address;
+					$('#store_name').text(store_name);
+					$('#store_time').text(store_time);
+					$('#address').text(address);
+					
+					var location_lng=data.Data.Store.location_lng;
+					var location_lat=data.Data.Store.location_lat;
+					
+					var map_url='http://uri.amap.com/marker?position='+location_lng+','+location_lat;
+					document.getElementById('map').addEventListener('tap', function() {
+						window.location.href=map_url;
+					})
+					
+				}, 'json');
+			};
+			getvipinfo(vip_id, token);
+			
+			
+
+		})
 	</script>
 	<script>
 		var swiper = new Swiper('.swiper-container', {
