@@ -1,4 +1,11 @@
-//var apiGetJsonType="jsonp";  //跨域 jsonp
+
+function isOnline(){
+	if(!navigator.onLine){
+		alert('您已断网');
+	}
+}
+
+
 
 function bdGetJson(url, data_list, apiGetJsonType, callback) {
 	//	url:接口的路径
