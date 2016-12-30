@@ -75,12 +75,29 @@
 			</a>
 		</nav>
 
-		<div class="mui-content index_main_card" id="index_main_card">
-			<div>
-				<img class="card_head" src="../../images/750px_174px_banner.png" alt="" />
-				<img class="card_body" src="../../images/750px_362px_card1.png" alt="" />
-				<img class="card_body" src="../../images/750px_362px_card1.png" alt="" />
-				<img class="card_body" src="../../images/750px_362px_card1.png" alt="" />
+		<div class="mui-content  mui-scroll-wrapper index_main_card" id="index_main_card" id="pullrefresh">
+			<!--下拉刷新容器-->
+			<div class="mui-scroll card_area">
+
+				<!--<div class="card_list">
+					<img class="card_in" src="../../images/460px_274px_card7.png" alt="" />
+					<img class="card_out" src="../../images/478px_300px_card1.png" alt="" />
+					<span class="card_shop_name">华雄美容美发（春晖路店）</span>
+					<span class="card_shop_num">NO.4651831851321</span>
+					<span class="card_shop_type">金卡</span>
+					<span class="card_shop_prize">储值88.88元</span>
+					<img class="card_shop_tel" src="../../images/50px_50px_icon_P.png" alt="" />
+				</div>
+				<div class="card_list_c">
+					<img class="card_out_c" src="../../images/478px_300px_card2.png" alt="" />
+					<img class="card_in_c" src="../../images/460px_274px_card7.png" alt="" />
+					<span class="card_shop_name_c">华雄美容美发（春晖路店）</span>
+					<span class="card_shop_num_c">NO.4651831851321</span>
+					<span class="card_shop_type_c">金卡</span>
+					<span class="card_shop_prize_c">储值88.88元</span>
+					<img class="card_shop_tel_c" src="../../images/50px_50px_icon_P.png" alt="" />
+				</div>-->
+
 			</div>
 
 		</div>
@@ -278,8 +295,8 @@
 						callback: pulldownRefresh
 					},
 					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
+						//						contentrefresh: '正在加载...',
+						//						callback: pullupRefresh
 					}
 				}
 			});
@@ -292,11 +309,14 @@
 					mui('#index_main_card').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
+			var count = 0;
 			/**
 			 * 上拉加载具体业务实现
 			 */
 			function pullupRefresh() {
-				setTimeout(function() {}, 1500);
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2));
+				}, 1500);
 			}
 
 			//创建子页面，首个选项卡页面显示，其它均隐藏；
@@ -315,8 +335,10 @@
 
 				//				搜索功能
 				$('#search').change(function() {
-					console.log('搜索监听事件');
-				})
+					var member_name = $('#search').val();
+					console.log('需要的member_name：' + member_name);
+					GetVipDimInfo(member_id, member_name);
+				});
 
 				//				首页获取用户所有的会员卡接口
 				function GetVips(getvips_url, member_id, page_num, page_size, token) {
@@ -341,6 +363,58 @@
 						success: function(data) {
 							//获得服务器响应
 							console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
+							var Vips = data.Data.Vips;
+							for(var i = 0; i < Vips.length; i++) {
+								var vip_id = Vips[i].id;
+								var store_id = Vips[i].store_id;
+								var store_name = Vips[i].store_name;
+								var store_tel = Vips[i].store_tel;
+								var cardtype_name = Vips[i].cardtype_name;
+								var tl_imgurl = Vips[i].tl_imgurl;
+								var tl_bagurl = Vips[i].tl_bagurl;
+								var tl_bagurl1 = Vips[i].tl_bagurl1;
+								var BalanceArray = Vips[i].BalanceArray;
+								var store_tel = Vips[i].store_tel;
+								var vip_sn = Vips[i].vip_sn;
+								if(i % 2 == 0) { //如果是偶数
+									var card_list_div = '<div class="card_list" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
+										'<img class="card_in" src="' + tl_imgurl + '" alt="" />' +
+										'<img class="card_out" src="' + tl_bagurl1 + '" alt="" />' +
+										'<span class="card_shop_name">' + store_name + '</span>' +
+										'<span class="card_shop_num">' + vip_sn + '</span>' +
+										'<span class="card_shop_type">' + cardtype_name + '</span>' +
+										'<span class="card_shop_prize">' + BalanceArray + '</span>' +
+										'<img class="card_shop_tel" src="../../images/50px_50px_icon_P.png" alt="" />' +
+										'</div>';
+								} else {
+									var card_list_div = '<div class="card_list_c" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
+										'<img class="card_out_c" src="' + tl_bagurl + '" alt="" />' +
+										'<img class="card_in_c" src="' + tl_imgurl + '" alt="" />' +
+										'<span class="card_shop_name_c">' + store_name + '</span>' +
+										'<span class="card_shop_num_c">' + vip_sn + '</span>' +
+										'<span class="card_shop_type_c">' + cardtype_name + '</span>' +
+										'<span class="card_shop_prize_c">' + BalanceArray + '</span>' +
+										'<img class="card_shop_tel_c" src="../../images/50px_50px_icon_P.png" alt="" />' +
+										'</div>';
+								}
+								$('.card_area').append(card_list_div);
+
+								mui(".card_area").on('tap', '.card_list,.card_list_c', function() {
+									var vip_id = $(this).attr('vip_id');
+									var store_id = $(this).attr('store_id');
+									var webview = mui.openWindow({
+										url: 'index_main_card/index_main_card_detail.html',
+										extras: {
+											member_id: member_id,
+											vip_id: vip_id,
+											token: token,
+											store_id: store_id
+										}
+									});
+								})
+
+							}
+
 						}
 					});
 
@@ -361,7 +435,7 @@
 
 				//获取未读消息接口
 				function GetUnreadCount(member_id, token) {
-					mui.get(getunreadcount_url, {
+					mui.get(getvipdiminfo_url, {
 						member_id: member_id,
 						token: token
 					}, function(data) {
@@ -373,19 +447,29 @@
 
 				var member_name = '我了个区啊';
 
+				//				搜索功能接口
 
-//				搜索功能接口
-
-				function GetVipDimInfo(member_id, member_name) {
-					mui.get(getvipdiminfo_url, {
-						member_id: member_id,
-						member_name: member_name
-					}, function(data) {
-						//获得服务器响应
-						console.log('获取搜索接口返回数据:' + JSON.stringify(data));
-					}, 'json');
+				function GetVipDimInfo(member_id, member_name, token) {
+					mui.ajax(getvipdiminfo_url, {
+						data: {
+							member_id: member_id,
+							member_name: member_name,
+							token: token
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							//服务器返回响应，根据响应结果，分析是否登录成功；
+							console.log('获取搜索接口返回数据:' + JSON.stringify(data));
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
+						}
+					});
 				};
-				GetVipDimInfo(member_id, member_name);
+				//				GetVipDimInfo(member_id, member_name);
 
 			});
 

@@ -34,7 +34,7 @@
 			<div class="products_search">
 				<div class="search_area">
 					<img src="../../../images/26px_26px_search.png" alt="" />
-					<input type="text" name="" id="" value="" placeholder="搜索产品" />
+					<input id="search" type="text" name="" id="" value="" placeholder="搜索产品" />
 				</div>
 				<img class="search_img" src="../../../images/56px_42px_fenlei.png" alt="" />
 
@@ -92,13 +92,13 @@
 		});
 
 		mui.plusReady(function() {
-			var getallgoodsclient_url=test_url+'/api/goods/GetAllGoodsClient';
+			var getallgoodsclient_url = test_url + '/api/goods/GetAllGoodsClient';
 			var self = plus.webview.currentWebview();
 			var token = self.token;
 			var store_id = self.store_id;
-			
-//			获取所有商品接口
-			function GetAllGoodsClient(getallgoodsclient_url,store_id,token) {
+
+			//			获取所有商品接口
+			function GetAllGoodsClient(getallgoodsclient_url, store_id, token) {
 				mui.ajax(getallgoodsclient_url, {
 					data: {
 						store_id: store_id,
@@ -110,31 +110,29 @@
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log('获取所有商品接口接口返回数据:' + JSON.stringify(data));
-						var ClassList=data.Data.ClassList;
-						console.log('需要的:'+ClassList);
-						for(var i=0;i<ClassList.length;i++){
-							var class_name=ClassList[i].class_name;
-							var GoodsList=ClassList[i].GoodsList;
-							var products_list_div='<div class="list_head">'+class_name+'</div>';
-							for(var j=0;j<GoodsList.length;j++){
-								var thumb=GoodsList[j].thumb;
-								var goods_desc=GoodsList[j].goods_desc;
-								var goods_price=GoodsList[j].goods_price;
-								var unit_name=GoodsList[j].unit_name;
-								var prize=goods_price+'元/'+unit_name;
-								products_list_div+='<div class="list_body">'+
-														'<img class="list_img" src="'+thumb+'" alt="" />'+
-														'<span class="list_name">'+goods_desc+'</span>'+
-														'<span class="list_prize">'+prize+'</span>'+
-														'<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />'+
-													'</div>';
+						var ClassList = data.Data.ClassList;
+						console.log('需要的:' + ClassList);
+						for(var i = 0; i < ClassList.length; i++) {
+							var class_name = ClassList[i].class_name;
+							var GoodsList = ClassList[i].GoodsList;
+							var products_list_div = '<div class="list_head">' + class_name + '</div>';
+							for(var j = 0; j < GoodsList.length; j++) {
+								var thumb = GoodsList[j].thumb;
+								var goods_desc = GoodsList[j].goods_desc;
+								var goods_price = GoodsList[j].goods_price;
+								var unit_name = GoodsList[j].unit_name;
+								var prize = goods_price + '元/' + unit_name;
+								products_list_div += '<div class="list_body">' +
+									'<img class="list_img" src="' + thumb + '" alt="" />' +
+									'<span class="list_name">' + goods_desc + '</span>' +
+									'<span class="list_prize">' + prize + '</span>' +
+									'<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />' +
+									'</div>';
 							};
 							$('.products_list').append(products_list_div);
-							
+
 						};
-						
-						
-						
+
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
@@ -143,13 +141,39 @@
 				});
 
 			};
-			GetAllGoodsClient(getallgoodsclient_url,store_id,token); 
-			
-			
-			
-			
-			
-			
+			GetAllGoodsClient(getallgoodsclient_url, store_id, token);
+
+			var getgoods_url = test_url + 'api/goods/GetGoods';
+				//			搜索接口
+			function GetGoods(getgoods_url, store_id, goods_name, token) {
+				mui.ajax(getgoods_url, {
+					data: {
+						store_id: store_id,
+						goods_name: goods_name,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取商品页面搜索接口返回数据:' + JSON.stringify(data));
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+
+			$('#search').change(function() {
+				var goods_name=$('#search').val();
+				console.log('需要的goods_name:'+goods_name);
+				console.log('需要的store_id:'+store_id);
+				console.log('需要的token:'+token);
+				GetGoods(getgoods_url, store_id, goods_name, token);
+			});
+
 		})
 	</script>
 	<script>

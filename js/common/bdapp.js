@@ -1,7 +1,7 @@
 
 function isOnline(){
 	if(!navigator.onLine){
-		alert('您已断网');
+		alert('网络连接断开');
 	}
 }
 

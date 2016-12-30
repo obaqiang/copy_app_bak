@@ -182,6 +182,7 @@
 	<script src="../../../js/config/web_config.js"></script>
 	<script src="../../../js/plugin/swiper.min.js"></script>
 	<script src="../../../js/jquery-1.11.3.js"></script>
+	<script src="../../../js/common/bdapp.js"></script>
 	<script>
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
@@ -200,17 +201,18 @@
 //		}
 
 		mui.plusReady(function() {
-
-			//			var self = plus.webview.currentWebview();
-			//			var memember_id = self.memember_id;
-			//			var vip_id = self.vip_id;
-			//			var token = self.token;
-			//          var store_id = self.store_id;
+			isOnline();
+			var self = plus.webview.currentWebview();
+			var member_id = self.member_id;
+			var vip_id = self.vip_id;
+			var token = self.token;
+			var store_id = self.store_id;
+			
 			var getvipinfo_url = test_url + '/api/member/getvipinfo';
-			var member_id = 272;
-			var vip_id = 4612;
-			var token = '6f8d5f18b41e41f98e4762520295688f';
-			var store_id = 688;
+//			var member_id = 272;
+//			var vip_id = 4612;
+//			var token = '4058c30e1e7e4333a2ca6120a6d94253';
+//			var store_id = 688;
 
 			//			会员卡详情接口
 			function getvipinfo(vip_id, token) {
@@ -304,8 +306,8 @@
 						for(var i = 0; i < Tickets.length; i++) {
 							var ticket_money = Tickets[i].ticket_money;
 							var condition_money = Tickets[i].condition_money;
-							var id=Tickets[i].id;
-							var ticket_div = '<div class="swiper-slide" ticket_id="'+id+'">' +
+							var ticket_id=Tickets[i].id;
+							var ticket_div = '<div class="swiper-slide" store_id="'+store_id+'" ticket_id="'+ticket_id+'">' +
 								'<img src="../../../images/204px_102px_quanbg.png" alt="" />' +
 								'<div class="coupon_data_1">' +
 								'<span>' + ticket_money + '</span>' +
@@ -336,13 +338,14 @@
 
 			var pickupticket_url = test_url + '/api/ticket/PickupTicket';
 			//			领取优惠券接口
-			function PickupTicket(pickupticket_url,member_id,store_id,ticket_id,vip_id) {
+			function PickupTicket(pickupticket_url,member_id,store_id,ticket_id,vip_id,token) {
 				mui.ajax(pickupticket_url, {
 					data: {
 						staff_id: member_id,
 						store_id: store_id,
 						ticket_id:ticket_id,
-						vip_id:vip_id
+						vip_id:vip_id,
+						token:token
 					},
 					dataType: 'json', //服务器返回json格式数据
 					type: 'post', //HTTP请求类型
@@ -360,6 +363,23 @@
 					}
 				});
 			}
+//			给领取优惠券增加点击事件
+			mui(".swiper-wrapper").on('tap','.swiper-slide',function(){
+			  //获取id
+			  var store_id = $(this).attr('store_id');
+			  var ticket_id = $(this).attr('ticket_id');
+			  console.log('需要的staff_id:'+member_id);
+			  console.log('需要的store_id：'+store_id);
+			  console.log('需要的ticket_id:'+ticket_id);
+			  console.log('需要的vip_id:'+vip_id);
+			  console.log('需要的token:'+token);
+			  PickupTicket(pickupticket_url,member_id,store_id,ticket_id,vip_id,token);
+			  
+			  
+			}) 
+			
+			
+			
 
 		})
 	</script>

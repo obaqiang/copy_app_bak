@@ -428,7 +428,7 @@
 
 			mui.plusReady(function() {
 
-				if(UserInfo.has_login()==true) {//判断是否已经登陆过
+				if(UserInfo.has_login()==false) {//判断是否已经登陆过
 					console.log('方法中的已经登陆过');
 					//				如果已经登陆过,则直接跳转到首页,并将member_id和token传给首页
 					var token = UserInfo.token();
@@ -474,8 +474,8 @@
 						var url_login = test_url + '/api/member/LoginVerify';
 						console.log(data_list);
 						mui.get(url_login, data_list, function(data) {
-							console.log(JSON.stringify(data));
-							console.log(data.Data.Member.id);
+							console.log('登陆接口返回的数据:'+JSON.stringify(data));
+							console.log('需要的member_id:'+data.Data.Member.id);
 							console.log('需要的Token：' + data.Data.Token);
 
 							if(data.ErrorCode == 4) { //此时需要输入验证码
