@@ -33,7 +33,7 @@
 				<h1 class="mui-title">个人信息</h1>
 			</header>
 			<div class="card_detail_nav">
-				<div class="card_detail_nav_left">
+				<div class="card_detail_nav_left" id="products_all">
 					<img class="nav_icon" src="../../../images/54px_54px_icon1.png" alt="" />
 					<span class="nav_text">全部商品</span>
 				</div>
@@ -44,7 +44,7 @@
 			</div>
 
 			<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted card_detail_bg">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="account">
 					<a class="mui-navigate-right mine_list_head card_detail_name">
 						<span>余额</span>
 						<span class="detail_name_text" id='balance'>￥0.00</span>
@@ -62,65 +62,19 @@
 			<div class="coupon_area">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide">
+						<!--<div class="swiper-slide">
 							<img src="../../../images/204px_102px_quanbg.png" alt="" />
 							<div class="coupon_data_1">
-								<span>10</span>
+								<span>2000</span>
 								<span>元</span>
 							</div>
 							<span class="coupon_data_2">(满200可用)</span>
 							<span class="coupon_data_3">点击<br />领取</span>
-						</div>
-						<div class="swiper-slide">
-							<img src="../../../images/204px_102px_quanbg.png" alt="" />
-							<div class="coupon_data_1">
-								<span>10</span>
-								<span>元</span>
-							</div>
-							<span class="coupon_data_2">(满200可用)</span>
-							<span class="coupon_data_3">点击<br />领取</span>
-						</div>
-						<div class="swiper-slide">
-							<img src="../../../images/204px_102px_quanbg.png" alt="" />
-							<div class="coupon_data_1">
-								<span>10</span>
-								<span>元</span>
-							</div>
-							<span class="coupon_data_2">(满200可用)</span>
-							<span class="coupon_data_3">点击<br />领取</span>
-						</div>
-						<div class="swiper-slide">
-							<img src="../../../images/204px_102px_quanbg.png" alt="" />
-							<div class="coupon_data_1">
-								<span>10</span>
-								<span>元</span>
-							</div>
-							<span class="coupon_data_2">(满200可用)</span>
-							<span class="coupon_data_3">点击<br />领取</span>
-						</div>
-						<div class="swiper-slide">
-							<img src="../../../images/204px_102px_quanbg.png" alt="" />
-							<div class="coupon_data_1">
-								<span>10</span>
-								<span>元</span>
-							</div>
-							<span class="coupon_data_2">(满200可用)</span>
-							<span class="coupon_data_3">点击<br />领取</span>
-						</div>
+						</div>-->
 					</div>
 					<!-- Add Pagination -->
 					<!--<div class="swiper-pagination"></div>-->
 				</div>
-				<!--<div class="card_coupon">
-					<img src="images/204px_102px_quanbg.png" alt="" />
-					<div class="coupon_data_1">
-						<span >10</span>
-						<span >元</span>
-					</div>
-
-					<span class="coupon_data_2">(满200可用)</span>
-					<span class="coupon_data_3">点击<br />领取</span>
-				</div>-->
 
 			</div>
 			<div class="vip_text">
@@ -232,15 +186,31 @@
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
+//		for(var i = 0; i < 3; i++) {
+//			var div = '<div class="swiper-slide">' +
+//				'<img src="../../../images/204px_102px_quanbg.png" alt="" />' +
+//				'<div class="coupon_data_1">' +
+//				'<span>2000</span>' +http://192.168.1.162:8020/m/images/204px_102px_quanbg.png
+//				'<span>元</span>' +
+//				'</div>' +
+//				'<span class="coupon_data_2">(满200可用)</span>' +
+//				'<span class="coupon_data_3">点击<br />领取</span>' +
+//				'</div>';
+//			$('.swiper-wrapper').append(div);
+//		}
 
 		mui.plusReady(function() {
 
 			//			var self = plus.webview.currentWebview();
+			//			var memember_id = self.memember_id;
 			//			var vip_id = self.vip_id;
 			//			var token = self.token;
+			//          var store_id = self.store_id;
 			var getvipinfo_url = test_url + '/api/member/getvipinfo';
-			var vip_id = 601;
-			var token = '1042dd0f008a4f3e868bfa6b76e13711';
+			var member_id = 272;
+			var vip_id = 4612;
+			var token = '6f8d5f18b41e41f98e4762520295688f';
+			var store_id = 688;
 
 			//			会员卡详情接口
 			function getvipinfo(vip_id, token) {
@@ -271,16 +241,42 @@
 					var map_url = 'http://uri.amap.com/marker?position=' + location_lng + ',' + location_lat;
 					document.getElementById('map').addEventListener('tap', function() {
 						window.location.href = map_url;
-					})
+					});
 
+					//					点击积分兑换事件
 					document.getElementById('points_exchange').addEventListener('tap', function() {
-						var points=$('#points_exchange').text();
-						points=points.replace(/[^0-9]/ig,""); 
+						var points = $('#points_exchange').text();
+						points = points.replace(/[^0-9]/ig, "");
 						var webview = mui.openWindow({
 							url: 'index_main_card_detail_points.html',
 							extras: {
 								points: points,
-								token: token
+								token: token,
+								vip_id: vip_id
+							}
+						});
+					});
+
+					//					点击余额事件
+					document.getElementById('account').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_account.html',
+							extras: {
+								token: token,
+								vip_id: vip_id,
+								store_id: store_id,
+								prize: data.Data.Vip.end_money
+							}
+						});
+					})
+
+					//					点击全部商品事件
+					document.getElementById('products_all').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_main_card_products.html',
+							extras: {
+								token: token,
+								store_id: store_id,
 							}
 						});
 					})
@@ -289,17 +285,85 @@
 			};
 			getvipinfo(vip_id, token);
 
+			var GetPickUpTickets_url = test_url + '/api/ticket/GetPickUpTickets';
+			//			优惠券显示接口
+			function GetPickUpTickets(GetPickUpTickets_url, vip_id, store_id, token) {
+				mui.ajax(GetPickUpTickets_url, {
+					data: {
+						vip_id: vip_id,
+						store_id: store_id,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取载入会员卡优惠券显示接口接口返回数据:' + JSON.stringify(data));
+						var Tickets = data.Data.Tickets;
+						for(var i = 0; i < Tickets.length; i++) {
+							var ticket_money = Tickets[i].ticket_money;
+							var condition_money = Tickets[i].condition_money;
+							var id=Tickets[i].id;
+							var ticket_div = '<div class="swiper-slide" ticket_id="'+id+'">' +
+								'<img src="../../../images/204px_102px_quanbg.png" alt="" />' +
+								'<div class="coupon_data_1">' +
+								'<span>' + ticket_money + '</span>' +
+								'<span>元</span>' +
+								'</div>' +
+								'<span class="coupon_data_2">(满' + condition_money + '可用)</span>' +
+								'<span class="coupon_data_3">点击<br />领取</span>' +
+								'</div>';
+							$('.swiper-wrapper').append(ticket_div);
+						}
+						var swiper = new Swiper('.swiper-container', {
+							pagination: '.swiper-pagination',
+							paginationClickable: true,
+
+							slidesPerView: 3.5,
+
+						});
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log('优惠券显示接口返回失败');
+					}
+				});
+			};
+			GetPickUpTickets(GetPickUpTickets_url, vip_id, store_id, token);
+			
+
+			var pickupticket_url = test_url + '/api/ticket/PickupTicket';
+			//			领取优惠券接口
+			function PickupTicket(pickupticket_url,member_id,store_id,ticket_id,vip_id) {
+				mui.ajax(pickupticket_url, {
+					data: {
+						staff_id: member_id,
+						store_id: store_id,
+						ticket_id:ticket_id,
+						vip_id:vip_id
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取领取优惠券接口返回数据:' + JSON.stringify(data));
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+
 		})
 	</script>
-	<script>
-		var swiper = new Swiper('.swiper-container', {
-			pagination: '.swiper-pagination',
-			paginationClickable: true,
 
-			slidesPerView: 3.5,
-
-		});
-	</script>
 	<script>
 		//各个屏幕大小适配
 		(function(doc, win) {

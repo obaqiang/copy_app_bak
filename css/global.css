@@ -10,6 +10,11 @@
 .nav_header h1{
 	color: #ffffff;
 }
+.nav_icon_right{
+	width: 0.28rem;
+	float: right;
+	margin: 10px;
+}
 .bg_ff{
 	background: #fff;
 }
@@ -40,4 +45,32 @@
 }
 .mui-bar-nav{
 	box-shadow: none !important;
+}
+.nav_ul{
+	position: absolute;
+	top: 40px;
+	right:0;
+	background: #f4f4f4;
+	padding: 0;
+	margin: 0;
+}
+.nav_ul li{
+	list-style: none;
+	width: 0.82rem;
+	text-align: center;
+	height: 0.36rem;
+	line-height: 0.36rem;
+	font-size: 0.14rem;
+	border-bottom: 1px solid #e4e4e4;
+	
+}
+.nav_bottom{
+	background: #CB2920;
+	line-height: 0.5rem;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	text-align: center;
+	color: #fff;
+	font-size: 0.17rem;
 }

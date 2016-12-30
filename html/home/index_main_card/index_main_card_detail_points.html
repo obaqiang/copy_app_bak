@@ -35,7 +35,7 @@
 			</header>
 
 			<div class="points_head of_h">
-				<div class="points_head_list">
+				<div class="points_head_list" id="points_exchange">
 					<div>积分明细</div>
 					<img src="../../../images/44px_44px_icon1.png" alt="" />
 				</div>
@@ -97,6 +97,8 @@
 			var self = plus.webview.currentWebview();
 			var points = self.points;
 			var token = self.token;
+			var Vip_id = self.vip_id;
+			console.log('points:' + Vip_id);
 			$('.points_head_num').text(points);
 
 			var getintproducts_url = test_url + '/api/goods/GetIntProducts';
@@ -128,11 +130,11 @@
 							if(products.length == 0) {
 								$('.points_goods').hide();
 							}
-							var id=products[i].id;
+							var id = products[i].id;
 							var product_name = products[i].product_name;
 							var product_desc = products[i].product_desc;
 							var thumb = products[i].thumb;
-							var li = '<li class="mui-table-view-cell mui-media points_more" Vip_id="'+id+'">' +
+							var li = '<li class="mui-table-view-cell mui-media points_more" Vip_id="' + id + '">' +
 								'<a class="mui-navigate-right">' +
 								'<img class="mui-media-object mui-pull-left" src="' + thumb + '">' +
 								'<div class="mui-media-body">' +
@@ -144,16 +146,6 @@
 							console.log('需要的li' + li);
 							$('#products_list').append(li);
 
-							mui("#products_list").on('tap', '.points_more', function() {
-								var Vip_id=$(this).attr('Vip_id');
-								var webview = mui.openWindow({
-									url: 'index_main_card_detail_points_more.html',
-									extras: {
-										token: token,
-										Vip_id:Vip_id
-									}
-								});
-							})
 
 						}
 
@@ -165,6 +157,16 @@
 				});
 			}
 			GetIntProducts(store_id, type, page_num, page_size);
+
+			document.getElementById('points_exchange').addEventListener('tap', function() {
+				var webview = mui.openWindow({
+					url: 'index_main_card_detail_points_more.html',
+					extras: {
+						token: token,
+						Vip_id: Vip_id
+					}
+				});
+			})
 
 		})
 	</script>

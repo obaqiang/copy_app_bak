@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<link rel="stylesheet" href="../../../css/global.css" />
+		<link rel="stylesheet" href="../../../css/index_main_card_products.css" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<header class="mui-bar mui-bar-nav nav_header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">所有商品</h1>
+			</header>
+			<div class="products_search">
+				<div class="search_area">
+					<img src="../../../images/26px_26px_search.png" alt="" />
+					<input type="text" name="" id="" value="" placeholder="搜索产品" />
+				</div>
+				<img class="search_img" src="../../../images/56px_42px_fenlei.png" alt="" />
+
+			</div>
+			<ul class="search_choose" style="display: none;">
+				<li>移动硬盘</li>
+				<li>显示器</li>
+				<li>电源</li>
+				<li>固态硬盘</li>
+			</ul>
+
+			<div class="products_list">
+				<!--<div class="list_head">
+					移动硬盘
+				</div>
+				<div class="list_body">
+					<img class="list_img" src="../../../images/164px_164px_chanpin.png" alt="" />
+					<span class="list_name">西部数据大数据库里富华大厦接口华盛顿佛挡杀佛是</span>
+					<span class="list_prize">1499.00元/件</span>
+					<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />
+				</div>
+				<div class="list_body">
+					<img class="list_img" src="../../../images/164px_164px_chanpin.png" alt="" />
+					<span class="list_name">西部数据大数据库里富华大厦接口华盛顿佛挡杀佛是</span>
+					<span class="list_prize">1499.00元/件</span>
+					<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />
+				</div>
+
+				<div class="list_head">
+					移动硬盘
+				</div>
+				<div class="list_body">
+					<img class="list_img" src="../../../images/164px_164px_chanpin.png" alt="" />
+					<span class="list_name">西部数据大数据库里富华大厦接口华盛顿佛挡杀佛是</span>
+					<span class="list_prize">1499.00元/件</span>
+					<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />
+				</div>
+				<div class="list_body">
+					<img class="list_img" src="../../../images/164px_164px_chanpin.png" alt="" />
+					<span class="list_name">西部数据大数据库里富华大厦接口华盛顿佛挡杀佛是</span>
+					<span class="list_prize">1499.00元/件</span>
+					<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />
+				</div>-->
+
+			</div>
+
+		</div>
+	</body>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/config/web_config.js"></script>
+	<script src="../../../js/jquery-1.11.3.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+
+		mui.plusReady(function() {
+			var getallgoodsclient_url=test_url+'/api/goods/GetAllGoodsClient';
+			var self = plus.webview.currentWebview();
+			var token = self.token;
+			var store_id = self.store_id;
+			
+//			获取所有商品接口
+			function GetAllGoodsClient(getallgoodsclient_url,store_id,token) {
+				mui.ajax(getallgoodsclient_url, {
+					data: {
+						store_id: store_id,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取所有商品接口接口返回数据:' + JSON.stringify(data));
+						var ClassList=data.Data.ClassList;
+						console.log('需要的:'+ClassList);
+						for(var i=0;i<ClassList.length;i++){
+							var class_name=ClassList[i].class_name;
+							var GoodsList=ClassList[i].GoodsList;
+							var products_list_div='<div class="list_head">'+class_name+'</div>';
+							for(var j=0;j<GoodsList.length;j++){
+								var thumb=GoodsList[j].thumb;
+								var goods_desc=GoodsList[j].goods_desc;
+								var goods_price=GoodsList[j].goods_price;
+								var unit_name=GoodsList[j].unit_name;
+								var prize=goods_price+'元/'+unit_name;
+								products_list_div+='<div class="list_body">'+
+														'<img class="list_img" src="'+thumb+'" alt="" />'+
+														'<span class="list_name">'+goods_desc+'</span>'+
+														'<span class="list_prize">'+prize+'</span>'+
+														'<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />'+
+													'</div>';
+							};
+							$('.products_list').append(products_list_div);
+							
+						};
+						
+						
+						
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+
+			};
+			GetAllGoodsClient(getallgoodsclient_url,store_id,token); 
+			
+			
+			
+			
+			
+			
+		})
+	</script>
+	<script>
+		//各个屏幕大小适配
+		(function(doc, win) {
+			var docEl = doc.documentElement,
+				resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+				recalc = function() {
+					var clientWidth = docEl.clientWidth;
+					if(!clientWidth) return;
+					docEl.style.fontSize = 100 * (clientWidth / 375) + 'px';
+				};
+
+			if(!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false);
+		})(document, window);
+	</script>
+
+</html>
