@@ -43,7 +43,7 @@
 					<div>当前积分</div>
 					<div class="points_head_num">0000</div>
 				</div>
-				<div class="points_head_list">
+				<div class="points_head_list" id="points_record">
 					<div>兑换记录</div>
 					<img src="../../../images/44px_44px_icon2.png" alt="" />
 				</div>
@@ -105,7 +105,7 @@
 			var store_id = 483;
 			var type = 1;
 			var page_num = 1;
-			var page_size = 1;
+			var page_size = 10;
 			//			积分请求接口
 			function GetIntProducts(store_id, type, page_num, page_size) {
 				mui.ajax(getintproducts_url, {
@@ -124,7 +124,7 @@
 						console.log('获取积分请求接口接口返回数据:' + JSON.stringify(data));
 
 						var products = data.Data.Products;
-						console.log('需要的：' + products);
+//						console.log('需要的：' + products);
 						for(var i = 0; i < products.length; i++) {
 
 							if(products.length == 0) {
@@ -143,7 +143,7 @@
 								'</div>' +
 								'</a>' +
 								'</li>';
-							console.log('需要的li' + li);
+//							console.log('需要的li' + li);
 							$('#products_list').append(li);
 
 
@@ -158,6 +158,7 @@
 			}
 			GetIntProducts(store_id, type, page_num, page_size);
 
+//			积分明细
 			document.getElementById('points_exchange').addEventListener('tap', function() {
 				var webview = mui.openWindow({
 					url: 'index_main_card_detail_points_more.html',
@@ -166,7 +167,19 @@
 						Vip_id: Vip_id
 					}
 				});
-			})
+			});
+//			兑换记录
+			document.getElementById('points_record').addEventListener('tap', function() {
+				var webview = mui.openWindow({
+					url: 'index_main_card_detail_points_record.html',
+					extras: {
+						token: token,
+						Vip_id: Vip_id,
+						store_id:store_id
+					}
+				});
+			});
+			
 
 		})
 	</script>

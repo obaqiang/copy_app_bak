@@ -110,8 +110,8 @@
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log('获取所有商品接口接口返回数据:' + JSON.stringify(data));
+						var store_id = data.Data.store_id;
 						var ClassList = data.Data.ClassList;
-						console.log('需要的:' + ClassList);
 						for(var i = 0; i < ClassList.length; i++) {
 							var class_name = ClassList[i].class_name;
 							var GoodsList = ClassList[i].GoodsList;
@@ -130,6 +130,7 @@
 									'</div>';
 							};
 							$('.products_list').append(products_list_div);
+
 
 						};
 
@@ -171,6 +172,8 @@
 				console.log('需要的goods_name:'+goods_name);
 				console.log('需要的store_id:'+store_id);
 				console.log('需要的token:'+token);
+				store_id=197;
+				goods_name='Hhh';
 				GetGoods(getgoods_url, store_id, goods_name, token);
 			});
 

@@ -143,3 +143,9 @@ UserInfo.member_id = function(){
     }
     plus.storage.setItem('member_id', arguments[0]);
 };
+
+
+function getLocalTime(nS) {     
+    return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,17)
+}
+ 

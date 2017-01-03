@@ -46,7 +46,7 @@
 				<div class="account_head_content of_h">
 					<div class="content_left">
 						<div class="content_num">
-							1500
+							未定义
 						</div>
 						<div class="content_des">
 							积分（个）
@@ -54,7 +54,7 @@
 					</div>
 					<div class="content_right">
 						<div class="content_num">
-							4
+							未定义
 						</div>
 						<div class="content_des">
 							套餐（种）
@@ -65,20 +65,27 @@
 			</div>
 
 			<div class="account_list">
-				<div class="account_list_head">
-					储值套餐
+				<div class="type_001" style="display: none;">
+					<div class="account_list_head">
+						买赠套餐
+					</div>
 				</div>
-				<div class="account_list_body">
-					<span class="list_body_name">超级豪华套餐</span>
-					<img class="list_body_img" src="../../../images/26px_16px.png" alt="" />
-					<span class="list_body_prize">￥110.00</span>
+				<div class="type_002" style="display: none;">
+					<div class="account_list_head">
+						储值套餐
+					</div>
+				</div>
+				<div class="type_003" style="display: none;">
+					<div class="account_list_head">
+						计时套餐
+					</div>
+				</div>
 
-				</div>
-				<div class="account_list_body">
+				<!--<div class="account_list_body">
 					<span class="list_body_name">超级豪华套餐</span>
 					<img class="list_body_img" src="../../../images/26px_16px.png" alt="" />
 					<span class="list_body_prize">￥110.00</span>
-					<div class="list_inner">
+					<div class="list_inner" style="display: none;">
 						<div class="list_inner_left">
 							<div class="list_inner_left_name">
 								毛巾
@@ -90,23 +97,14 @@
 						<div class="list_inner_right">
 							￥100.00
 						</div>
-					</div>
-					<div class="list_inner">
-						<div class="list_inner_left">
-							<div class="list_inner_left_name">
-								毛巾
-							</div>
-							<div class="list_inner_left_prize">
-								原价￥100
-							</div>
-						</div>
-						<div class="list_inner_right">
-							￥100.00
-						</div>
+
 					</div>
 
-				</div>
+				</div>-->
+
 			</div>
+
+		</div>
 
 		</div>
 	</body>
@@ -126,17 +124,17 @@
 			var store_id = self.store_id;
 			var prize = self.prize;
 			$('.title_num').text(prize);
-	
+
 			var getpackages_url = test_url + '/api/order/GetPackages';
 			var store_id;
 			var vip_id;
 
-			function GetPackages(getpackages_url,store_id,vip_id,token) {
+			function GetPackages(getpackages_url, store_id, vip_id, token) {
 				mui.ajax(getpackages_url, {
 					data: {
 						store_id: store_id,
 						vip_id: vip_id,
-						token:token
+						token: token
 					},
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
@@ -144,13 +142,102 @@
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log('获取余额接口接口返回数据:' + JSON.stringify(data));
-						var Recharges=data.Data.Recharges;
-						for(var i=0;i<Recharges.length-1;i++){
-							var package_name=Recharges['package_name'];
-							
-							
-						}
+						var Recharges = data.Data.Recharges;
+						for(var i = 0; i < Recharges.length; i++) {
+							var type = Recharges[i]['type'];
+							var package_name = Recharges[i]['package_name'];
+							var Items = Recharges[i]['Items'];
+							var price = Recharges[i]['price'];
 
+							function pinjie(type_name, Items, price) { //字符串拼接
+								if(Items.length == 0) {
+									var div_out =
+										//										'<div class="account_list_head">' +
+										//										type_name +
+										//										'</div>' +
+										'<div class="account_list_body list_ok">' +
+										'<span class="list_body_name">' + package_name + '</span>' +
+										//										'<img class="list_body_img" src="../../../images/26px_16px.png" alt="" />' +
+										'<span class="list_body_prize">￥' + price + '</span>' +
+										'</div>';
+									var account_div = div_out;
+								} else {
+									var div_in = '';
+									var div_out =
+										'<div class="account_list_body list_ok">' +
+										'<span class="list_body_name">' + package_name + '</span>' +
+										'<img class="list_body_img" Items=' + Items + ' src="../../../images/26px_16px.png" alt="" />' +
+										'<span class="list_body_prize">￥' + price + '</span>';
+
+									for(var i = 0; i < Items.length; i++) {
+										var goods_name = Items[i].goods_name;
+										var price = Items[i].price;
+										var origin_price = Items[i].origin_price;
+										div_in +=
+											"<div class=\"list_inner\" style=\"display:none;\">" +
+											"<div class=\"list_inner_left\">" +
+											"<div class=\"list_inner_left_name\">" +
+											goods_name +
+											"</div>" +
+											"<div class=\"list_inner_left_prize\">" +
+											"原价￥" + origin_price +
+											"</div>" +
+											"</div>" +
+											"<div class=\"list_inner_right\">" +
+											"￥" + price +
+											"</div>" +
+											"</div>";
+									}
+
+									var account_div = div_out + div_in + "</div>";
+									if(type_name == '买赠套餐') {
+										$('.type_001').append(account_div);
+										$('.type_001').show();
+									} else if(type_name == '储值套餐') {
+										$('.type_002').append(account_div);
+										$('.type_002').show();
+									} else if(type_name == '计时套餐') {
+										$('.type_003').append(account_div);
+										$('.type_003').show();
+									}
+
+								}
+
+							}
+
+							if(type == 001) {
+								var type_name = '买赠套餐';
+								pinjie(type_name, Items, price);
+							} else if(type_name, type == 002) {
+								var type_name = '储值套餐';
+								pinjie(type_name, Items, price);
+							} else if(type_name, type == 003) {
+								var type_name = '计时套餐';
+								pinjie(type_name, Items, price);
+							}
+							mui(".account_list").on('tap', '.list_ok', function() {
+								isOnline();
+//								alert(11);
+								var src=$(this).children('img').attr('src');
+								$(this).removeClass('list_ok');
+								$(this).addClass('list_no');
+								$(this).children('.list_inner').show();
+								$(this).children('img').attr('src','../../../images/26px_16px2.png');
+								
+							});
+							mui(".account_list").on('tap', '.list_no', function() {
+								isOnline();
+//								alert(22);
+								var src=$(this).children('img').attr('src');
+								$(this).removeClass('list_no');
+								$(this).addClass('list_ok');
+								$(this).children('.list_inner').hide();
+								$(this).children('img').attr('src','../../../images/26px_16px.png');
+								
+							});
+							
+
+						}
 
 					},
 					error: function(xhr, type, errorThrown) {
@@ -160,11 +247,7 @@
 				});
 
 			};
-			GetPackages(getpackages_url,store_id,vip_id,token);
-			
-			
-			
-			
+			GetPackages(getpackages_url, store_id, vip_id, token);
 
 		})
 	</script>

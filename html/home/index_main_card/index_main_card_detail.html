@@ -261,6 +261,7 @@
 
 					//					点击余额事件
 					document.getElementById('account').addEventListener('tap', function() {
+						isOnline();
 						var webview = mui.openWindow({
 							url: 'index_account.html',
 							extras: {

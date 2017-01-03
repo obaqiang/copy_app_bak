@@ -34,7 +34,21 @@
 				<h1 class="mui-title">积分</h1>
 			</header>
 			<div class="points_more_body">
-				<div class="points_more_list of_h">
+				<!--<div class="points_more_list of_h">
+					<div class="more_list_left">
+						+10
+					</div>
+					<div class="more_list_right">
+						<div>
+							结账赠送产品积分
+						</div>
+						<div>
+							2016-04-16 10:00
+						</div>
+					</div>
+
+				</div>-->
+				<!--<div class="points_more_list of_h">
 					<div class="more_list_left">
 						+10
 					</div>
@@ -61,21 +75,7 @@
 						</div>
 					</div>
 
-				</div>
-				<div class="points_more_list of_h">
-					<div class="more_list_left">
-						+10
-					</div>
-					<div class="more_list_right">
-						<div>
-							结账赠送产品积分
-						</div>
-						<div>
-							2016-04-16 10:00
-						</div>
-					</div>
-
-				</div>
+				</div>-->
 			</div>
 
 		</div>
@@ -93,13 +93,17 @@
 			var self = plus.webview.currentWebview();
 			var Vip_id = self.Vip_id;
 			var token = self.token;
-			console.log('需要的Vip_id：'+Vip_id);
-			var getvipintegralca_url=test_url+'/api/query/GetVipIntegralCA';
-			var page_num=1;
-			var page_size=1;
-			
-//			积分明细接口
-			function GetVipIntegralCA(getvipintegralca_url,page_num,page_size,token) {
+			console.log('需要的Vip_id：' + Vip_id);
+			var getvipintegralca_url = test_url + '/api/query/GetVipIntegralCA';
+			var page_num = 1;
+			var page_size = 1;
+
+			function getLocalTime(nS) {
+				return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+			}
+
+			//			积分明细接口
+			function GetVipIntegralCA(getvipintegralca_url, page_num, page_size, token) {
 				mui.ajax(getvipintegralca_url, {
 					data: {
 						Vip_id: Vip_id,
@@ -113,7 +117,28 @@
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log('获取积分明细接口接口返回数据:' + JSON.stringify(data));
-
+						var Items = data.Data.Items;
+						for(var i = 0; i < Items.length; i++) {
+							var integral = Items[i].integral;
+							var memo = Items[i].memo;
+							var add_time =Items[i].add_time;
+							add_time=getLocalTime(add_time);
+							var points_div='<div class="points_more_list of_h">'+
+											'<div class="more_list_left">'+
+												'+'+integral+
+											'</div>'+
+											'<div class="more_list_right">'+
+											'<div>'+
+												memo+
+											'</div>'+
+											'<div>'+
+												add_time+
+											'</div>'+
+											'</div>'+
+											'</div>';		
+							$('.points_more_body').append(points_div);
+						
+						}
 
 					},
 					error: function(xhr, type, errorThrown) {
@@ -122,9 +147,7 @@
 					}
 				});
 			}
-			GetVipIntegralCA(getvipintegralca_url,page_num,page_size,token);
-			
-			
+			GetVipIntegralCA(getvipintegralca_url, page_num, page_size, token);
 
 		})
 	</script>
