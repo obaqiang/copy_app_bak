@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<link rel="stylesheet" href="../../../css/global.css" />
+		<link rel="stylesheet" href="../../../css/index_bill.css" />
+		<link rel="stylesheet" href="../../../css/swiper.min.css">
+		<style>
+			html,
+			body {
+				background-color: #fff;
+			}
+			
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<header class="mui-bar mui-bar-nav nav_header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">账单</h1>
+			</header>
+
+			<div class="bill_head">
+				<div class="bill_head_left text_on">
+					消费账单
+				</div>
+				<div class="bill_head_right">
+					充值账单
+				</div>
+			</div>
+
+			<div class="swiper-container">
+				<div class="swiper-wrapper bill_month">
+					<span class="swiper-slide">1月</span>
+					<span class="swiper-slide">2月</span>
+					<span class="swiper-slide">3月</span>
+					<span class="swiper-slide">4月</span>
+					<span class="swiper-slide">5月</span>
+					<span class="swiper-slide">6月</span>
+					<span class="swiper-slide">7月</span>
+					<span class="swiper-slide">8月</span>
+					<span class="swiper-slide">9月</span>
+					<span class="swiper-slide">10月</span>
+					<span class="swiper-slide">11月</span>
+					<span class="swiper-slide">12月</span>
+					<span class="swiper-slide">全部</span>
+				</div>
+				<!-- Add Pagination -->
+				<!--<div class="swiper-pagination"></div>-->
+			</div>
+
+			<div class="bill_charge">
+				<span>合计充值：</span>
+				<span>60.40</span>
+				<span>元</span>
+			</div>
+
+			<table class="bill_table" border="0" cellspacing="" cellpadding="">
+				<tr>
+					<th>名称</th>
+					<th>金额</th>
+					<th>时间</th>
+				</tr>
+
+				<tr>
+					<td>套餐充值</td>
+					<td>40.00</td>
+					<td>2016-11-22</td>
+				</tr>
+				<tr>
+					<td>套餐充值</td>
+					<td>40.00</td>
+					<td>2016-11-22</td>
+				</tr>
+
+			</table>
+
+			<div id="main" style="height:200px"></div>
+
+		</div>
+	</body>
+	<script src="../../../libs/echarts-all.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/plugin/swiper.min.js"></script>
+	<script src="../../../js/jquery-1.11.3.js"></script>
+	<script src="../../../js/common/bdapp.js"></script>
+	<script src="../../../js/config/web_config.js"></script>
+
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+
+		function datetime_to_unix(datetime) {
+			var tmp_datetime = datetime.replace(/:/g, '-');
+			tmp_datetime = tmp_datetime.replace(/ /g, '-');
+			var arr = tmp_datetime.split("-");
+			var now = new Date(Date.UTC(arr[0], arr[1] - 1, arr[2], arr[3] - 8, arr[4], arr[5]));
+			return parseInt(now.getTime() / 1000);
+		}
+
+		var self = plus.webview.currentWebview();
+		var vip_id = self.vip_id;
+		var token = self.token;
+		var store_id = self.store_id;
+		var getvipca_url = test_url + '/api/query/getvipca';
+		var page_num = 1;
+		var page_size = 10;
+		var type=002;
+		
+		var myDate = new Date();
+		var time_time = myDate.getTime();
+		var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+		var year_time = myDate.getFullYear();
+		month_time += 1;
+		var sec_time=time_time/1000;
+		sec_time=parseInt(sec_time);
+//		console.log(sec_time);
+//		console.log(month_time);
+//		console.log(year_time);
+
+		if(month_time < 10) {
+			month_time = '0' + month_time;
+		}
+//		var begin_time = year_time + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+		var begin_time = '2016' + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+		
+		begin_time=datetime_to_unix(begin_time);
+		var end_time=sec_time;
+		//		begin_time=Date.parse(new Date(begin_time));
+//		console.log(begin_time);
+
+		//		var begin_time=month_time.getTime();
+		//		begin_time=begin_time/1000;
+		//		console.log(begin_time);
+
+
+		console.log(getvipca_url+'?'+'store_id='+store_id+'&vip_id='+vip_id+'&type='+type+'&begin_time='+begin_time+'&end_time='+end_time+'&page_num='+page_num+'&page_size='+page_size);
+		function getvipca(getvipca_url, store_id, vip_id, type, begin_time, end_time, page_num, page_size) {
+			mui.ajax(getvipca_url, {
+				data: {
+					store_id: store_id,
+					vip_id: vip_id,
+					type: type,
+					begin_time: begin_time,
+					end_time: end_time,
+					page_num: page_num,
+					page_size: page_size
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log('获取账单接口返回数据:' + JSON.stringify(data));
+					var Items=data.Data.Items;
+					
+					
+					
+					
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+				}
+			});
+		}
+		
+		mui.plusReady(function() {
+			getvipca(getvipca_url, store_id, vip_id, type, begin_time, end_time, page_num, page_size); 
+			
+			
+		})
+		
+		
+	</script>
+
+	<script>
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			paginationClickable: true,
+
+			slidesPerView: 6,
+
+		});
+		//各个屏幕大小适配
+		(function(doc, win) {
+			var docEl = doc.documentElement,
+				resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+				recalc = function() {
+					var clientWidth = docEl.clientWidth;
+					if(!clientWidth) return;
+					docEl.style.fontSize = 100 * (clientWidth / 375) + 'px';
+				};
+
+			if(!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false);
+		})(document, window);
+	</script>
+	<script>
+		// 基于准备好的dom，初始化echarts图表
+		var myChart = echarts.init(document.getElementById('main'));
+
+		var option = {
+			title: {
+				text: '最近七月（单位：元）',
+				//      subtext: '',
+				//				x: 'left',
+				//				align: 'right',
+				padding: [5, 0, 0, 20],
+				textStyle: {
+					fontSize: '0.13rem'
+				}
+			},
+
+			grid: {
+				x: 50,
+				x2: 0,
+				y: '15%',
+				width: '80%',
+				backgroundColor: '#F8F8F8',
+				height: '70%',
+				borderWidth: 0
+			},
+
+			xAxis: [{
+				type: 'category',
+				boundaryGap: 3,
+				data: ['5月', '6月', '7月', '8月', '9月', '10月', '11月'],
+				axisLabel: {
+					textStyle: {
+						color: '#bababa'
+					}
+				},
+				//      nameLocation:'middle'
+				boundaryGap: false,
+				axisTick: {
+					show: false
+				},
+				axisLine: {
+					lineStyle: {
+						color: '#b3b3b3'
+					}
+				}
+			}],
+			yAxis: {
+				type: 'value',
+				show: true,
+				max: 700,
+				splitNumber: 7,
+				axisLine: {
+					show: true,
+					onZero: true
+				},
+				axisLine: {
+					lineStyle: {
+						color: '#b3b3b3'
+					}
+				},
+				axisLabel: {
+					textStyle: {
+						color: '#bababa'
+					}
+				},
+
+			},
+			series: [{
+				type: 'line',
+				data: [0, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134, 90],
+				symbol: 'none',
+				itemStyle: {
+					normal: {
+						color: '#ff9436',
+						areaStyle: {
+							color: 'rgba(255,148,54,0.2)'
+						}
+					}
+
+				},
+			}]
+		};
+
+		// 为echarts对象加载数据
+		myChart.setOption(option);
+		$(window).resize(function() {
+			myChart.resize();
+		});
+	</script>
+
+</html>

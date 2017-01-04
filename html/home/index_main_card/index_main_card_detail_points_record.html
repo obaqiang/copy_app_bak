@@ -52,7 +52,7 @@
 			</div>
 
 			<div class="record_data">
-				<div class="record_data_list of_h">
+				<!--<div class="record_data_list of_h">
 					<img class="record_data_img" src="../../../images/140px_120px_background.png" alt="" />
 					<div class="record_data_mid">
 						<div>
@@ -89,7 +89,7 @@
 							等待确认
 						</div>
 					</div>
-				</div>
+				</div>-->
 
 			</div>
 
@@ -168,7 +168,8 @@
 					}
 				});
 			}
-			//			GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token);
+			var status='等待确认';
+			GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token,status);
 
 			//			等待确认
 			document.getElementById('wait').addEventListener('tap', function() {
@@ -191,7 +192,6 @@
 			document.getElementById('cancel').addEventListener('tap', function() {
 				type = 4;
 				$('.record_data').empty();
-				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token);
 				var status='已取消';
 				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token,status);
 

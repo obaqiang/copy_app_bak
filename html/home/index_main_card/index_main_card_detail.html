@@ -81,7 +81,7 @@
 				会员专享
 			</div>
 			<ul class="mui-table-view mui-grid-view mui-grid-9 vip_area">
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_action">
 					<a href="#">
 						<img src="../../../images/64px_huodong.png" alt="" />
 						<div class="mui-media-body">活动</div>
@@ -117,7 +117,7 @@
 						<div class="mui-media-body">消费记录</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="bill">
 					<a href="#">
 						<img src="../../../images/64px_zhangdan.png" alt="" />
 						<div class="mui-media-body">账单</div>
@@ -179,10 +179,11 @@
 		</div>
 	</body>
 	<script src="../../../js/mui.min.js"></script>
-	<script src="../../../js/config/web_config.js"></script>
+	
 	<script src="../../../js/plugin/swiper.min.js"></script>
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script src="../../../js/common/bdapp.js"></script>
+	<script src="../../../js/config/web_config.js"></script>
 	<script>
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
@@ -283,6 +284,33 @@
 							}
 						});
 					})
+					
+					
+					//					点击活动事件
+					document.getElementById('index_action').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_action.html',
+							extras: {
+								token: token,
+								store_id: store_id,
+								vip_id:vip_id
+							}
+						});
+					})
+					
+					document.getElementById('bill').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_bill.html',
+							extras: {
+								token: token,
+								store_id: store_id,
+								vip_id:vip_id
+							}
+						});
+					})
+					
+					
+					
 
 				}, 'json');
 			};

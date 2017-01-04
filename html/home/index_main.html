@@ -75,7 +75,7 @@
 			</a>
 		</nav>
 
-		<div class="mui-content  mui-scroll-wrapper index_main_card" id="index_main_card" id="pullrefresh">
+		<div class="mui-content  mui-scroll-wrapper index_main_card" id="index_main_card">
 			<!--下拉刷新容器-->
 			<div class="mui-scroll card_area">
 
@@ -292,11 +292,12 @@
 				pullRefresh: {
 					container: '#index_main_card',
 					down: {
+						auto:false,
 						callback: pulldownRefresh
 					},
 					up: {
 						//						contentrefresh: '正在加载...',
-						//						callback: pullupRefresh
+						callback: pullupRefresh
 					}
 				}
 			});
@@ -309,29 +310,125 @@
 					mui('#index_main_card').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
-			var count = 0;
+			//			var count = 0;
 			/**
 			 * 上拉加载具体业务实现
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2));
+					page_num++;
+					GetVips(getvips_url, member_id, page_num, page_size, token); 
+
+					mui('#index_main_card').pullRefresh().endPullupToRefresh();
+
 				}, 1500);
 			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#index_main_card').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#index_main_card').pullRefresh().pullupLoading();
+				});
+			}
+
+			var self = plus.webview.currentWebview();
+			var member_id = self.member_id;
+			var token = self.token;
+			var getvips_url = test_url + '/api/member/GetVips';
+			var getstoreshopinfo_url = test_url + '/api/Store/GetStoreShopInfo';
+			var getunreadcount_url = test_url + '/api/member/GetUnreadCount';
+			var getvipdiminfo_url = yehongbing_url + '/api/member/GetVipDimInfo';
+			var page_num = 1;
+			var page_size = 10;
+			var store_id = 693;
+
+			//				首页获取用户所有的会员卡接口
+			function GetVips(getvips_url, member_id, page_num, page_size, token) {
+				//					mui.get(getvips_url, {
+				//						member_id: member_id,
+				//						page_num: page_num,
+				//						page_size: page_size,
+				//						token: token
+				//					}, function(data) {
+				//						//获得服务器响应
+				//						console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
+				//					}, 'json');
+				mui.ajax(getvips_url, {
+					data: {
+						member_id: member_id,
+						page_num: page_num,
+						page_size: page_size,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					success: function(data) {
+						//获得服务器响应
+						console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
+						var Vips = data.Data.Vips;
+						for(var i = 0; i < Vips.length; i++) {
+							var vip_id = Vips[i].id;
+							var store_id = Vips[i].store_id;
+							var store_name = Vips[i].store_name;
+							var store_tel = Vips[i].store_tel;
+							var cardtype_name = Vips[i].cardtype_name;
+							var tl_imgurl = Vips[i].tl_imgurl;
+							var tl_bagurl = Vips[i].tl_bagurl;
+							var tl_bagurl1 = Vips[i].tl_bagurl1;
+							var BalanceArray = Vips[i].BalanceArray;
+							var store_tel = Vips[i].store_tel;
+							var vip_sn = Vips[i].vip_sn;
+							if(i % 2 == 0) { //如果是偶数
+								var card_list_div = '<div class="card_list" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
+									'<img class="card_in" src="' + tl_imgurl + '" alt="" />' +
+									'<img class="card_out" src="' + tl_bagurl1 + '" alt="" />' +
+									'<span class="card_shop_name">' + store_name + '</span>' +
+									'<span class="card_shop_num">' + vip_sn + '</span>' +
+									'<span class="card_shop_type">' + cardtype_name + '</span>' +
+									'<span class="card_shop_prize">' + BalanceArray + '</span>' +
+									'<img class="card_shop_tel" src="../../images/50px_50px_icon_P.png" alt="" />' +
+									'</div>';
+							} else {
+								var card_list_div = '<div class="card_list_c" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
+									'<img class="card_out_c" src="' + tl_bagurl + '" alt="" />' +
+									'<img class="card_in_c" src="' + tl_imgurl + '" alt="" />' +
+									'<span class="card_shop_name_c">' + store_name + '</span>' +
+									'<span class="card_shop_num_c">' + vip_sn + '</span>' +
+									'<span class="card_shop_type_c">' + cardtype_name + '</span>' +
+									'<span class="card_shop_prize_c">' + BalanceArray + '</span>' +
+									'<img class="card_shop_tel_c" src="../../images/50px_50px_icon_P.png" alt="" />' +
+									'</div>';
+							}
+							$('.card_area').append(card_list_div);
+
+							mui(".card_area").on('tap', '.card_list,.card_list_c', function() {
+								var vip_id = $(this).attr('vip_id');
+								var store_id = $(this).attr('store_id');
+								var webview = mui.openWindow({
+									url: 'index_main_card/index_main_card_detail.html',
+									extras: {
+										member_id: member_id,
+										vip_id: vip_id,
+										token: token,
+										store_id: store_id
+									}
+								});
+							})
+
+						}
+
+					}
+				});
+
+			};
 
 			//创建子页面，首个选项卡页面显示，其它均隐藏；
 			mui.plusReady(function() {
-				var self = plus.webview.currentWebview();
-				var member_id = self.member_id;
-				var token = self.token;
-				var getvips_url = test_url + '/api/member/GetVips';
-				var getstoreshopinfo_url = test_url + '/api/Store/GetStoreShopInfo';
-				var getunreadcount_url = test_url + '/api/member/GetUnreadCount';
-				var getvipdiminfo_url = yehongbing_url + '/api/member/GetVipDimInfo';
-				var page_num = 1;
-				var page_size = 10;
-				var store_id = 693;
-				var lala;
 
 				//				搜索功能
 				$('#search').change(function() {
@@ -340,85 +437,6 @@
 					GetVipDimInfo(member_id, member_name);
 				});
 
-				//				首页获取用户所有的会员卡接口
-				function GetVips(getvips_url, member_id, page_num, page_size, token) {
-					//					mui.get(getvips_url, {
-					//						member_id: member_id,
-					//						page_num: page_num,
-					//						page_size: page_size,
-					//						token: token
-					//					}, function(data) {
-					//						//获得服务器响应
-					//						console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
-					//					}, 'json');
-					mui.ajax(getvips_url, {
-						data: {
-							member_id: member_id,
-							page_num: page_num,
-							page_size: page_size,
-							token: token
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						success: function(data) {
-							//获得服务器响应
-							console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
-							var Vips = data.Data.Vips;
-							for(var i = 0; i < Vips.length; i++) {
-								var vip_id = Vips[i].id;
-								var store_id = Vips[i].store_id;
-								var store_name = Vips[i].store_name;
-								var store_tel = Vips[i].store_tel;
-								var cardtype_name = Vips[i].cardtype_name;
-								var tl_imgurl = Vips[i].tl_imgurl;
-								var tl_bagurl = Vips[i].tl_bagurl;
-								var tl_bagurl1 = Vips[i].tl_bagurl1;
-								var BalanceArray = Vips[i].BalanceArray;
-								var store_tel = Vips[i].store_tel;
-								var vip_sn = Vips[i].vip_sn;
-								if(i % 2 == 0) { //如果是偶数
-									var card_list_div = '<div class="card_list" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
-										'<img class="card_in" src="' + tl_imgurl + '" alt="" />' +
-										'<img class="card_out" src="' + tl_bagurl1 + '" alt="" />' +
-										'<span class="card_shop_name">' + store_name + '</span>' +
-										'<span class="card_shop_num">' + vip_sn + '</span>' +
-										'<span class="card_shop_type">' + cardtype_name + '</span>' +
-										'<span class="card_shop_prize">' + BalanceArray + '</span>' +
-										'<img class="card_shop_tel" src="../../images/50px_50px_icon_P.png" alt="" />' +
-										'</div>';
-								} else {
-									var card_list_div = '<div class="card_list_c" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
-										'<img class="card_out_c" src="' + tl_bagurl + '" alt="" />' +
-										'<img class="card_in_c" src="' + tl_imgurl + '" alt="" />' +
-										'<span class="card_shop_name_c">' + store_name + '</span>' +
-										'<span class="card_shop_num_c">' + vip_sn + '</span>' +
-										'<span class="card_shop_type_c">' + cardtype_name + '</span>' +
-										'<span class="card_shop_prize_c">' + BalanceArray + '</span>' +
-										'<img class="card_shop_tel_c" src="../../images/50px_50px_icon_P.png" alt="" />' +
-										'</div>';
-								}
-								$('.card_area').append(card_list_div);
-
-								mui(".card_area").on('tap', '.card_list,.card_list_c', function() {
-									var vip_id = $(this).attr('vip_id');
-									var store_id = $(this).attr('store_id');
-									var webview = mui.openWindow({
-										url: 'index_main_card/index_main_card_detail.html',
-										extras: {
-											member_id: member_id,
-											vip_id: vip_id,
-											token: token,
-											store_id: store_id
-										}
-									});
-								})
-
-							}
-
-						}
-					});
-
-				};
 				GetVips(getvips_url, member_id, page_num, page_size, token);
 
 				//获取分店信息接口

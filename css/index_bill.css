@@ -17,13 +17,16 @@
 	float: left;
 	text-align: center;
 }
+.text_on{
+	background: #CB2920;
+	color: #fff;
+}
 .bill_head_right{
 	width: 50%;
 	float: left;
 	text-align: center;
-	border-left: 1px solid #CB2920;
-	background: #CB2920;
-	color: #fff;
+	/*border-left: 1px solid #CB2920;*/
+	
 }
 .bill_month{
 	margin: 0.1rem auto 0;
