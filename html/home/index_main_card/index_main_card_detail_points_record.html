@@ -110,12 +110,15 @@
 			var Vip_id = self.Vip_id;
 			var token = self.token;
 			var store_id = self.store_id;
+			var member_id = self.member_id;
 			var page_num = 1;
 			var page_size = 10;
 			var type = 1;
+			
+			
 			var getexchanges_url = test_url + '/api/exchange/GetExchanges';
 
-			function GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token,status) {
+			function GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token, status) {
 				mui.ajax(getexchanges_url, {
 					data: {
 						store_id: store_id,
@@ -133,19 +136,20 @@
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log('获取查看积分记录接口返回数据:' + JSON.stringify(data));
 						var Exchanges = data.Data.Exchanges;
-						for(var i=0;i<Exchanges.length;i++) {
+						for(var i = 0; i < Exchanges.length; i++) {
 							var Items = Exchanges[i].Items;
 							var product_name = Items[0].product_name;
 							var add_time = Exchanges[i].add_time;
 							add_time = getLocalTime(add_time);
 							var useintegral = Exchanges[i].useintegral;
 							var thumb = Exchanges[i].thumb;
+							var exchange_id = Exchanges[i].exchange_id;
 							var list_div =
-								'<div class="record_data_list of_h">' +
+								'<div class="record_data_list of_h" exchange_id="' + exchange_id + '">' +
 								'<img class="record_data_img" src="../../../images/140px_120px_background.png" alt="" />' +
 								'<div class="record_data_mid">' +
 								'<div>' +
-								product_name +'</div>' +
+								product_name + '</div>' +
 								'<div>' +
 								useintegral + '积分' +
 								'</div>' +
@@ -155,11 +159,24 @@
 								add_time +
 								'</div>' +
 								'<div>' +
-								status +'</div>' +
+								status + '</div>' +
 								'</div>' +
 								'</div>';
 							$('.record_data').append(list_div);
 						}
+
+						mui(".record_data").on('tap', '.record_data_list', function() {
+							var exchange_id = this.getAttribute("exchange_id");
+
+							var webview = mui.openWindow({
+								url: 'index_main_card_detail_points_detail.html',
+								extras: {
+									token: token,
+									exchange_id: exchange_id,
+									member_id:member_id
+								}
+							});
+						})
 
 					},
 					error: function(xhr, type, errorThrown) {
@@ -168,23 +185,23 @@
 					}
 				});
 			}
-			var status='等待确认';
-			GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token,status);
+			var status = '等待确认';
+			GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token, status);
 
 			//			等待确认
 			document.getElementById('wait').addEventListener('tap', function() {
 				type = 1;
 				$('.record_data').empty();
-				var status='等待确认';
-				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token,status);
+				var status = '等待确认';
+				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token, status);
 			});
 
 			//			已确认
 			document.getElementById('already').addEventListener('tap', function() {
 				type = 2;
 				$('.record_data').empty();
-				var status='已确认';
-				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token,status);
+				var status = '已确认';
+				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token, status);
 
 			});
 
@@ -192,8 +209,8 @@
 			document.getElementById('cancel').addEventListener('tap', function() {
 				type = 4;
 				$('.record_data').empty();
-				var status='已取消';
-				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token,status);
+				var status = '已取消';
+				GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token, status);
 
 			});
 

@@ -146,7 +146,7 @@ UserInfo.member_id = function(){
 
 
 function getLocalTime(nS) {     
-    return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,17)
+    return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,18)
 }
  
 

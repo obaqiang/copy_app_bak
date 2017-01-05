@@ -78,3 +78,18 @@
 .type_wait{
 	color: #fb7115;
 }
+.alert_bl{
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	top: 2rem;
+}
+.alert_bl span{
+	background: #000000;
+	display: inline-block;
+	opacity:0.5;
+	color: #fff;
+	font-size: 0.12rem;
+	border-radius: 0.1rem;
+	padding: 0.1rem 0.2rem;
+}

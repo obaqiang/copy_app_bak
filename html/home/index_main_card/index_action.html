@@ -95,6 +95,9 @@
 		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
+				window.addEventListener("pageflowrefresh", function (e) {
+    				location.reload();
+				});
 
 				mui('#action').pullRefresh().endPulldownToRefresh(); //refresh completed
 			}, 1500);

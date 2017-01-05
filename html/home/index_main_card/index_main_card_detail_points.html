@@ -34,22 +34,22 @@
 				<h1 class="mui-title">积分</h1>
 			</header>
 
-			<div class="points_head of_h">
-				<div class="points_head_list" id="points_exchange">
-					<div>积分明细</div>
-					<img src="../../../images/44px_44px_icon1.png" alt="" />
-				</div>
-				<div class="points_head_list points_head_mid">
-					<div>当前积分</div>
-					<div class="points_head_num">0000</div>
-				</div>
-				<div class="points_head_list" id="points_record">
-					<div>兑换记录</div>
-					<img src="../../../images/44px_44px_icon2.png" alt="" />
-				</div>
-			</div>
-
 			<div class="mui-scroll">
+				<div class="points_head of_h">
+					<div class="points_head_list" id="points_exchange">
+						<div>积分明细</div>
+						<img src="../../../images/44px_44px_icon1.png" alt="" />
+					</div>
+					<div class="points_head_list points_head_mid">
+						<div>当前积分</div>
+						<div class="points_head_num">0000</div>
+					</div>
+					<div class="points_head_list" id="points_record">
+						<div>兑换记录</div>
+						<img src="../../../images/44px_44px_icon2.png" alt="" />
+					</div>
+				</div>
+
 				<div class="points_goods">
 					积分产品
 				</div>
@@ -95,11 +95,11 @@
 			pullRefresh: {
 				container: '#detail_points',
 				down: {
-					
+
 					callback: pulldownRefresh
 				},
 				up: {
-					contentrefresh:'',
+					contentrefresh: '',
 					//						contentrefresh: '正在加载...',
 					callback: pullupRefresh
 				}
@@ -144,6 +144,7 @@
 		var points = self.points;
 		var token = self.token;
 		var Vip_id = self.vip_id;
+		var member_id = self.member_id;
 		//			console.log('points:' + Vip_id);
 		$('.points_head_num').text(points);
 
@@ -225,7 +226,8 @@
 					extras: {
 						token: token,
 						Vip_id: Vip_id,
-						store_id: store_id
+						store_id: store_id,
+						member_id:member_id
 					}
 				});
 			});

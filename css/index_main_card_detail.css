@@ -61,10 +61,13 @@
 	float: right;
 	color: #a4a4a4;
 }
+.coupon_area .swiper-wrapper{
+	padding-left: 0.05rem;
+}
 .coupon_area .swiper-slide{
 	position: relative;
 	margin-top: 0.09rem;
-	margin-left:0.05rem;
+	/*margin-left:0.05rem;*/
 }
 .coupon_area .swiper-slide img{
 	width: 1.02rem;

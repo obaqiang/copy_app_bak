@@ -28,59 +28,60 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div class="mui-content mui-scroll-wrapper" id="red_packets">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">已领红包</h1>
 			</header>
 
-			<div class="packets_head">
-				<span>
+			<div class=" mui-scroll">
+				<div class="packets_head">
+					<span>
 					红包剩余金额:
 				</span>
-				<span class="head_num" id="InMoney">0.00</span>
-				<span>元</span>
-			</div>
-
-			<div class="swiper-container">
-				<div class="swiper-wrapper bill_month">
-					<span class="swiper-slide">1月</span>
-					<span class="swiper-slide">2月</span>
-					<span class="swiper-slide">3月</span>
-					<span class="swiper-slide">4月</span>
-					<span class="swiper-slide">5月</span>
-					<span class="swiper-slide">6月</span>
-					<span class="swiper-slide">7月</span>
-					<span class="swiper-slide">8月</span>
-					<span class="swiper-slide">9月</span>
-					<span class="swiper-slide">10月</span>
-					<span class="swiper-slide">11月</span>
-					<span class="swiper-slide">12月</span>
-					<span class="swiper-slide">全部</span>
-				</div>
-				<!-- Add Pagination -->
-				<!--<div class="swiper-pagination"></div>-->
-			</div>
-
-			<div class="bill_charge">
-				<span>合计充值：</span>
-				<span id="total_money">0.00</span>
-				<span>元</span>
-				<div class="packets_right">
-					<span>已用金额</span>
-					<span id="OutMoney">0.00</span>
+					<span class="head_num" id="InMoney">?.00</span>
 					<span>元</span>
 				</div>
-			</div>
 
-			<table class="bill_table" border="0" cellspacing="" cellpadding="">
-				<tr>
-					<th>名称</th>
-					<th>金额</th>
-					<th>时间</th>
-				</tr>
+				<div class="swiper-container">
+					<div class="swiper-wrapper bill_month">
+						<span class="swiper-slide">1月</span>
+						<span class="swiper-slide">2月</span>
+						<span class="swiper-slide">3月</span>
+						<span class="swiper-slide">4月</span>
+						<span class="swiper-slide">5月</span>
+						<span class="swiper-slide">6月</span>
+						<span class="swiper-slide">7月</span>
+						<span class="swiper-slide">8月</span>
+						<span class="swiper-slide">9月</span>
+						<span class="swiper-slide">10月</span>
+						<span class="swiper-slide">11月</span>
+						<span class="swiper-slide">12月</span>
+						<span class="swiper-slide">全部</span>
+					</div>
+					<!-- Add Pagination -->
+					<!--<div class="swiper-pagination"></div>-->
+				</div>
 
-				<!--<tr>
+				<div class="bill_charge">
+					<span>合计充值：</span>
+					<span id="total_money">?.00</span>
+					<span>元</span>
+					<div class="packets_right">
+						<span>已用金额</span>
+						<span id="OutMoney">?.00</span>
+						<span>元</span>
+					</div>
+				</div>
+
+				<table class="bill_table" border="0" cellspacing="" cellpadding="">
+					<tr>
+						<th>名称</th>
+						<th>金额</th>
+						<th>时间</th>
+					</tr>
+
+					<!--<tr>
 					<td>10.00元</td>
 					<td>领取</td>
 					<td>
@@ -98,7 +99,8 @@
 					</td>
 				</tr>-->
 
-			</table>
+				</table>
+			</div>
 
 		</div>
 	</body>
@@ -109,13 +111,61 @@
 	<script src="../../../js/plugin/swiper.min.js"></script>
 	<script>
 		mui.init({
-			swipeBack: true //启用右滑关闭功能
+			pullRefresh: {
+				container: '#red_packets',
+				down: {
+
+					callback: pulldownRefresh
+				},
+				up: {
+					contentrefresh: '',
+					//						contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
 		});
+
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			setTimeout(function() {
+				window.addEventListener("pageflowrefresh", function(e) {
+					location.reload();
+				});
+
+				mui('#red_packets').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}, 1500);
+		}
+		//			var count = 0;
+		/**
+		 * 上拉加载具体业务实现
+		 */
+		function pullupRefresh() {
+			setTimeout(function() {
+
+				page_num++;
+				GetRedpacketItemsOfVip(getredpacketitemsofvip_url, vip_id, begin_time, end_time, page_num, page_size, token);
+				mui('#red_packets').pullRefresh().endPullupToRefresh();
+
+			}, 1500);
+		}
+		if(mui.os.plus) {
+			mui.plusReady(function() {
+				setTimeout(function() {
+					mui('#red_packets').pullRefresh().pullupLoading();
+				}, 1000);
+
+			});
+		} else {
+			mui.ready(function() {
+				mui('#red_packets').pullRefresh().pullupLoading();
+			});
+		}
 
 		var self = plus.webview.currentWebview();
 		var vip_id = self.vip_id;
 		var token = self.token;
-		
 
 		var getredpacketitemsofvip_url = test_url + '/api/redpacket/GetRedpacketItemsOfVip';
 		var page_num = 1;
@@ -125,18 +175,17 @@
 		var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
 		var year_time = myDate.getFullYear();
 		month_time += 1;
-		var sec_time=time_time/1000;
-		sec_time=parseInt(sec_time);
+		var sec_time = time_time / 1000;
+		sec_time = parseInt(sec_time);
 		if(month_time < 10) {
-		month_time = '0' + month_time;
+			month_time = '0' + month_time;
 		}
 		var begin_time = year_time + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
 //		var begin_time = '2016' + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
-		begin_time=datetime_to_unix(begin_time);
-		var end_time=sec_time;
-		
+		begin_time = datetime_to_unix(begin_time);
+		var end_time = sec_time;
 
-		function GetRedpacketItemsOfVip(getredpacketitemsofvip_url,vip_id,begin_time,end_time,page_num,page_size,token) {
+		function GetRedpacketItemsOfVip(getredpacketitemsofvip_url, vip_id, begin_time, end_time, page_num, page_size, token) {
 			mui.ajax(getredpacketitemsofvip_url, {
 				data: {
 					vip_id: vip_id,
@@ -144,7 +193,7 @@
 					end_time: end_time,
 					page_num: page_num,
 					page_size: page_size,
-					token:token
+					token: token
 				},
 				dataType: 'json', //服务器返回json格式数据
 				type: 'get', //HTTP请求类型
@@ -153,45 +202,45 @@
 				success: function(data) {
 					//服务器返回响应，根据响应结果，分析是否登录成功；
 					console.log('获取红包接口返回数据:' + JSON.stringify(data));
-					var Items=data.Data.Items;
-					var InMoney=data.Data.InMoney;
-					var OutMoney=data.Data.OutMoney;
-					var total_money=InMoney+OutMoney;
+					var Items = data.Data.Items;
+					var InMoney = data.Data.InMoney;
+					var OutMoney = data.Data.OutMoney;
+					var total_money = InMoney + OutMoney;
 					$('#InMoney').text(InMoney);
 					$('#OutMoney').text(OutMoney);
 					$('#total_money').text(total_money);
-					for(var i=0;i<Items.length;i++){
-						var type=Items[i].type;
-						var in_money=Items[i].in_money;
-						var money=Items[i].money;
-						var last_time=Items[i].last_time;
-						
-						var year=last_time.slice(0,10);
-//						console.log(year);
-						var time=last_time.slice(12,19);
-//						console.log(time);
-						if(type==001){
-							var table_type='领取';
-							var table_money=in_money;
-						}else if(type==002||type==003){
-							table_type='已用';
-							var table_money=money;
-						}else if(type==004){
-							table_type='过期';
-							var table_money=in_money;
+					for(var i = 0; i < Items.length; i++) {
+						var type = Items[i].type;
+						var in_money = Items[i].in_money;
+						var money = Items[i].money;
+						var last_time = Items[i].last_time;
+
+						var year = last_time.slice(0, 10);
+						//						console.log(year);
+						var time = last_time.slice(12, 19);
+						//						console.log(time);
+						if(type == 001) {
+							var table_type = '领取';
+							var table_money = in_money;
+						} else if(type == 002 || type == 003) {
+							table_type = '已用';
+							var table_money = money;
+						} else if(type == 004) {
+							table_type = '过期';
+							var table_money = in_money;
 						}
 
-						var talbe_div=
-						'<tr>'+
-						'<td>'+table_money+'元</td>'+
-						'<td>'+table_type+'</td>'+
-						'<td>'+
-						'<span>'+year+'</span><br />'+
-						'<span>'+time+'</span>'+
-						'</td>'+
-						'</tr>';
+						var talbe_div =
+							'<tr>' +
+							'<td>' + table_money + '元</td>' +
+							'<td>' + table_type + '</td>' +
+							'<td>' +
+							'<span>' + year + '</span><br />' +
+							'<span>' + time + '</span>' +
+							'</td>' +
+							'</tr>';
 						$('.bill_table').append(talbe_div);
-						
+
 					}
 
 				},
@@ -201,15 +250,11 @@
 				}
 			});
 		}
-		
-		
+
 		mui.plusReady(function() {
-			GetRedpacketItemsOfVip(getredpacketitemsofvip_url,vip_id,begin_time,end_time,page_num,page_size,token);
-			
-			
+			GetRedpacketItemsOfVip(getredpacketitemsofvip_url, vip_id, begin_time, end_time, page_num, page_size, token);
+
 		})
-		
-		
 	</script>
 
 	<script>
