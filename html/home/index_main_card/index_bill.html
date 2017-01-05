@@ -128,15 +128,12 @@
 		month_time += 1;
 		var sec_time=time_time/1000;
 		sec_time=parseInt(sec_time);
-//		console.log(sec_time);
-//		console.log(month_time);
-//		console.log(year_time);
 
 		if(month_time < 10) {
 			month_time = '0' + month_time;
 		}
-//		var begin_time = year_time + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
-		var begin_time = '2016' + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+		var begin_time = year_time + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+//		var begin_time = '2016' + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
 		
 		begin_time=datetime_to_unix(begin_time);
 		var end_time=sec_time;

@@ -38,26 +38,37 @@
 				<span>
 					红包剩余金额:
 				</span>
-				<span class="head_num">50.40</span>
+				<span class="head_num" id="InMoney">0.00</span>
 				<span>元</span>
 			</div>
 
-			<div class="bill_month">
-				<span>7月</span>
-				<span>8月</span>
-				<span>9月</span>
-				<span>10月</span>
-				<span>11月</span>
-				<span>全部</span>
+			<div class="swiper-container">
+				<div class="swiper-wrapper bill_month">
+					<span class="swiper-slide">1月</span>
+					<span class="swiper-slide">2月</span>
+					<span class="swiper-slide">3月</span>
+					<span class="swiper-slide">4月</span>
+					<span class="swiper-slide">5月</span>
+					<span class="swiper-slide">6月</span>
+					<span class="swiper-slide">7月</span>
+					<span class="swiper-slide">8月</span>
+					<span class="swiper-slide">9月</span>
+					<span class="swiper-slide">10月</span>
+					<span class="swiper-slide">11月</span>
+					<span class="swiper-slide">12月</span>
+					<span class="swiper-slide">全部</span>
+				</div>
+				<!-- Add Pagination -->
+				<!--<div class="swiper-pagination"></div>-->
 			</div>
 
 			<div class="bill_charge">
 				<span>合计充值：</span>
-				<span>60.40</span>
+				<span id="total_money">0.00</span>
 				<span>元</span>
 				<div class="packets_right">
 					<span>已用金额</span>
-					<span>0.00</span>
+					<span id="OutMoney">0.00</span>
 					<span>元</span>
 				</div>
 			</div>
@@ -69,7 +80,7 @@
 					<th>时间</th>
 				</tr>
 
-				<tr>
+				<!--<tr>
 					<td>10.00元</td>
 					<td>领取</td>
 					<td>
@@ -85,7 +96,7 @@
 						<span>2016-11-22</span><br />
 						<span>13:22:52</span>
 					</td>
-				</tr>
+				</tr>-->
 
 			</table>
 
@@ -95,29 +106,94 @@
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/config/web_config.js"></script>
+	<script src="../../../js/plugin/swiper.min.js"></script>
 	<script>
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
 
-		var getredpacketitemsofvip_url = test_url + '/api/redpacket/GetRedpacketItemsOfVip';
+		var self = plus.webview.currentWebview();
+		var vip_id = self.vip_id;
+		var token = self.token;
+		
 
-		function GetRedpacketItemsOfVip() {
+		var getredpacketitemsofvip_url = test_url + '/api/redpacket/GetRedpacketItemsOfVip';
+		var page_num = 1;
+		var page_size = 20;
+		var myDate = new Date();
+		var time_time = myDate.getTime();
+		var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+		var year_time = myDate.getFullYear();
+		month_time += 1;
+		var sec_time=time_time/1000;
+		sec_time=parseInt(sec_time);
+		if(month_time < 10) {
+		month_time = '0' + month_time;
+		}
+		var begin_time = year_time + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+//		var begin_time = '2016' + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+		begin_time=datetime_to_unix(begin_time);
+		var end_time=sec_time;
+		
+
+		function GetRedpacketItemsOfVip(getredpacketitemsofvip_url,vip_id,begin_time,end_time,page_num,page_size,token) {
 			mui.ajax(getredpacketitemsofvip_url, {
 				data: {
 					vip_id: vip_id,
 					begin_time: begin_time,
-					end_time:end_time,
-					page_num:page_num,
-					page_size:page_size
+					end_time: end_time,
+					page_num: page_num,
+					page_size: page_size,
+					token:token
 				},
 				dataType: 'json', //服务器返回json格式数据
 				type: 'get', //HTTP请求类型
 				timeout: 10000, //超时时间设置为10秒；
-				
+
 				success: function(data) {
 					//服务器返回响应，根据响应结果，分析是否登录成功；
 					console.log('获取红包接口返回数据:' + JSON.stringify(data));
+					var Items=data.Data.Items;
+					var InMoney=data.Data.InMoney;
+					var OutMoney=data.Data.OutMoney;
+					var total_money=InMoney+OutMoney;
+					$('#InMoney').text(InMoney);
+					$('#OutMoney').text(OutMoney);
+					$('#total_money').text(total_money);
+					for(var i=0;i<Items.length;i++){
+						var type=Items[i].type;
+						var in_money=Items[i].in_money;
+						var money=Items[i].money;
+						var last_time=Items[i].last_time;
+						
+						var year=last_time.slice(0,10);
+//						console.log(year);
+						var time=last_time.slice(12,19);
+//						console.log(time);
+						if(type==001){
+							var table_type='领取';
+							var table_money=in_money;
+						}else if(type==002||type==003){
+							table_type='已用';
+							var table_money=money;
+						}else if(type==004){
+							table_type='过期';
+							var table_money=in_money;
+						}
+
+						var talbe_div=
+						'<tr>'+
+						'<td>'+table_money+'元</td>'+
+						'<td>'+table_type+'</td>'+
+						'<td>'+
+						'<span>'+year+'</span><br />'+
+						'<span>'+time+'</span>'+
+						'</td>'+
+						'</tr>';
+						$('.bill_table').append(talbe_div);
+						
+					}
+
 				},
 				error: function(xhr, type, errorThrown) {
 					//异常处理；
@@ -125,9 +201,25 @@
 				}
 			});
 		}
+		
+		
+		mui.plusReady(function() {
+			GetRedpacketItemsOfVip(getredpacketitemsofvip_url,vip_id,begin_time,end_time,page_num,page_size,token);
+			
+			
+		})
+		
+		
 	</script>
 
 	<script>
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			paginationClickable: true,
+
+			slidesPerView: 6,
+
+		});
 		//各个屏幕大小适配
 		(function(doc, win) {
 			var docEl = doc.documentElement,

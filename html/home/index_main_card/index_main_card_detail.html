@@ -93,7 +93,7 @@
 						<div class="mui-media-body">优惠券</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="red_packet">
 					<a href="#">
 						<img src="../../../images/64px_hongbao.png" alt="" />
 						<div class="mui-media-body">红包</div>
@@ -111,7 +111,7 @@
 						<div class="mui-media-body">充值记录</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="purchase_history">
 					<a href="#">
 						<img src="../../../images/64px_xiaofei.png" alt="" />
 						<div class="mui-media-body">消费记录</div>
@@ -308,6 +308,18 @@
 							}
 						});
 					})
+					
+					document.getElementById('purchase_history').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_purchase_history.html',
+							extras: {
+								token: token,
+								vip_id:vip_id,
+								store_id:store_id
+							}
+						});
+					})
+					
 					
 					
 					
