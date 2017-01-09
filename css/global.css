@@ -83,6 +83,7 @@
 	position: fixed;
 	width: 100%;
 	top: 2rem;
+	z-index: 10;
 }
 .alert_bl span{
 	background: #000000;
@@ -92,4 +93,8 @@
 	font-size: 0.12rem;
 	border-radius: 0.1rem;
 	padding: 0.1rem 0.2rem;
+}
+.bg_cb{
+	background: #CB2920 !important;
+	color: #fff !important;
 }

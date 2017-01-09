@@ -292,7 +292,7 @@
 				pullRefresh: {
 					container: '#index_main_card',
 					down: {
-						auto:false,
+						auto: false,
 						callback: pulldownRefresh
 					},
 					up: {
@@ -307,6 +307,8 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
+					page_num=1;
+					GetVips(getvips_url, member_id, page_num, page_size, token);
 					mui('#index_main_card').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
@@ -317,7 +319,7 @@
 			function pullupRefresh() {
 				setTimeout(function() {
 					page_num++;
-					GetVips(getvips_url, member_id, page_num, page_size, token); 
+					GetVips(getvips_url, member_id, page_num, page_size, token);
 
 					mui('#index_main_card').pullRefresh().endPullupToRefresh();
 
@@ -347,6 +349,64 @@
 			var page_size = 10;
 			var store_id = 693;
 
+			function main_pinjie(data) {
+				if(page_num==1){
+					$('.card_area').empty();
+				}
+				
+				var Vips = data.Data.Vips;
+				for(var i = 0; i < Vips.length; i++) {
+					var vip_id = Vips[i].id;
+					var store_id = Vips[i].store_id;
+					var store_name = Vips[i].store_name;
+					var store_tel = Vips[i].store_tel;
+					var cardtype_name = Vips[i].cardtype_name;
+					var tl_imgurl = Vips[i].tl_imgurl;
+					var tl_bagurl = Vips[i].tl_bagurl;
+					var tl_bagurl1 = Vips[i].tl_bagurl1;
+					var BalanceArray = Vips[i].BalanceArray;
+					var store_tel = Vips[i].store_tel;
+					var vip_sn = Vips[i].vip_sn;
+					if(i % 2 == 0) { //如果是偶数
+						var card_list_div = '<div class="card_list" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
+							'<img class="card_in" src="' + tl_imgurl + '" alt="" />' +
+							'<img class="card_out" src="' + tl_bagurl1 + '" alt="" />' +
+							'<span class="card_shop_name">' + store_name + '</span>' +
+							'<span class="card_shop_num">' + vip_sn + '</span>' +
+							'<span class="card_shop_type">' + cardtype_name + '</span>' +
+							'<span class="card_shop_prize">' + BalanceArray + '</span>' +
+							'<img class="card_shop_tel" src="../../images/50px_50px_icon_P.png" alt="" />' +
+							'</div>';
+					} else {
+						var card_list_div = '<div class="card_list_c" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
+							'<img class="card_out_c" src="' + tl_bagurl + '" alt="" />' +
+							'<img class="card_in_c" src="' + tl_imgurl + '" alt="" />' +
+							'<span class="card_shop_name_c">' + store_name + '</span>' +
+							'<span class="card_shop_num_c">' + vip_sn + '</span>' +
+							'<span class="card_shop_type_c">' + cardtype_name + '</span>' +
+							'<span class="card_shop_prize_c">' + BalanceArray + '</span>' +
+							'<img class="card_shop_tel_c" src="../../images/50px_50px_icon_P.png" alt="" />' +
+							'</div>';
+					}
+					$('.card_area').append(card_list_div);
+
+					mui(".card_area").on('tap', '.card_list,.card_list_c', function() {
+						var vip_id = $(this).attr('vip_id');
+						var store_id = $(this).attr('store_id');
+						var webview = mui.openWindow({
+							url: 'index_main_card/index_main_card_detail.html',
+							extras: {
+								member_id: member_id,
+								vip_id: vip_id,
+								token: token,
+								store_id: store_id
+							}
+						});
+					})
+
+				}
+			}
+
 			//				首页获取用户所有的会员卡接口
 			function GetVips(getvips_url, member_id, page_num, page_size, token) {
 				//					mui.get(getvips_url, {
@@ -370,58 +430,7 @@
 					success: function(data) {
 						//获得服务器响应
 						console.log('获取首页获取用户所有的会员卡接口返回数据:' + JSON.stringify(data));
-						var Vips = data.Data.Vips;
-						for(var i = 0; i < Vips.length; i++) {
-							var vip_id = Vips[i].id;
-							var store_id = Vips[i].store_id;
-							var store_name = Vips[i].store_name;
-							var store_tel = Vips[i].store_tel;
-							var cardtype_name = Vips[i].cardtype_name;
-							var tl_imgurl = Vips[i].tl_imgurl;
-							var tl_bagurl = Vips[i].tl_bagurl;
-							var tl_bagurl1 = Vips[i].tl_bagurl1;
-							var BalanceArray = Vips[i].BalanceArray;
-							var store_tel = Vips[i].store_tel;
-							var vip_sn = Vips[i].vip_sn;
-							if(i % 2 == 0) { //如果是偶数
-								var card_list_div = '<div class="card_list" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
-									'<img class="card_in" src="' + tl_imgurl + '" alt="" />' +
-									'<img class="card_out" src="' + tl_bagurl1 + '" alt="" />' +
-									'<span class="card_shop_name">' + store_name + '</span>' +
-									'<span class="card_shop_num">' + vip_sn + '</span>' +
-									'<span class="card_shop_type">' + cardtype_name + '</span>' +
-									'<span class="card_shop_prize">' + BalanceArray + '</span>' +
-									'<img class="card_shop_tel" src="../../images/50px_50px_icon_P.png" alt="" />' +
-									'</div>';
-							} else {
-								var card_list_div = '<div class="card_list_c" store_tel="' + store_tel + '" store_id="' + store_id + '" vip_id="' + vip_id + '">' +
-									'<img class="card_out_c" src="' + tl_bagurl + '" alt="" />' +
-									'<img class="card_in_c" src="' + tl_imgurl + '" alt="" />' +
-									'<span class="card_shop_name_c">' + store_name + '</span>' +
-									'<span class="card_shop_num_c">' + vip_sn + '</span>' +
-									'<span class="card_shop_type_c">' + cardtype_name + '</span>' +
-									'<span class="card_shop_prize_c">' + BalanceArray + '</span>' +
-									'<img class="card_shop_tel_c" src="../../images/50px_50px_icon_P.png" alt="" />' +
-									'</div>';
-							}
-							$('.card_area').append(card_list_div);
-
-							mui(".card_area").on('tap', '.card_list,.card_list_c', function() {
-								var vip_id = $(this).attr('vip_id');
-								var store_id = $(this).attr('store_id');
-								var webview = mui.openWindow({
-									url: 'index_main_card/index_main_card_detail.html',
-									extras: {
-										member_id: member_id,
-										vip_id: vip_id,
-										token: token,
-										store_id: store_id
-									}
-								});
-							})
-
-						}
-
+						main_pinjie(data);
 					}
 				});
 
@@ -434,7 +443,8 @@
 				$('#search').change(function() {
 					var member_name = $('#search').val();
 					console.log('需要的member_name：' + member_name);
-					GetVipDimInfo(member_id, member_name);
+					console.log(getvipdiminfo_url + '?member_id=' + member_id + '&member_name=' + member_name + '&token=' + token);
+					GetVipDimInfo(getvipdiminfo_url, member_id, member_name, token);
 				});
 
 				GetVips(getvips_url, member_id, page_num, page_size, token);
@@ -461,13 +471,11 @@
 						console.log('获取未读消息接口返回数据:' + JSON.stringify(data));
 					}, 'json');
 				};
-				GetUnreadCount(member_id, token);
-
-				var member_name = '我了个区啊';
+				//				GetUnreadCount(member_id, token);
 
 				//				搜索功能接口
 
-				function GetVipDimInfo(member_id, member_name, token) {
+				function GetVipDimInfo(getvipdiminfo_url, member_id, member_name, token) {
 					mui.ajax(getvipdiminfo_url, {
 						data: {
 							member_id: member_id,
@@ -480,6 +488,8 @@
 						success: function(data) {
 							//服务器返回响应，根据响应结果，分析是否登录成功；
 							console.log('获取搜索接口返回数据:' + JSON.stringify(data));
+							page_num=1;
+							main_pinjie(data);
 						},
 						error: function(xhr, type, errorThrown) {
 							//异常处理；

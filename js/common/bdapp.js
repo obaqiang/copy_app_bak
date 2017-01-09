@@ -191,3 +191,60 @@ function cutstr(str, len) {
         return str;
     }
 }
+
+
+
+
+//账单页面和红包页面进入时的月份显示
+function monthShow(month_time) {
+switch(month_time) {
+	case 1:
+		$('.bill_month').children().eq(0).addClass('bg_cb');
+		break;
+	case 2:
+		$('.bill_month').children().eq(1).addClass('bg_cb');
+		break;
+	case 3:
+		$('.bill_month').children().eq(2).addClass('bg_cb');
+		break;
+	case 4:
+		$('.bill_month').children().eq(3).addClass('bg_cb');
+		break;
+	case 5:
+		$('.bill_month').children().eq(4).addClass('bg_cb');
+		break;
+	case 6:
+		$('.bill_month').children().eq(5).addClass('bg_cb');
+		break;
+	case 7:
+		$('.bill_month').children().eq(6).addClass('bg_cb');
+		break;
+	case 8:
+		$('.bill_month').children().eq(7).addClass('bg_cb');
+		break;
+	case 9:
+		$('.bill_month').children().eq(8).addClass('bg_cb');
+		break;
+	case 10:
+		$('.bill_month').children().eq(9).addClass('bg_cb');
+		break;
+	case 11:
+		$('.bill_month').children().eq(10).addClass('bg_cb');
+		break;
+	case 12:
+		$('.bill_month').children().eq(11).addClass('bg_cb');
+			break;
+
+	}
+}
+
+
+
+//定时小黑色弹框
+function Alert(alert_text){
+	$('.alert_bl').remove();
+	var alert_div='<div class="alert_bl" style="display:none;"><span>'+alert_text+'</span></div>';
+	$('body').append(alert_div);
+	$('.alert_bl').fadeIn();
+	setTimeout("$('.alert_bl').fadeOut()", 1500);
+}

@@ -18,8 +18,8 @@
 	text-align: center;
 }
 .text_on{
-	background: #CB2920;
-	color: #fff;
+	background: #CB2920 !important;
+	color: #fff !important;
 }
 .bill_head_right{
 	width: 50%;

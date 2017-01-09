@@ -130,10 +130,9 @@
 		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
-				window.addEventListener("pageflowrefresh", function(e) {
-					location.reload();
-				});
-
+				page_num=1;
+				GetRedpacketItemsOfVip(getredpacketitemsofvip_url, vip_id, begin_time, end_time, page_num, page_size, token);
+	
 				mui('#red_packets').pullRefresh().endPulldownToRefresh(); //refresh completed
 			}, 1500);
 		}
@@ -175,6 +174,7 @@
 		var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
 		var year_time = myDate.getFullYear();
 		month_time += 1;
+		monthShow(month_time);
 		var sec_time = time_time / 1000;
 		sec_time = parseInt(sec_time);
 		if(month_time < 10) {
@@ -202,6 +202,11 @@
 				success: function(data) {
 					//服务器返回响应，根据响应结果，分析是否登录成功；
 					console.log('获取红包接口返回数据:' + JSON.stringify(data));
+					if(page_num == 1) {
+						$('.bill_table').empty();
+						var head_div = '<tr><th>名称</th><th>金额</th><th>时间</th></tr>';
+						$('.bill_table').append(head_div);
+					}
 					var Items = data.Data.Items;
 					var InMoney = data.Data.InMoney;
 					var OutMoney = data.Data.OutMoney;
@@ -255,6 +260,114 @@
 			GetRedpacketItemsOfVip(getredpacketitemsofvip_url, vip_id, begin_time, end_time, page_num, page_size, token);
 
 		})
+		
+		
+		
+		
+		
+		function month_Change(month_begin, month_end, year_time) {
+			
+			page_num == 1;
+			begin_time = year_time + '-' + month_begin + '-' + '01' + ' ' + '00:00:00';
+			begin_time = datetime_to_unix(begin_time);
+			end_time = year_time + '-' + month_end + '-' + '01' + ' ' + '00:00:00';
+			end_time = datetime_to_unix(end_time);
+			GetRedpacketItemsOfVip(getredpacketitemsofvip_url, vip_id, begin_time, end_time, page_num, page_size, token);
+		}
+		
+		
+		
+		
+		mui(".bill_month").on('tap', 'span', function() {
+			var month_text = $(this).text();
+			if(month_text == '1月') {
+				var month_begin = '01';
+				var month_end = '02';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '2月') {
+				var month_begin = '02';
+				var month_end = '03';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '3月') {
+				var month_begin = '03';
+				var month_end = '04';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '4月') {
+				var month_begin = '04';
+				var month_end = '05';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '5月') {
+				var month_begin = '05';
+				var month_end = '06';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '6月') {
+				var month_begin = '06';
+				var month_end = '07';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '7月') {
+				var month_begin = '07';
+				var month_end = '08';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '8月') {
+				var month_begin = '08';
+				var month_end = '09';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '9月') {
+				var month_begin = '09';
+				var month_end = '10';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '10月') {
+				var month_begin = '10';
+				var month_end = '11';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '11月') {
+				var month_begin = '12';
+				var month_end = '12';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '12月') {
+				var month_begin = '12';
+				var month_end = '03';
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				year_time += 1;
+				month_Change(month_begin, month_end, year_time);
+			} else if(month_text == '全部') {
+				$('.bill_month').children().removeClass('bg_cb');
+				$(this).addClass('bg_cb');
+				begin_time = year_time + '-' + '01' + '-' + '01' + ' ' + '00:00:00';
+				begin_time = datetime_to_unix(begin_time);
+				GetRedpacketItemsOfVip(getredpacketitemsofvip_url, vip_id, begin_time, end_time, page_num, page_size, token);
+			}
+
+		})
+		
+		
+		
+		
+		
+		
 	</script>
 
 	<script>

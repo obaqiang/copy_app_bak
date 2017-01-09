@@ -426,23 +426,73 @@
 				setTimeout("alertHide()", 2000);
 			}
 
+			function verifycode(url_login, data_list) {
+				mui.get(url_login, data_list, function(data) {
+					console.log('登陆接口返回的数据:' + JSON.stringify(data));
+					console.log('需要的member_id:' + data.Data.Member.id);
+					console.log('需要的Token：' + data.Data.Token);
+
+					if(data.ErrorCode == 4) { //此时需要输入验证码
+						//								
+
+						var errorMsg = data.ErrorMessage;
+						$('.login_alert span').text(errorMsg);
+						loginAlert();
+						$('#identify').show();
+						var tel = $('#account').val();
+						var tel_url = 'https://api.bdvip.net/api/member/verifycode?deviceToken=&phone=';
+						var identify_url = tel_url + tel + '&' + new Date().getTime();
+						$('#identify_img').attr('src', identify_url);
+					} else if(data.ErrorCode == 0) { //正常登陆跳转首页
+						UserInfo.username(data_list.account);
+						UserInfo.password(data_list.pwd);
+						UserInfo.member_id(data.Data.Member.id);
+						UserInfo.token(data.Data.Token);
+
+						var webview = mui.openWindow({
+							url: '../home/index_main.html',
+							extras: {
+								member_id: data.Data.Member.id,
+								token: data.Data.Token
+							}
+						});
+
+					} else { //账号密码错误
+						var errorMsg = data.ErrorMessage;
+						$('.login_alert span').text(errorMsg);
+						loginAlert();
+					}
+
+				}, 'json');
+			}
+
 			mui.plusReady(function() {
 
-				if(UserInfo.has_login()==true) {//判断是否已经登陆过
+				if(UserInfo.has_login() == true) { //判断是否已经登陆过
 					console.log('方法中的已经登陆过');
 					//				如果已经登陆过,则直接跳转到首页,并将member_id和token传给首页
 					var token = UserInfo.token();
-					console.log('需要的token:'+token);
-					
+					console.log('需要的token:' + token);
+					var username = UserInfo.username();
+					var password = UserInfo.password();
+					var data_list = {};
+					data_list.account = username;
+					data_list.pwd = password;
+					//					console.log('需要的' + data_list.VerifyCode);
+					var url_login = test_url + '/api/member/LoginVerify';
+					verifycode(url_login, data_list);
+
+
+
 					var member_id = UserInfo.member_id();
-					console.log('需要的member_id：'+member_id);
-					var webview = mui.openWindow({
-						url: '../home/index_main.html',
-						extras: {
-							member_id: member_id,
-							token: token
-						}
-					});
+					console.log('需要的member_id：' + member_id);
+					//					var webview = mui.openWindow({
+					//						url: '../home/index_main.html',
+					//						extras: {
+					//							member_id: member_id,
+					//							token: token
+					//						}
+					//					});
 				}
 
 				document.getElementById('login').addEventListener('tap', function() {
@@ -473,44 +523,7 @@
 						//					console.log('需要的' + data_list.VerifyCode);
 						var url_login = test_url + '/api/member/LoginVerify';
 						console.log(data_list);
-						mui.get(url_login, data_list, function(data) {
-							console.log('登陆接口返回的数据:'+JSON.stringify(data));
-							console.log('需要的member_id:'+data.Data.Member.id);
-							console.log('需要的Token：' + data.Data.Token);
-
-							if(data.ErrorCode == 4) { //此时需要输入验证码
-								//								
-
-								var errorMsg = data.ErrorMessage;
-								$('.login_alert span').text(errorMsg);
-								loginAlert();
-								$('#identify').show();
-								var tel = $('#account').val();
-								var tel_url = 'https://api.bdvip.net/api/member/verifycode?deviceToken=&phone=';
-								var identify_url = tel_url + tel + '&' + new Date().getTime();
-								$('#identify_img').attr('src', identify_url);
-							} else if(data.ErrorCode == 0) { //正常登陆跳转首页
-								UserInfo.username(data_list.account);
-								UserInfo.password(data_list.pwd);
-								UserInfo.member_id(data.Data.Member.id);
-								UserInfo.token(data.Data.Token);
-
-								var webview = mui.openWindow({
-									url: '../home/index_main.html',
-									extras: {
-										member_id: data.Data.Member.id,
-										token: data.Data.Token
-									}
-								});
-
-							} else { //账号密码错误
-								var errorMsg = data.ErrorMessage;
-								$('.login_alert span').text(errorMsg);
-								loginAlert();
-							}
-
-						}, 'json');
-
+						verifycode(url_login, data_list);
 					}
 				})
 

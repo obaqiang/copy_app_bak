@@ -91,6 +91,58 @@
 			swipeBack: true //启用右滑关闭功能
 		});
 
+		function products_pinjie(data) {
+			$('.products_list').empty();
+
+			var store_id = data.Data.store_id;
+			var ClassList = data.Data.ClassList;
+			if(!ClassList) {
+				return;
+			}
+			if(!ClassList) {
+				return;
+			}
+			for(var i = 0; i < ClassList.length; i++) {
+				var class_name = ClassList[i].class_name;
+				var GoodsList = ClassList[i].GoodsList;
+				var products_list_div = '<div class="list_head">' + class_name + '</div>';
+				for(var j = 0; j < GoodsList.length; j++) {
+					var thumb = GoodsList[j].thumb;
+					var goods_name = GoodsList[j].goods_name;
+					var goods_desc = GoodsList[j].goods_desc;
+					var goods_price = GoodsList[j].goods_price;
+					var unit_name = GoodsList[j].unit_name;
+					var prize = goods_price + '元/' + unit_name;
+					products_list_div += '<div class="list_body" goods_name="'+goods_name+'">' +
+						'<img class="list_img" src="' + thumb + '" alt="" />' +
+						'<span class="list_name">' + goods_desc + '</span>' +
+						'<span class="list_prize">' + prize + '</span>' +
+						'<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />' +
+						'</div>';
+				};
+				$('.products_list').append(products_list_div);
+
+			};
+		}
+		
+		
+		mui(".products_list").on('tap','.list_body',function(){
+			var goods_name=$(this).attr('goods_name');
+			var thumb=$(this).children('img').attr('src');
+			var prize=$(this).children('list_prize').text();
+			var goods_desc=$(this).children('.list_name').text();
+			var webview = mui.openWindow({
+				url: 'index_main_card_products_detail.html',
+				extras: {
+					goods_name: goods_name,
+					thumb: thumb,
+					prize: prize,
+					goods_desc: goods_desc
+				}
+			});
+		
+		})
+
 		mui.plusReady(function() {
 			var getallgoodsclient_url = test_url + '/api/goods/GetAllGoodsClient';
 			var self = plus.webview.currentWebview();
@@ -110,30 +162,7 @@
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log('获取所有商品接口接口返回数据:' + JSON.stringify(data));
-						var store_id = data.Data.store_id;
-						var ClassList = data.Data.ClassList;
-						for(var i = 0; i < ClassList.length; i++) {
-							var class_name = ClassList[i].class_name;
-							var GoodsList = ClassList[i].GoodsList;
-							var products_list_div = '<div class="list_head">' + class_name + '</div>';
-							for(var j = 0; j < GoodsList.length; j++) {
-								var thumb = GoodsList[j].thumb;
-								var goods_desc = GoodsList[j].goods_desc;
-								var goods_price = GoodsList[j].goods_price;
-								var unit_name = GoodsList[j].unit_name;
-								var prize = goods_price + '元/' + unit_name;
-								products_list_div += '<div class="list_body">' +
-									'<img class="list_img" src="' + thumb + '" alt="" />' +
-									'<span class="list_name">' + goods_desc + '</span>' +
-									'<span class="list_prize">' + prize + '</span>' +
-									'<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />' +
-									'</div>';
-							};
-							$('.products_list').append(products_list_div);
-
-
-						};
-
+						products_pinjie(data);
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
@@ -144,8 +173,9 @@
 			};
 			GetAllGoodsClient(getallgoodsclient_url, store_id, token);
 
-			var getgoods_url = test_url + 'api/goods/GetGoods';
-				//			搜索接口
+			var getgoods_url = test_url + '/api/goods/GetGoods';
+
+			//			搜索接口
 			function GetGoods(getgoods_url, store_id, goods_name, token) {
 				mui.ajax(getgoods_url, {
 					data: {
@@ -159,6 +189,7 @@
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log('获取商品页面搜索接口返回数据:' + JSON.stringify(data));
+						products_pinjie(data);
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
@@ -168,13 +199,14 @@
 			}
 
 			$('#search').change(function() {
-				var goods_name=$('#search').val();
-				console.log('需要的goods_name:'+goods_name);
-				console.log('需要的store_id:'+store_id);
-				console.log('需要的token:'+token);
-				store_id=197;
-				goods_name='Hhh';
-				GetGoods(getgoods_url, store_id, goods_name, token);
+				var goods_name = $('#search').val();
+				if(goods_name == '') {
+					GetAllGoodsClient(getallgoodsclient_url, store_id, token);
+				} else {
+					console.log(getgoods_url + '?store_id=' + store_id + '&goods_name=' + goods_name + '&token=' + token);
+					GetGoods(getgoods_url, store_id, goods_name, token);
+				}
+
 			});
 
 		})
