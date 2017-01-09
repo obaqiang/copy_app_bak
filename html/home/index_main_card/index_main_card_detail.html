@@ -106,7 +106,7 @@
 						<div class="mui-media-body">奖品</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_recharge">
 					<a href="#">
 						<img src="../../../images/64px_chongzhi.png" alt="" />
 						<div class="mui-media-body">充值记录</div>
@@ -124,7 +124,7 @@
 						<div class="mui-media-body">账单</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_sign_statics">
 					<a href="#">
 						<img src="../../../images/64px_qiandan.png" alt="" />
 						<div class="mui-media-body">签单</div>
@@ -374,8 +374,19 @@
 							}
 						});
 					})
+//					充值记录
+					document.getElementById('index_recharge').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_recharge.html',
+							extras: {
+								token: token,
+								vip_id: vip_id,
+								store_id:store_id
+							}
+						});
+					})
 					
-
+//					账单
 					document.getElementById('bill').addEventListener('tap', function() {
 						var webview = mui.openWindow({
 							url: 'index_bill.html',
@@ -386,6 +397,19 @@
 							}
 						});
 					})
+					
+//					签单
+					document.getElementById('index_sign_statics').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_sign_statics.html',
+							extras: {
+								token: token,
+								store_id: store_id,
+								vip_id: vip_id
+							}
+						});
+					})
+					
 
 					document.getElementById('purchase_history').addEventListener('tap', function() {
 						var webview = mui.openWindow({
