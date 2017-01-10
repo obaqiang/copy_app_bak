@@ -72,13 +72,13 @@
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
+						<img src="images/140px_120px_background.png" />
 					</div>
 					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
+						<img src="images/140px_120px_background.png" />
 					</div>
 					<div class="swiper-slide">
-						<img src="images/140px_120px_background.png"/>
+						<img src="images/140px_120px_background.png" />
 					</div>
 				</div>
 				<!-- Add Pagination -->
@@ -93,6 +93,49 @@
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
+
+
+		var self = plus.webview.currentWebview();
+		var store_id = self.store_id;
+		var vip_id = self.vip_id;
+		
+		var type;
+		var page_num=1;
+		var page_size=10;
+		var hasitems=1;
+
+
+		var gettradephotos_url=test_url+'/api/tradephoto/GetTradePhotos';
+	
+		function GetTradePhotos(gettradephotos_url,store_id,vip_id,type,page_num,page_size,hasitems,token) {
+			mui.ajax(gettradephotos_url, {
+				data: {
+					store_id: store_id,
+					vip_id: vip_id,
+					type:type,
+					page_num:page_num,
+					page_size:page_size,
+					hasitems:hasitems,
+					token:token
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log('获取交易拍照记录接口返回数据:' + JSON.stringify(data));
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+				}
+			});
+		}
+		GetTradePhotos(gettradephotos_url,store_id,vip_id,type,page_num,page_size,hasitems,token);
+		
+		
+		
+		
 	</script>
 	<script>
 		var swiper = new Swiper('.swiper-container', {

@@ -28,7 +28,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div class="mui-content mui-scroll-wrapper" id="index_sign_statics">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">签单统计</h1>
@@ -37,18 +37,18 @@
 			<div class="swiper-container">
 				<div class="swiper-wrapper bill_month statics_head">
 					<span class="swiper-slide">1月</span>
-						<span class="swiper-slide">2月</span>
-						<span class="swiper-slide">3月</span>
-						<span class="swiper-slide">4月</span>
-						<span class="swiper-slide">5月</span>
-						<span class="swiper-slide">6月</span>
-						<span class="swiper-slide">7月</span>
-						<span class="swiper-slide">8月</span>
-						<span class="swiper-slide">9月</span>
-						<span class="swiper-slide">10月</span>
-						<span class="swiper-slide">11月</span>
-						<span class="swiper-slide">12月</span>
-						<span class="swiper-slide">全部</span>
+					<span class="swiper-slide">2月</span>
+					<span class="swiper-slide">3月</span>
+					<span class="swiper-slide">4月</span>
+					<span class="swiper-slide">5月</span>
+					<span class="swiper-slide">6月</span>
+					<span class="swiper-slide">7月</span>
+					<span class="swiper-slide">8月</span>
+					<span class="swiper-slide">9月</span>
+					<span class="swiper-slide">10月</span>
+					<span class="swiper-slide">11月</span>
+					<span class="swiper-slide">12月</span>
+					<span class="swiper-slide">全部</span>
 				</div>
 			</div>
 
@@ -58,14 +58,15 @@
 				<span>元</span>
 			</div>
 
-			<table class="bill_table" border="0" cellspacing="" cellpadding="">
-				<tr>
-					<th>名称</th>
-					<th>金额</th>
-					<th>时间</th>
-				</tr>
+			<div class="mui-scroll">
+				<table class="bill_table " border="0" cellspacing="" cellpadding="">
+					<tr>
+						<th>名称</th>
+						<th>金额</th>
+						<th>时间</th>
+					</tr>
 
-				<!--<tr>
+					<!--<tr>
 					<td>套餐充值</td>
 					<td>40.00</td>
 					<td>2016-11-22</td>
@@ -76,7 +77,8 @@
 					<td>2016-11-22</td>
 				</tr>-->
 
-			</table>
+				</table>
+			</div>
 
 			<!--<div id="main" style="height:200px"></div>-->
 
@@ -90,8 +92,54 @@
 
 	<script>
 		mui.init({
-			swipeBack: true //启用右滑关闭功能
+			pullRefresh: {
+				container: '#index_sign_statics',
+				down: {
+
+					callback: pulldownRefresh
+				},
+				up: {
+					contentrefresh: '',
+					//						contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
 		});
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			setTimeout(function() {
+				page_index=1;
+				GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+				mui('#index_sign_statics').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}, 1500);
+		}
+		//			var count = 0;
+		/**
+		 * 上拉加载具体业务实现
+		 */
+		function pullupRefresh() {
+			setTimeout(function() {
+
+				page_index++;
+				GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+				mui('#index_sign_statics').pullRefresh().endPullupToRefresh();
+
+			}, 1500);
+		}
+		if(mui.os.plus) {
+			mui.plusReady(function() {
+				setTimeout(function() {
+					mui('#index_sign_statics').pullRefresh().pullupLoading();
+				}, 1000);
+
+			});
+		} else {
+			mui.ready(function() {
+				mui('#index_sign_statics').pullRefresh().pullupLoading();
+			});
+		}
 
 		var self = plus.webview.currentWebview();
 		var store_id = self.store_id;

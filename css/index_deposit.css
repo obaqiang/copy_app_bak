@@ -29,3 +29,8 @@
 	height: 0.4rem;
 	line-height: 0.4rem;
 }
+.deposit_status{
+	color: #666666;
+	float: right;
+	margin-right: 0.6rem;
+}

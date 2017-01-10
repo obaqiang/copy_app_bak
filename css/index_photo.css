@@ -29,10 +29,40 @@
 	margin-top:0.1rem;
 	margin-right: 0.15rem;
 }
-.confirm_ok{
+.confirm_text{
 	display: inline-block;
 	color: #00a0e9;
 	border: 1px solid #00a0e9;
+	border-radius: 0.05rem;
+	padding: 0.01rem 0.04rem;
+	font-size: 0.13rem;
+	margin-top:0.1rem;
+	margin-right: 0.15rem;
+}
+.confirm_wait{
+	display: inline-block;
+	color: #ffbe60;
+	border: 1px solid #ffbe60;
+	border-radius: 0.05rem;
+	padding: 0.01rem 0.04rem;
+	font-size: 0.13rem;
+	margin-top:0.1rem;
+	margin-right: 0.15rem;
+}
+.confirm_sure{
+	display: inline-block;
+	color: #00a0e9;
+	border: 1px solid #00a0e9;
+	border-radius: 0.05rem;
+	padding: 0.01rem 0.04rem;
+	font-size: 0.13rem;
+	margin-top:0.1rem;
+	margin-right: 0.15rem;
+}
+.confirm_cancel{
+	display: inline-block;
+	color: #666666;
+	border: 1px solid #666666;
 	border-radius: 0.05rem;
 	padding: 0.01rem 0.04rem;
 	font-size: 0.13rem;
@@ -44,4 +74,7 @@
 }
 .title_left_content{
 
+}
+.swiper-slide img{
+	height: 1rem;
 }

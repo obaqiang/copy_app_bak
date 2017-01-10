@@ -39,3 +39,6 @@
 .content_last{
 	border-bottom: none;
 }
+.swiper-slide img{
+	height: 1rem;
+}
