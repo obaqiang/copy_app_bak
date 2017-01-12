@@ -79,98 +79,92 @@
 	<script src="../../../js/config/web_config.js"></script>
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-
-
-
-		var self = plus.webview.currentWebview();
-		var store_id = self.store_id;
-		var cardtype_id = self.cardtype_id;
-		var token = self.token;
-
-		var getpacakges_url=test_url+'/api/recharge/GetPacakges';
-
-		function GetPacakges(getpacakges_url,store_id,cardtype_id,token) {
-			mui.ajax(getpacakges_url, {
-				data: {
-					store_id: store_id,
-					cardtype_id: cardtype_id,
-					token:token
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log('获取套餐管理接口返回数据:' + JSON.stringify(data));
-					
-					var Packages=data.Data.Packages;
-					for(var i=0;i<Packages.length;i++){
-						var package_name=Packages[i].package_name;
-						var money=Packages[i].money;
-						var type=Packages[i].type;
-						var type_text;
-							if(type=='001'){
-								type_text='买赠';
-							}else if(type=='002'){
-								type_text='买赠';
-							}else if(type=='003'){
-								type_text='计时';
-							}
-						if(i==0){
-							
-							var package_div=
-							'<div class="package_list list_head">'+
-							'<div class="list_a">'+
-								type_text+
-							'</div>'+
-							'<div class="list_b">'+
-							'<div class="list_b_name">'+
-								package_name+
-							'</div>'+
-							'<div class="list_b_prize">'+
-								money+'元'+
-							'</div>'+
-							'</div>'+
-							'<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />'+
-							'</div>';
-							$('.mui-content').append(package_div);
-						}else{
-							var package_div=
-							'<div class="package_list">'+
-							'<div class="list_a">'+
-								type_text+
-							'</div>'+
-							'<div class="list_b">'+
-							'<div class="list_b_name">'+
-								package_name+
-							'</div>'+
-							'<div class="list_b_prize">'+
-								money+'元'+
-							'</div>'+
-							'</div>'+
-							'<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />'+
-							'</div>';
-							$('.mui-content').append(package_div);
-						}
-						
-					}
-					
-					
-					
-					
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(type);
-				}
-			});
-		}
-		GetPacakges(getpacakges_url,store_id,cardtype_id,token);
-
 		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			var self = plus.webview.currentWebview();
+			var store_id = self.store_id;
+			var cardtype_id = self.cardtype_id;
+			var token = self.token;
+
+			var getpacakges_url = test_url + '/api/recharge/GetPacakges';
+
+			function GetPacakges(getpacakges_url, store_id, cardtype_id, token) {
+				mui.ajax(getpacakges_url, {
+					data: {
+						store_id: store_id,
+						cardtype_id: cardtype_id,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取套餐管理接口返回数据:' + JSON.stringify(data));
+
+						var Packages = data.Data.Packages;
+						for(var i = 0; i < Packages.length; i++) {
+							var package_name = Packages[i].package_name;
+							var money = Packages[i].money;
+							var type = Packages[i].type;
+							var type_text;
+							if(type == '001') {
+								type_text = '买赠';
+							} else if(type == '002') {
+								type_text = '买赠';
+							} else if(type == '003') {
+								type_text = '计时';
+							}
+							if(i == 0) {
+
+								var package_div =
+									'<div class="package_list list_head">' +
+									'<div class="list_a">' +
+									type_text +
+									'</div>' +
+									'<div class="list_b">' +
+									'<div class="list_b_name">' +
+									package_name +
+									'</div>' +
+									'<div class="list_b_prize">' +
+									money + '元' +
+									'</div>' +
+									'</div>' +
+									'<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />' +
+									'</div>';
+								$('.mui-content').append(package_div);
+							} else {
+								var package_div =
+									'<div class="package_list">' +
+									'<div class="list_a">' +
+									type_text +
+									'</div>' +
+									'<div class="list_b">' +
+									'<div class="list_b_name">' +
+									package_name +
+									'</div>' +
+									'<div class="list_b_prize">' +
+									money + '元' +
+									'</div>' +
+									'</div>' +
+									'<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />' +
+									'</div>';
+								$('.mui-content').append(package_div);
+							}
+
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+			GetPacakges(getpacakges_url, store_id, cardtype_id, token);
 
 		})
 	</script>

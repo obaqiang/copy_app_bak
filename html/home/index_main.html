@@ -327,18 +327,18 @@
 
 				}, 1500);
 			}
-			if(mui.os.plus) {
-				mui.plusReady(function() {
-					setTimeout(function() {
-						mui('#index_main_card').pullRefresh().pullupLoading();
-					}, 1000);
-
-				});
-			} else {
-				mui.ready(function() {
-					mui('#index_main_card').pullRefresh().pullupLoading();
-				});
-			}
+//			if(mui.os.plus) {
+//				mui.plusReady(function() {
+//					setTimeout(function() {
+//						mui('#index_main_card').pullRefresh().pullupLoading();
+//					}, 1000);
+//
+//				});
+//			} else {
+//				mui.ready(function() {
+//					mui('#index_main_card').pullRefresh().pullupLoading();
+//				});
+//			}
 
 			var self = plus.webview.currentWebview();
 			var member_id = self.member_id;

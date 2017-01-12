@@ -28,7 +28,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content mui-scroll-wrapper" id="index_sign_statics">
+		<div class="mui-content ">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">签单统计</h1>
@@ -58,15 +58,16 @@
 				<span>元</span>
 			</div>
 
-			<div class="mui-scroll">
-				<table class="bill_table " border="0" cellspacing="" cellpadding="">
-					<tr>
-						<th>名称</th>
-						<th>金额</th>
-						<th>时间</th>
-					</tr>
+			<div class="mui-scroll-wrapper"  id="index_sign_statics">
+				<div class="mui-scroll">
+					<table class="bill_table " border="0" cellspacing="" cellpadding="">
+						<tr>
+							<th>名称</th>
+							<th>金额</th>
+							<th>时间</th>
+						</tr>
 
-					<!--<tr>
+						<!--<tr>
 					<td>套餐充值</td>
 					<td>40.00</td>
 					<td>2016-11-22</td>
@@ -77,7 +78,8 @@
 					<td>2016-11-22</td>
 				</tr>-->
 
-				</table>
+					</table>
+				</div>
 			</div>
 
 			<!--<div id="main" style="height:200px"></div>-->
@@ -110,7 +112,7 @@
 		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
-				page_index=1;
+				page_index = 1;
 				GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
 				mui('#index_sign_statics').pullRefresh().endPulldownToRefresh(); //refresh completed
 			}, 1500);
@@ -128,18 +130,18 @@
 
 			}, 1500);
 		}
-		if(mui.os.plus) {
-			mui.plusReady(function() {
-				setTimeout(function() {
-					mui('#index_sign_statics').pullRefresh().pullupLoading();
-				}, 1000);
-
-			});
-		} else {
-			mui.ready(function() {
-				mui('#index_sign_statics').pullRefresh().pullupLoading();
-			});
-		}
+//		if(mui.os.plus) {
+//			mui.plusReady(function() {
+//				setTimeout(function() {
+//					mui('#index_sign_statics').pullRefresh().pullupLoading();
+//				}, 1000);
+//
+//			});
+//		} else {
+//			mui.ready(function() {
+//				mui('#index_sign_statics').pullRefresh().pullupLoading();
+//			});
+//		}
 
 		var self = plus.webview.currentWebview();
 		var store_id = self.store_id;
@@ -147,8 +149,7 @@
 		var token = self.token;
 		var page_index = 0;
 		var page_size = 20;
-		
-		
+
 		var myDate = new Date();
 		var time_time = myDate.getTime();
 		var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
@@ -169,7 +170,6 @@
 
 		begin_time = datetime_to_unix(begin_time);
 		var end_time = sec_time;
-		
 
 		GetSignBillDl_url = test_url + '/api/vip/GetSignBillDl';
 
@@ -212,7 +212,14 @@
 				}
 			});
 		}
-//		GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+		
+		mui.plusReady(function() {
+			GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size); 
+
+		})
+		
+		
+		//		GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
 		function month_Change(month_begin, month_end, year_time) {
 
 			page_index = 1;
@@ -307,8 +314,6 @@
 			}
 
 		})
-
-
 	</script>
 
 	<script>

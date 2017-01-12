@@ -110,176 +110,172 @@
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/config/web_config.js"></script>
 	<script>
-		mui.init({
-			pullRefresh: {
-				container: '#index_coupon',
-				down: {
-
-					callback: pulldownRefresh
-				},
-				up: {
-					contentrefresh: '',
-					//						contentrefresh: '正在加载...',
-					callback: pullupRefresh
-				}
-			}
-		});
-
-		/**
-		 * 下拉刷新具体业务实现
-		 */
-		function pulldownRefresh() {
-			setTimeout(function() {
-
-				mui('#index_coupon').pullRefresh().endPulldownToRefresh(); //refresh completed
-			}, 1500);
-		}
-		//			var count = 0;
-		/**
-		 * 上拉加载具体业务实现
-		 */
-		function pullupRefresh() {
-			setTimeout(function() {
-
-				page_num++;
-				GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
-				mui('#index_coupon').pullRefresh().endPullupToRefresh();
-
-			}, 1500);
-		}
-		if(mui.os.plus) {
-			mui.plusReady(function() {
-				setTimeout(function() {
-					mui('#index_coupon').pullRefresh().pullupLoading();
-				}, 1000);
-
-			});
-		} else {
-			mui.ready(function() {
-				mui('#index_coupon').pullRefresh().pullupLoading();
-			});
-		}
-
-		var self = plus.webview.currentWebview();
-		var store_id = self.store_id;
-		var vip_id = self.vip_id;
-		var token = self.token;
-		var type = 1;
-		var page_num = 0;
-		var page_size = 10;
-
-		var getviptickets_url = test_url + '/api/ticket/GetVipTickets';
-
-		function GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size) {
-			mui.ajax(getviptickets_url, {
-				data: {
-					store_id: store_id,
-					vip_id: vip_id,
-					type: type,
-					page_num: page_num,
-					page_size: page_size,
-					token: token
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log('获取首页查看优惠券接口返回数据:' + JSON.stringify(data));
-					if(page_num == 1) {
-						$('.coupon_area_div').empty();
-					}
-					var Tickets = data.Data.Tickets;
-					for(var i = 0; i < Tickets.length; i++) {
-						var status = Tickets[i].status;
-						var add_time = Tickets[i].add_time;
-						if(add_time != 0) {
-							add_time = add_time.slice(0, 9);
-						}
-
-						var last_time = Tickets[i].last_time;
-						if(last_time != 0) {
-							last_time = last_time.slice(0, 9);
-						}
-
-						var ticket_name = Tickets[i].ticket_name;
-						var ticket_money = Tickets[i].ticket_money;
-						var ticket_id = Tickets[i].ticket_id;
-						var condition_money = Tickets[i].condition_money;
-						var type_img;
-						if(type == '1') {
-							type_img = '../../../images/180px_180px_1.png';
-						} else if(type == '2') {
-							type_img = '../../../images/180px_180px_2.png';
-						} else if(type == '3') {
-							type_img = '../../../images/180px_180px_3.png';
-						}
-						var coupon_div =
-							'<div class="coupon_list of_h" ticket_id="' + ticket_id + '">' +
-							'<div class="coupon_list_left">' +
-							'<div class="coupon_list_left_prize">' +
-							ticket_money +
-							'</div>' +
-							'<div class="coupon_list_left_time">' +
-							'使用期限 ' + add_time + '~' + last_time +
-							'</div>' +
-							'<div class="coupon_list_left_limit">' +
-							'满￥' + condition_money + '可用' +
-							'</div>' +
-							'</div>' +
-							'<img class="coupon_list_img" src="' + type_img + '" alt="" />' +
-							'<div class="coupon_list_num">￥' + ticket_money + '</div>' +
-							'</div>';
-						$('.coupon_area_div').append(coupon_div);
-
-					}
-
-					mui(".coupon_area_div").on('tap', '.coupon_list', function() {
-						var ticket_id = $(this).attr('ticket_id');
-						var img_src = $(this).children('.coupon_list_img').attr('src');
-
-						var webview = mui.openWindow({
-							url: 'index_coupon_detail.html',
-							extras: {
-								token: token,
-								ticket_id: ticket_id,
-								img_src: img_src
-							}
-						});
-					})
-
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(type);
-				}
-			});
-		}
-		GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
-
-//		未使用
-		document.getElementById('coupon_wait').addEventListener('tap', function() {
-			type=1;
-			page_num=1;
-			GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
-		})
-//		已确认
-		document.getElementById('coupon_sure').addEventListener('tap', function() {
-			type=2;
-			page_num=1;
-			GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
-		})
-//		已取消
-		document.getElementById('coupon_cancel').addEventListener('tap', function() {
-			type=3;
-			page_num=1;
-			GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
-		})
-		
-		
-		
-
 		mui.plusReady(function() {
+			mui.init({
+				pullRefresh: {
+					container: '#index_coupon',
+					down: {
+
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '',
+						//						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+
+					mui('#index_coupon').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			//			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+
+					page_num++;
+					GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
+					mui('#index_coupon').pullRefresh().endPullupToRefresh();
+
+				}, 1500);
+			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#index_coupon').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#index_coupon').pullRefresh().pullupLoading();
+				});
+			}
+
+			var self = plus.webview.currentWebview();
+			var store_id = self.store_id;
+			var vip_id = self.vip_id;
+			var token = self.token;
+			var type = 1;
+			var page_num = 0;
+			var page_size = 10;
+
+			var getviptickets_url = test_url + '/api/ticket/GetVipTickets';
+
+			function GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size) {
+				mui.ajax(getviptickets_url, {
+					data: {
+						store_id: store_id,
+						vip_id: vip_id,
+						type: type,
+						page_num: page_num,
+						page_size: page_size,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取首页查看优惠券接口返回数据:' + JSON.stringify(data));
+						if(page_num == 1) {
+							$('.coupon_area_div').empty();
+						}
+						var Tickets = data.Data.Tickets;
+						for(var i = 0; i < Tickets.length; i++) {
+							var status = Tickets[i].status;
+							var add_time = Tickets[i].add_time;
+							if(add_time != 0) {
+								add_time = add_time.slice(0, 9);
+							}
+
+							var last_time = Tickets[i].last_time;
+							if(last_time != 0) {
+								last_time = last_time.slice(0, 9);
+							}
+
+							var ticket_name = Tickets[i].ticket_name;
+							var ticket_money = Tickets[i].ticket_money;
+							var ticket_id = Tickets[i].ticket_id;
+							var condition_money = Tickets[i].condition_money;
+							var type_img;
+							if(type == '1') {
+								type_img = '../../../images/180px_180px_1.png';
+							} else if(type == '2') {
+								type_img = '../../../images/180px_180px_2.png';
+							} else if(type == '3') {
+								type_img = '../../../images/180px_180px_3.png';
+							}
+							var coupon_div =
+								'<div class="coupon_list of_h" ticket_id="' + ticket_id + '">' +
+								'<div class="coupon_list_left">' +
+								'<div class="coupon_list_left_prize">' +
+								ticket_money +
+								'</div>' +
+								'<div class="coupon_list_left_time">' +
+								'使用期限 ' + add_time + '~' + last_time +
+								'</div>' +
+								'<div class="coupon_list_left_limit">' +
+								'满￥' + condition_money + '可用' +
+								'</div>' +
+								'</div>' +
+								'<img class="coupon_list_img" src="' + type_img + '" alt="" />' +
+								'<div class="coupon_list_num">￥' + ticket_money + '</div>' +
+								'</div>';
+							$('.coupon_area_div').append(coupon_div);
+
+						}
+
+						mui(".coupon_area_div").on('tap', '.coupon_list', function() {
+							var ticket_id = $(this).attr('ticket_id');
+							var img_src = $(this).children('.coupon_list_img').attr('src');
+
+							var webview = mui.openWindow({
+								url: 'index_coupon_detail.html',
+								extras: {
+									token: token,
+									ticket_id: ticket_id,
+									img_src: img_src
+								}
+							});
+						})
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+			GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
+
+			//		未使用
+			document.getElementById('coupon_wait').addEventListener('tap', function() {
+					type = 1;
+					page_num = 1;
+					GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
+				})
+				//		已确认
+			document.getElementById('coupon_sure').addEventListener('tap', function() {
+					type = 2;
+					page_num = 1;
+					GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
+				})
+				//		已取消
+			document.getElementById('coupon_cancel').addEventListener('tap', function() {
+				type = 3;
+				page_num = 1;
+				GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
+			})
 
 		})
 	</script>

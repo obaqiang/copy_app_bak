@@ -188,58 +188,58 @@
 	<script src="../../../js/config/web_config.js"></script>
 	<script></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-		var self = plus.webview.currentWebview();
-		var member_id = self.member_id;
-		var vip_id = self.vip_id;
-		var token = self.token;
-		var store_id = self.store_id;
-
-		//		测试post
-		//		function AddStoreShopInfo() {
-		//			mui.ajax('https://testapi.bdvip.net/api/Store/AddStoreShopInfo', {
-		//				data: {
-		//					shop_address: "\U6c5f\U82cf\U7701\U82cf\U5dde\U5e02\U6606\U5c71\U5e02\U5468\U5e02\U9547\U5965\U6377\U8def",
-		//					shop_id: 1,
-		//					shop_name: "\U54c8\U54c8",
-		//					shop_tel: 12345678910,
-		//					store_id: 483,
-		//					token:token
-		//				},
-		//				dataType: 'json', //服务器返回json格式数据
-		//				type: 'post', //HTTP请求类型
-		//				timeout: 10000, //超时时间设置为10秒；
-		//				headers: {
-		//					'Content-Type': 'application/json'
-		//				},
-		//				success: function(data) {
-		//					//服务器返回响应，根据响应结果，分析是否登录成功；
-		//					console.log('测试post:' + JSON.stringify(data));
-		//				},
-		//				error: function(xhr, type, errorThrown) {
-		//					//异常处理；
-		//					console.log(type);
-		//				}
-		//			});
-		//		}
-		//		AddStoreShopInfo();
-
-		//		for(var i = 0; i < 3; i++) {
-		//			var div = '<div class="swiper-slide">' +
-		//				'<img src="../../../images/204px_102px_quanbg.png" alt="" />' +
-		//				'<div class="coupon_data_1">' +
-		//				'<span>2000</span>' +http://192.168.1.162:8020/m/images/204px_102px_quanbg.png
-		//				'<span>元</span>' +
-		//				'</div>' +
-		//				'<span class="coupon_data_2">(满200可用)</span>' +
-		//				'<span class="coupon_data_3">点击<br />领取</span>' +
-		//				'</div>';
-		//			$('.swiper-wrapper').append(div);
-		//		}
-
 		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			var self = plus.webview.currentWebview();
+			var member_id = self.member_id;
+			var vip_id = self.vip_id;
+			var token = self.token;
+			var store_id = self.store_id;
+
+			//		测试post
+			//		function AddStoreShopInfo() {
+			//			mui.ajax('https://testapi.bdvip.net/api/Store/AddStoreShopInfo', {
+			//				data: {
+			//					shop_address: "\U6c5f\U82cf\U7701\U82cf\U5dde\U5e02\U6606\U5c71\U5e02\U5468\U5e02\U9547\U5965\U6377\U8def",
+			//					shop_id: 1,
+			//					shop_name: "\U54c8\U54c8",
+			//					shop_tel: 12345678910,
+			//					store_id: 483,
+			//					token:token
+			//				},
+			//				dataType: 'json', //服务器返回json格式数据
+			//				type: 'post', //HTTP请求类型
+			//				timeout: 10000, //超时时间设置为10秒；
+			//				headers: {
+			//					'Content-Type': 'application/json'
+			//				},
+			//				success: function(data) {
+			//					//服务器返回响应，根据响应结果，分析是否登录成功；
+			//					console.log('测试post:' + JSON.stringify(data));
+			//				},
+			//				error: function(xhr, type, errorThrown) {
+			//					//异常处理；
+			//					console.log(type);
+			//				}
+			//			});
+			//		}
+			//		AddStoreShopInfo();
+
+			//		for(var i = 0; i < 3; i++) {
+			//			var div = '<div class="swiper-slide">' +
+			//				'<img src="../../../images/204px_102px_quanbg.png" alt="" />' +
+			//				'<div class="coupon_data_1">' +
+			//				'<span>2000</span>' +http://192.168.1.162:8020/m/images/204px_102px_quanbg.png
+			//				'<span>元</span>' +
+			//				'</div>' +
+			//				'<span class="coupon_data_2">(满200可用)</span>' +
+			//				'<span class="coupon_data_3">点击<br />领取</span>' +
+			//				'</div>';
+			//			$('.swiper-wrapper').append(div);
+			//		}
+
 			isOnline();
 
 			var getvipinfo_url = test_url + '/api/member/getvipinfo';
@@ -318,75 +318,74 @@
 							}
 						});
 					})
-					
-//					套餐充值
+
+					//					套餐充值
 					document.getElementById('package_charge').addEventListener('tap', function() {
 						var webview = mui.openWindow({
 							url: 'index_main_card_package.html',
 							extras: {
 								token: token,
 								store_id: store_id,
-								cardtype_id:cardtype_id
+								cardtype_id: cardtype_id
 							}
 						});
 					})
-					
 
 					//					点击活动事件
 					document.getElementById('index_action').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_action.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-								vip_id: vip_id
-							}
-						});
-					})
-//					优惠券
+							var webview = mui.openWindow({
+								url: 'index_action.html',
+								extras: {
+									token: token,
+									store_id: store_id,
+									vip_id: vip_id
+								}
+							});
+						})
+						//					优惠券
 					document.getElementById('index_coupon').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_coupon.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-								vip_id: vip_id
-							}
-						});
-					})
+							var webview = mui.openWindow({
+								url: 'index_coupon.html',
+								extras: {
+									token: token,
+									store_id: store_id,
+									vip_id: vip_id
+								}
+							});
+						})
 						//					红包
 					document.getElementById('red_packet').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_red_packets.html',
-							extras: {
-								token: token,
-								vip_id: vip_id
-							}
-						});
-					})
-//					奖品
+							var webview = mui.openWindow({
+								url: 'index_red_packets.html',
+								extras: {
+									token: token,
+									vip_id: vip_id
+								}
+							});
+						})
+						//					奖品
 					document.getElementById('index_prize_list').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_prize_list.html',
-							extras: {
-								token: token,
-								vip_id: vip_id
-							}
-						});
-					})
-//					充值记录
+							var webview = mui.openWindow({
+								url: 'index_prize_list.html',
+								extras: {
+									token: token,
+									vip_id: vip_id
+								}
+							});
+						})
+						//					充值记录
 					document.getElementById('index_recharge').addEventListener('tap', function() {
 						var webview = mui.openWindow({
 							url: 'index_recharge.html',
 							extras: {
 								token: token,
 								vip_id: vip_id,
-								store_id:store_id
+								store_id: store_id
 							}
 						});
 					})
-					
-//					账单
+
+					//					账单
 					document.getElementById('bill').addEventListener('tap', function() {
 						var webview = mui.openWindow({
 							url: 'index_bill.html',
@@ -397,31 +396,31 @@
 							}
 						});
 					})
-					
-//					签单
+
+					//					签单
 					document.getElementById('index_sign_statics').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_sign_statics.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-								vip_id: vip_id
-							}
-						});
-					})
-//					托管
+							var webview = mui.openWindow({
+								url: 'index_sign_statics.html',
+								extras: {
+									token: token,
+									store_id: store_id,
+									vip_id: vip_id
+								}
+							});
+						})
+						//					托管
 					document.getElementById('index_deposit').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_deposit.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-								member_id: member_id,
-								vip_id: vip_id
-							}
-						});
-					})
-//					交易拍照
+							var webview = mui.openWindow({
+								url: 'index_deposit.html',
+								extras: {
+									token: token,
+									store_id: store_id,
+									member_id: member_id,
+									vip_id: vip_id
+								}
+							});
+						})
+						//					交易拍照
 					document.getElementById('index_photo').addEventListener('tap', function() {
 						var webview = mui.openWindow({
 							url: 'index_photo.html',
@@ -432,7 +431,6 @@
 							}
 						});
 					})
-				
 
 					document.getElementById('purchase_history').addEventListener('tap', function() {
 						var webview = mui.openWindow({
@@ -469,11 +467,11 @@
 							var ticket_money = Tickets[i].ticket_money;
 							var condition_money = Tickets[i].condition_money;
 							var ticket_id = Tickets[i].id;
-							var out_num = Tickets[i].out_num;//已领取数量
-							var avg_num = Tickets[i].avg_num;//限制领取数量
-							var selected= Tickets[i].selected;//等于1就是已领取 0就是未领取
-							if(selected==0) {
-								var ticket_div = '<div class="swiper-slide" avg_num="'+avg_num+'" out_num="'+out_num+'" store_id="' + store_id + '" ticket_id="' + ticket_id + '">' +
+							var out_num = Tickets[i].out_num; //已领取数量
+							var avg_num = Tickets[i].avg_num; //限制领取数量
+							var selected = Tickets[i].selected; //等于1就是已领取 0就是未领取
+							if(selected == 0) {
+								var ticket_div = '<div class="swiper-slide" avg_num="' + avg_num + '" out_num="' + out_num + '" store_id="' + store_id + '" ticket_id="' + ticket_id + '">' +
 									'<img src="../../../images/204px_102px_quanbg.png" alt="" />' +
 									'<div class="coupon_data_1">' +
 									'<span>' + ticket_money + '</span>' +
@@ -553,14 +551,13 @@
 				//				console.log('需要的token:' + token);
 				console.log(pickupticket_url + '?member_id=' + member_id + '&store_id=' + store_id + '&ticket_id=' + ticket_id + '&vip_id=' + vip_id + '&token=' + token);
 				PickupTicket(pickupticket_url, member_id, store_id, ticket_id, vip_id, token);
-				var out_num=$(this).attr('out_num');
-				var avg_num=$(this).attr('avg_num');
-				if(out_num==avg_num){
+				var out_num = $(this).attr('out_num');
+				var avg_num = $(this).attr('avg_num');
+				if(out_num == avg_num) {
 					$(this).hide();
-				}else{
+				} else {
 					out_num++;
 				}
-			
 
 			})
 
