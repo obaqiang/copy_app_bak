@@ -31,7 +31,7 @@
 		</header>
 		<div class="mui-content">
 			<ul id="list" class="mui-table-view mui-table-view-chevron setting_ul">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="login_pwd">
 					<a class="mui-navigate-right">
 						修改登入密码
 					</a>
@@ -66,6 +66,20 @@
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
+
+		var self = plus.webview.currentWebview();
+		var phone = self.phone;
+		var token = self.token;
+		console.log(phone);
+		document.getElementById('login_pwd').addEventListener('tap', function() {
+			var webview = mui.openWindow({
+				url: 'index_main_setting_security_login_pwd.html',
+				extras: {
+					phone: phone,
+					token:token
+				}
+			});
+		})
 	</script>
 
 </html>

@@ -540,7 +540,7 @@
 
 			var getqrcode_url = test_url + '/api/member/GetQRCode';
 
-//			我的二维码
+			//			我的二维码
 			document.getElementById('my_qr_code').addEventListener('tap', function() {
 				var webview = mui.openWindow({
 					url: 'index_main_mine/index_main_mine_QR_code.html',
@@ -550,8 +550,8 @@
 					}
 				});
 			})
-			
-//			我的付款吗
+
+			//			我的付款吗
 			document.getElementById('my_payment').addEventListener('tap', function() {
 				var webview = mui.openWindow({
 					url: 'index_main_mine/index_main_mine_payment.html',
@@ -561,15 +561,15 @@
 					}
 				});
 			})
-			
-//			我要发卡
+
+			//			我要发卡
 			document.getElementById('my_send_card').addEventListener('tap', function() {
 				var webview = mui.openWindow({
 					url: 'http://www.bdvip.net/mobile/faka.html',
 				});
 			})
-			
-//			点击头像修改个人信息
+
+			//			点击头像修改个人信息
 			document.getElementById('thumb').addEventListener('tap', function() {
 				var name = $('#member_name').text();
 				var phone = $('#phone').text();
@@ -578,67 +578,55 @@
 					extras: {
 						member_id: member_id,
 						name: name,
-						phone:phone,
-						token:token
+						phone: phone,
+						token: token
 					}
 				});
 			})
-//			安全设置
-			document.getElementById('setting_security').addEventListener('tap', function() {
-				var webview = mui.openWindow({
-					url: 'index_main_setting/index_main_setting_security.html',
-					extras: {
-						member_id: member_id,
-						name: name,
-						phone:phone,
-						token:token
-					}
-				});
-			})
-//			消息设置
+
+			//			消息设置
 			document.getElementById('setting_message').addEventListener('tap', function() {
-				var webview = mui.openWindow({
-					url: 'index_main_setting/index_main_setting_message.html',
-					extras: {
-						member_id: member_id,
-						name: name,
-						phone:phone,
-						token:token
-					}
-				});
-			})
-//			问题解决
+					var webview = mui.openWindow({
+						url: 'index_main_setting/index_main_setting_message.html',
+						extras: {
+							member_id: member_id,
+							name: name,
+							phone: phone,
+							token: token
+						}
+					});
+				})
+				//			问题解决
 			document.getElementById('setting_question').addEventListener('tap', function() {
-				var webview = mui.openWindow({
-					url: 'index_main_setting/index_main_setting_question.html',
-					extras: {
-						member_id: member_id,
-						name: name,
-						phone:phone,
-						token:token
-					}
-				});
-			})
-//			关于BD
+					var webview = mui.openWindow({
+						url: 'index_main_setting/index_main_setting_question.html',
+						extras: {
+							member_id: member_id,
+							name: name,
+							phone: phone,
+							token: token
+						}
+					});
+				})
+				//			关于BD
 			document.getElementById('setting_about').addEventListener('tap', function() {
-				var webview = mui.openWindow({
-					url: 'index_main_setting/index_main_setting_about.html',
-					extras: {
-						member_id: member_id,
-						name: name,
-						phone:phone,
-						token:token
-					}
-				});
-			})
-//			退出登陸
+					var webview = mui.openWindow({
+						url: 'index_main_setting/index_main_setting_about.html',
+						extras: {
+							member_id: member_id,
+							name: name,
+							phone: phone,
+							token: token
+						}
+					});
+				})
+				//			退出登陸
 			document.getElementById('setting_out').addEventListener('tap', function() {
 				UserInfo.clear();
 				var webview = mui.openWindow({
 					url: '../login/login.html',
 				});
 			})
-
 
 			//选项卡点击事件
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {
@@ -692,15 +680,14 @@
 					var birthday = Member.birthday;
 					birthday = birthday.slice(0, 9);
 					var thumb = Member.thumb;
-					
-					if(thumb==""||!thumb){
-						thumb='../../images/146px_146px_moren.png';
+
+					if(thumb == "" || !thumb) {
+						thumb = '../../images/146px_146px_moren.png';
 					}
 					$('#member_name').text(member_name);
 					$('#phone').text(phone);
 					$('#birthday').text(birthday);
-					$('#thumb').attr('src',thumb);
-			
+					$('#thumb').attr('src', thumb);
 
 				} else if(label_name == '设置') {
 					$('.mui-title').text('设置');
@@ -714,8 +701,19 @@
 					$('.set_text').css('color', '#cb2920');
 					$('.mui-content').hide();
 					$('.index_main_setting').show();
-					//					var w = plus.webview.create( "index_main_setting.html" );
-					//					w.show(); // 显示窗口
+					var phone = Member.phone;
+//					安全设置
+					document.getElementById('setting_security').addEventListener('tap', function() {
+						var webview = mui.openWindow({
+							url: 'index_main_setting/index_main_setting_security.html',
+							extras: {
+								member_id: member_id,
+								name: name,
+								phone: phone,
+								token: token
+							}
+						});
+					})
 				}
 			});
 			//自定义事件，模拟点击“首页选项卡”
