@@ -256,8 +256,8 @@
 			function verifycode(url_login, data_list) {
 				mui.get(url_login, data_list, function(data) {
 					console.log('登陆接口返回的数据:' + JSON.stringify(data));
-					console.log('需要的member_id:' + data.Data.Member.id);
-					console.log('需要的Token：' + data.Data.Token);
+//					console.log('需要的member_id:' + data.Data.Member.id);
+//					console.log('需要的Token：' + data.Data.Token);
 
 					if(data.ErrorCode == 4) { //此时需要输入验证码
 						//								

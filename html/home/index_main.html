@@ -286,6 +286,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/config/web_config.js"></script>
 		<script src="../../js/plugin/qrcode.js"></script>
+		<script src="../../js/common/bdapp.js"></script>
 		<!--<script src="../../js/common/bd_port.js"></script>-->
 		<script type="text/javascript" charset="utf-8">
 			//mui初始化
@@ -630,6 +631,14 @@
 					}
 				});
 			})
+//			退出登陸
+			document.getElementById('setting_out').addEventListener('tap', function() {
+				UserInfo.clear();
+				var webview = mui.openWindow({
+					url: '../login/login.html',
+				});
+			})
+
 
 			//选项卡点击事件
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {

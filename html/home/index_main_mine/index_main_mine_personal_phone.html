@@ -40,11 +40,11 @@
 			</div>
 			<div class="verity">
 				<span>验证码&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				<input type="text" placeholder="请输入验证码" />
+				<input type="text" id="vcode" placeholder="请输入验证码" />
 				<span id="verity_btn" class="verity_btn_no">验证码</span>
 			</div>
 		</div>
-		<div class="nav_bottom">
+		<div class="nav_bottom" id="btn_sure">
 			确定
 		</div>
 	</body>
@@ -60,7 +60,7 @@
 
 		var self = plus.webview.currentWebview();
 		var token = self.token;
-		//		var phone = self.phone;
+		var oldphone = self.phone;
 		var newphone;
 
 		var changephonesms_url = test_url + '/api/member/ChangePhoneSMS';
@@ -77,11 +77,43 @@
 				success: function(data) {
 					//服务器返回响应，根据响应结果，分析是否登录成功；
 					console.log('获取验证码接口返回数据:' + JSON.stringify(data));
+					Alert('验证码发送成功');
+					setInterval(getTime, 1000);
 
 				},
 				error: function(xhr, type, errorThrown) {
 					//异常处理；
 					console.log(type);
+				}
+			});
+		}
+
+		var changephone_url = test_url + '/api/member/ChangePhone';
+
+		function ChangePhone(changephone_url,oldphone, newphone, vcode, token) {
+			mui.ajax(changephone_url, {
+				data: {
+					oldphone: oldphone,
+					newphone: newphone,
+					vcode: vcode,
+					token: token
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log('获取更改手机号接口返回数据:' + JSON.stringify(data));
+					if(data.Data.IsError==true){
+						Alert('修改失败 '+data.Data.ErrorMessage);
+					}else{
+						Alert('修改成功');
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					Alert('修改失败请重试');
 				}
 			});
 		}
@@ -109,24 +141,36 @@
 		}); //end blur
 
 		var t = 180;
+
 		function getTime() {
-			t - 1;
+			t -= 1;
 			if(t > 0) {
 				$('#verity_btn').text('剩' + t + 's');
-			}else{
-				
+				$('#verity_btn').addClass('verity_btn_no');
+				$('#verity_btn').removeClass('verity_btn_ok');
+			} else {
+				$('#verity_btn').text('验证码');
 			}
 
 		}
-		setInterval(getTime, 0);
 
 		document.getElementById('verity_btn').addEventListener('tap', function() {
 			if($(this).attr('class') == 'verity_btn_ok') {
 				newphone = $('#tel').val();
 				ChangePhoneSMS(changephonesms_url, newphone, token);
+
 			}
 
 		})
+		
+		document.getElementById('btn_sure').addEventListener('tap', function() {
+			var newphone=$('#tel').val();
+			var vcode=$('#vcode').val();
+			ChangePhone(changephone_url,oldphone, newphone, vcode, token);
+			
+		})
+		
+		
 	</script>
 	<script>
 		//各个屏幕大小适配

@@ -28,28 +28,9 @@
 	<body>
 		<header class="mui-bar mui-bar-nav setting_security_header">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">关于BD</h1>
+			<h1 class="mui-title">官网</h1>
 		</header>
 		<div class="mui-content">
-			<img class="about_icon" src="../../../images/154px_154px_logo.png" alt="" />
-			<div class="about_text">
-				BD贵宾卡
-			</div>
-			<div class="about_version">
-				v 2.1.1
-			</div>
-			<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted about_bg_list">
-				<li class="mui-table-view-cell" id="offical">
-					<a class="mui-navigate-right about_list_head">
-						<span>BD卡官网</span>
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right about_list_head">
-						<span>给BD卡评分</span>
-					</a>
-				</li>
-			</ul>
 
 		</div>
 	</body>
@@ -60,14 +41,16 @@
 	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
 		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-
-		document.getElementById('offical').addEventListener('tap', function() {
-			var webview = mui.openWindow({
-				url: 'index_main_setting_about_offical.html'
+				subpages: [{
+					url: 'http://www.bdvip.net/mobile/site.html',
+					styles: {
+						top: '45px',
+						bottom: 0,
+						bounce: 'vertical'
+					}
+				}]
 			});
-		})
+
 	</script>
 
 </html>

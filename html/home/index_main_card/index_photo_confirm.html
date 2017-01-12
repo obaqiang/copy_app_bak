@@ -120,9 +120,9 @@
 		var type = self.type;
 		var store_id = self.store_id;
 		var vip_id = self.vip_id;
-		var page_num=1;
-		var page_size=10;
-		var hasitems=1;
+		var page_num = 1;
+		var page_size = 10;
+		var hasitems = 1;
 
 		var gettradephoto_url = test_url + '/api/tradephoto/GetTradePhoto';
 
@@ -173,18 +173,48 @@
 		}
 		GetTradePhoto(gettradephoto_url, tradephoto_id, token);
 
-		var GetTradePhotos_url = test_url + '/api/tradephoto/GetTradePhotos';
+//		var GetTradePhotos_url = test_url + '/api/tradephoto/GetTradePhotos';
+//
+//		function GetTradePhotos(GetTradePhotos_url, store_id, vip_id, type, page_num, page_size, hasitems, token) {
+//			mui.ajax(GetTradePhotos_url, {
+//				data: {
+//					store_id: store_id,
+//					vip_id: vip_id,
+//					type: type,
+//					page_num: page_num,
+//					page_size: page_size,
+//					hasitems: hasitems,
+//					token: token
+//				},
+//				dataType: 'json', //服务器返回json格式数据
+//				type: 'get', //HTTP请求类型
+//				timeout: 10000, //超时时间设置为10秒；
+//				success: function(data) {
+//					//服务器返回响应，根据响应结果，分析是否登录成功；
+//					console.log('获取交易拍照记录确定接口返回数据:' + JSON.stringify(data));
+//					Alert('操作成功');
+//					if(type == 2) {
+//						$('.points_nav_bottom').text('已确定');
+//					}
+//
+//				},
+//				error: function(xhr, type, errorThrown) {
+//					//异常处理；
+//					console.log(type);
+//					Alert('操作失败，请重试！');
+//				}
+//			});
+//		}
 
-		function GetTradePhotos(GetTradePhotos_url, store_id, vip_id, type, page_num, page_size, hasitems, token) {
-			mui.ajax(GetTradePhotos_url, {
+
+		var confirm_url=test_url+'/api/tradephoto/Confirm';
+		
+		function Confirm(confirm_url,tradephoto_id,type,token) {
+			mui.ajax(confirm_url, {
 				data: {
-					store_id: store_id,
-					vip_id: vip_id,
-					type: type,
-					page_num: page_num,
-					page_size: page_size,
-					hasitems: hasitems,
-					token: token
+					tradephoto_id: tradephoto_id,
+					type:type,
+					token:token
 				},
 				dataType: 'json', //服务器返回json格式数据
 				type: 'get', //HTTP请求类型
@@ -192,16 +222,15 @@
 				success: function(data) {
 					//服务器返回响应，根据响应结果，分析是否登录成功；
 					console.log('获取交易拍照记录确定接口返回数据:' + JSON.stringify(data));
-					Alert('操作成功');
-					if(type==2){
-						$('.points_nav_bottom').text('已确定');
+					if(data.Data.IsError==false){
+						Alert('操作成功');
 					}
 					
 				},
 				error: function(xhr, type, errorThrown) {
 					//异常处理；
 					console.log(type);
-					Alert('操作失败，请重试！');
+					Alert('操作失败请重试');
 				}
 			});
 		}
@@ -214,16 +243,15 @@
 				$('.points_nav_bottom_right').show();
 
 				document.getElementById('points_nav_bottom_left').addEventListener('tap', function() {
-					var type=2;
-					GetTradePhotos(GetTradePhotos_url, store_id, vip_id, type, page_num, page_size, hasitems, token);
+					var type = 2;
+					Confirm(confirm_url,tradephoto_id,type,token);
 				})
-				
+
 				document.getElementById('points_nav_bottom_right').addEventListener('tap', function() {
-					var type=4;
-					GetTradePhotos(GetTradePhotos_url, store_id, vip_id, type, page_num, page_size, hasitems, token);
-					
+					var type = 4;
+					Confirm(confirm_url,tradephoto_id,type,token);
+
 				})
-				
 
 			} else if(type == 2) {
 				$('.points_nav_bottom').text('已确定');

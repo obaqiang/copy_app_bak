@@ -111,7 +111,7 @@
 				},
 				up: {
 					contentrefresh: '',
-					//						contentrefresh: '正在加载...',
+					contentrefresh: '正在加载...',
 					callback: pullupRefresh
 				}
 			}
@@ -122,7 +122,8 @@
 		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
-				page_num=1;
+				console.log('下拉的');
+//				page_num=1;
 				getvipca(getvipca_url, store_id, vip_id, type, begin_time, end_time, page_num, page_size);
 	
 				mui('#index_bill').pullRefresh().endPulldownToRefresh(); //refresh completed
@@ -134,28 +135,28 @@
 		 */
 		function pullupRefresh() {
 			setTimeout(function() {
-
+				console.log('上啦矰');
 				page_num++;
 				getvipca(getvipca_url, store_id, vip_id, type, begin_time, end_time, page_num, page_size);
 				mui('#index_bill').pullRefresh().endPullupToRefresh();
 
 			}, 1500);
 		}
-		if(mui.os.plus) {
-			mui.plusReady(function() {
-				setTimeout(function() {
-					mui('#index_bill').pullRefresh().pullupLoading();
-				}, 1000);
-
-			});
-		} else {
-			mui.ready(function() {
-				mui('#index_bill').pullRefresh().pullupLoading();
-			});
-		}
+//		if(mui.os.plus) {
+//			mui.plusReady(function() {
+//				setTimeout(function() {
+//					mui('#index_bill').pullRefresh().pullupLoading();
+//				}, 1000);
+//
+//			});
+//		} else {
+//			mui.ready(function() {
+//				mui('#index_bill').pullRefresh().pullupLoading();
+//			});
+//		}
 		
 		
-
+		
 		function datetime_to_unix(datetime) {
 			var tmp_datetime = datetime.replace(/:/g, '-');
 			tmp_datetime = tmp_datetime.replace(/ /g, '-');
@@ -179,7 +180,6 @@
 		var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
 		var year_time = myDate.getFullYear();
 		month_time += 1;
-		console.log(month_time);
 
 		monthShow(month_time);
 
@@ -214,6 +214,7 @@
 				timeout: 10000, //超时时间设置为10秒；
 				success: function(data) {
 					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(page_num);
 					console.log('获取账单接口返回数据:' + JSON.stringify(data));
 
 					if(page_num == 1) {
@@ -250,7 +251,7 @@
 
 		function month_Change(month_begin, month_end, year_time) {
 
-			page_num == 1;
+			page_num = 1;
 			begin_time = year_time + '-' + month_begin + '-' + '01' + ' ' + '00:00:00';
 			begin_time = datetime_to_unix(begin_time);
 			end_time = year_time + '-' + month_end + '-' + '01' + ' ' + '00:00:00';
