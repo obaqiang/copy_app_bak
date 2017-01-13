@@ -97,3 +97,6 @@
 	background-color: rgba(0, 0, 0, 0.4);  
 	padding: 0.02rem;
 }
+.mui-scroll-wrapper{
+	top: 90px !important;
+}

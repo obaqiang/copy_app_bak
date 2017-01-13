@@ -27,7 +27,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content mui-scroll-wrapper" id="action">
+		<div class="mui-content">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">活动</h1>
@@ -50,21 +50,23 @@
 				<div>未开始</div>
 			</div>
 
-			<div class="mui-scroll">
-				<!--<div class="action_content ">
-					<img class="action_content_img" src="../../../images/710px_305px_banner.png" alt="" />
-					<img class="action_content_img_over" src="../../../images/120px_120px_over.png" alt="" />
-					<div class="action_already">已参与</div>
-					<div class="action_content_des of_h">
-						<div class="des_left">
-							店庆快来
+			<div class="mui-scroll-wrapper" id="action">
+				<div class="mui-scroll">
+					<!--<div class="action_content ">
+						<img class="action_content_img" src="../../../images/710px_305px_banner.png" alt="" />
+						<img class="action_content_img_over" src="../../../images/120px_120px_over.png" alt="" />
+						<div class="action_already">已参与</div>
+						<div class="action_content_des of_h">
+							<div class="des_left">
+								店庆快来
+							</div>
+							<div class="des_right">
+								分享朋友即送100积分
+							</div>
 						</div>
-						<div class="des_right">
-							分享朋友即送100积分
-						</div>
-					</div>
-				</div>-->
+					</div>-->
 
+				</div>
 			</div>
 
 		</div>
@@ -114,18 +116,18 @@
 
 				}, 1500);
 			}
-//			if(mui.os.plus) {
-//				mui.plusReady(function() {
-//					setTimeout(function() {
-//						mui('#action').pullRefresh().pullupLoading();
-//					}, 1000);
-//
-//				});
-//			} else {
-//				mui.ready(function() {
-//					mui('#action').pullRefresh().pullupLoading();
-//				});
-//			}
+			//			if(mui.os.plus) {
+			//				mui.plusReady(function() {
+			//					setTimeout(function() {
+			//						mui('#action').pullRefresh().pullupLoading();
+			//					}, 1000);
+			//
+			//				});
+			//			} else {
+			//				mui.ready(function() {
+			//					mui('#action').pullRefresh().pullupLoading();
+			//				});
+			//			}
 
 			var self = plus.webview.currentWebview();
 			var token = self.token;

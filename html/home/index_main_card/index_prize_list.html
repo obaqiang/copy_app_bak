@@ -75,13 +75,25 @@
 			</div>
 
 		</div>
+		<div class="qr_area mask" id="mask" style="display: none;"></div>
+		<div class="qr_area qrcode" style="display: none;" id="qrcode">
+			<span class="qrcode_span"></span>
+		</div>
+
 	</body>
 	<script src="../../../js/mui.min.js"></script>
 	<script src="../../../js/plugin/swiper.min.js"></script>
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/config/web_config.js"></script>
+	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
+		//	var QRCodeData='DEE2E489A590FD0C';
+		//	var qrcode = new QRCode(document.getElementById("qrcode"), {
+		//		width: 300, //设置宽高
+		//		height: 300
+		//	});
+		//	qrcode.makeCode(QRCodeData);
 		mui.plusReady(function() {
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -112,9 +124,10 @@
 							var last_time = Items[i].last_time;
 							var add_time = Items[i].add_time;
 							add_time = unix_to_datetime(add_time);
-							var status_text;
+							var gift_code = Items[i].gift_code;
+							var status_text = '兑换';
 							var prize_div =
-								'<div class="recharge_list_content of_h">' +
+								'<div class="recharge_list_content of_h" gift_code="' + gift_code + '">' +
 								'<div class="recharge_list_left">' +
 								'<div class="recharge_list_left_head prize_list_left_head">' +
 								gift_name +
@@ -133,11 +146,27 @@
 								'</div>' +
 								'</div>';
 							$('.recharge_list').append(prize_div);
-
 						}
+						mui(".prize_list").on('tap', '.recharge_list_content', function() {
+
+							var QRCodeData = $(this).attr('gift_code');
+
+							$('.qrcode_span').text(QRCodeData);
+							var qrcode = new QRCode(document.getElementById("qrcode"), {
+								width: 300, //设置宽高
+								height: 300
+							});
+							qrcode.makeCode(QRCodeData);
+							$('.qr_area').show();
+						})
+						document.getElementById('mask').addEventListener('tap', function() {
+							$('.qr_area').empty();
+							$('.qr_area').html('<span class="qrcode_span"></span>');
+							$('.qr_area').hide();
+						})
+
 					},
-					error: function(xhr, type, errorThrown) {
-						//异常处理；
+					error: function(xhr, type, errorThrown) { //异常处理；
 						console.log(type);
 					}
 				});

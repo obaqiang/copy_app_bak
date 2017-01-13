@@ -28,7 +28,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content mui-scroll-wrapper" id="index_coupon">
+		<div class="mui-content ">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">优惠券</h1>
@@ -52,8 +52,9 @@
 
 			</div>
 
-			<div class="coupon_area_div mui-scroll">
-				<!--<div class="coupon_list of_h">
+			<div class="mui-scroll-wrapper" id="index_coupon">
+				<div class="coupon_area_div mui-scroll">
+					<!--<div class="coupon_list of_h">
 					<div class="coupon_list_left">
 						<div class="coupon_list_left_prize">
 							10
@@ -100,6 +101,7 @@
 					<img class="coupon_list_img" src="../../../images/180px_180px_3.png" alt="" />
 					<div class="coupon_list_num">￥10.00</div>
 				</div>-->
+				</div>
 			</div>
 
 		</div>
@@ -131,7 +133,8 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-
+					page_num=1;
+					GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
 					mui('#index_coupon').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
@@ -148,18 +151,18 @@
 
 				}, 1500);
 			}
-//			if(mui.os.plus) {
-//				mui.plusReady(function() {
-//					setTimeout(function() {
-//						mui('#index_coupon').pullRefresh().pullupLoading();
-//					}, 1000);
-//
-//				});
-//			} else {
-//				mui.ready(function() {
-//					mui('#index_coupon').pullRefresh().pullupLoading();
-//				});
-//			}
+			//			if(mui.os.plus) {
+			//				mui.plusReady(function() {
+			//					setTimeout(function() {
+			//						mui('#index_coupon').pullRefresh().pullupLoading();
+			//					}, 1000);
+			//
+			//				});
+			//			} else {
+			//				mui.ready(function() {
+			//					mui('#index_coupon').pullRefresh().pullupLoading();
+			//				});
+			//			}
 
 			var self = plus.webview.currentWebview();
 			var store_id = self.store_id;
