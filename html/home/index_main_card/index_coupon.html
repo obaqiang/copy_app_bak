@@ -148,18 +148,18 @@
 
 				}, 1500);
 			}
-			if(mui.os.plus) {
-				mui.plusReady(function() {
-					setTimeout(function() {
-						mui('#index_coupon').pullRefresh().pullupLoading();
-					}, 1000);
-
-				});
-			} else {
-				mui.ready(function() {
-					mui('#index_coupon').pullRefresh().pullupLoading();
-				});
-			}
+//			if(mui.os.plus) {
+//				mui.plusReady(function() {
+//					setTimeout(function() {
+//						mui('#index_coupon').pullRefresh().pullupLoading();
+//					}, 1000);
+//
+//				});
+//			} else {
+//				mui.ready(function() {
+//					mui('#index_coupon').pullRefresh().pullupLoading();
+//				});
+//			}
 
 			var self = plus.webview.currentWebview();
 			var store_id = self.store_id;

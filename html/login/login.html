@@ -181,6 +181,7 @@
 		</script>
 
 		<script>
+		mui.plusReady(function() {
 			//			用户名手机密码验证
 			//文本框失去焦点后
 			var account = 'false';
@@ -254,6 +255,7 @@
 			}
 
 			function verifycode(url_login, data_list) {
+				console.log('需要的data_list:'+JSON.stringify(data_list));
 				mui.get(url_login, data_list, function(data) {
 					console.log('登陆接口返回的数据:' + JSON.stringify(data));
 //					console.log('需要的member_id:' + data.Data.Member.id);
@@ -275,14 +277,16 @@
 						UserInfo.password(data_list.pwd);
 						UserInfo.member_id(data.Data.Member.id);
 						UserInfo.token(data.Data.Token);
-						
+						console.log('此时需要的data:'+JSON.stringify(data));
 						var webview = mui.openWindow({
 							url: '../home/index_main_anzhuo.html',
+							id:'index_main_anzhuo',
 							extras: {
 								member_id: data.Data.Member.id,
 								token: data.Data.Token,
 								Member:data.Data.Member
-							}
+							},
+							createNew:true
 						});
 
 					} else { //账号密码错误
@@ -294,7 +298,7 @@
 				}, 'json');
 			}
 
-			mui.plusReady(function() {
+			
 
 				if(UserInfo.has_login() == true) { //判断是否已经登陆过
 					console.log('方法中的已经登陆过');

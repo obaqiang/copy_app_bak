@@ -113,10 +113,10 @@
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script src="../../../js/common/bdapp.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
 		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
 
 			var self = plus.webview.currentWebview();
 			var vip_id = self.vip_id;
@@ -217,25 +217,24 @@
 							}
 							mui(".account_list").on('tap', '.list_ok', function() {
 								isOnline();
-//								alert(11);
-								var src=$(this).children('img').attr('src');
+								//								alert(11);
+								var src = $(this).children('img').attr('src');
 								$(this).removeClass('list_ok');
 								$(this).addClass('list_no');
 								$(this).children('.list_inner').show();
-								$(this).children('img').attr('src','../../../images/26px_16px2.png');
-								
+								$(this).children('img').attr('src', '../../../images/26px_16px2.png');
+
 							});
 							mui(".account_list").on('tap', '.list_no', function() {
 								isOnline();
-//								alert(22);
-								var src=$(this).children('img').attr('src');
+								//								alert(22);
+								var src = $(this).children('img').attr('src');
 								$(this).removeClass('list_no');
 								$(this).addClass('list_ok');
 								$(this).children('.list_inner').hide();
-								$(this).children('img').attr('src','../../../images/26px_16px.png');
-								
+								$(this).children('img').attr('src', '../../../images/26px_16px.png');
+
 							});
-							
 
 						}
 

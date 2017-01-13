@@ -343,6 +343,7 @@
 
 				var self = plus.webview.currentWebview();
 				var member_id = self.member_id;
+				console.log('index_main页面需要的member_id：'+member_id);
 				var token = self.token;
 				var Member = self.Member;
 				var getvips_url = test_url + '/api/member/GetVips';
@@ -545,7 +546,8 @@
 						extras: {
 							member_id: member_id,
 							token: token,
-						}
+						},
+						createNew:true
 					});
 				})
 
@@ -556,7 +558,8 @@
 						extras: {
 							member_id: member_id,
 							token: token,
-						}
+						},
+						createNew:true
 					});
 				})
 
@@ -564,6 +567,7 @@
 				document.getElementById('my_send_card').addEventListener('tap', function() {
 					var webview = mui.openWindow({
 						url: 'http://www.bdvip.net/mobile/faka.html',
+						createNew:true
 					});
 				})
 
@@ -578,7 +582,8 @@
 							name: name,
 							phone: phone,
 							token: token
-						}
+						},
+						createNew:true
 					});
 				})
 
@@ -591,7 +596,8 @@
 								name: name,
 								phone: phone,
 								token: token
-							}
+							},
+							createNew:true
 						});
 					})
 					//			问题解决
@@ -603,7 +609,8 @@
 								name: name,
 								phone: phone,
 								token: token
-							}
+							},
+							createNew:true
 						});
 					})
 					//			关于BD
@@ -615,7 +622,8 @@
 								name: name,
 								phone: phone,
 								token: token
-							}
+							},
+							createNew:true
 						});
 					})
 					//			退出登陸
@@ -623,6 +631,7 @@
 					UserInfo.clear();
 					var webview = mui.openWindow({
 						url: '../login/login.html',
+						createNew:true
 					});
 				})
 
@@ -676,7 +685,7 @@
 						var member_name = Member.member_name;
 						var phone = Member.phone;
 						var birthday = Member.birthday;
-						birthday = birthday.slice(0, 9);
+						birthday = birthday.slice(0, 10);
 						var thumb = Member.thumb;
 
 						if(thumb == "" || !thumb) {

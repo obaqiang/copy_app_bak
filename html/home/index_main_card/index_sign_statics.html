@@ -58,7 +58,7 @@
 				<span>元</span>
 			</div>
 
-			<div class="mui-scroll-wrapper"  id="index_sign_statics">
+			<div class="mui-scroll-wrapper" id="index_sign_statics">
 				<div class="mui-scroll">
 					<table class="bill_table " border="0" cellspacing="" cellpadding="">
 						<tr>
@@ -93,225 +93,224 @@
 	<script src="../../../js/config/web_config.js"></script>
 
 	<script>
-		mui.init({
-			pullRefresh: {
-				container: '#index_sign_statics',
-				down: {
+		mui.plusReady(function() {
+			mui.init({
+				pullRefresh: {
+					container: '#index_sign_statics',
+					down: {
 
-					callback: pulldownRefresh
-				},
-				up: {
-					contentrefresh: '',
-					//						contentrefresh: '正在加载...',
-					callback: pullupRefresh
-				}
-			}
-		});
-		/**
-		 * 下拉刷新具体业务实现
-		 */
-		function pulldownRefresh() {
-			setTimeout(function() {
-				page_index = 1;
-				GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
-				mui('#index_sign_statics').pullRefresh().endPulldownToRefresh(); //refresh completed
-			}, 1500);
-		}
-		//			var count = 0;
-		/**
-		 * 上拉加载具体业务实现
-		 */
-		function pullupRefresh() {
-			setTimeout(function() {
-
-				page_index++;
-				GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
-				mui('#index_sign_statics').pullRefresh().endPullupToRefresh();
-
-			}, 1500);
-		}
-//		if(mui.os.plus) {
-//			mui.plusReady(function() {
-//				setTimeout(function() {
-//					mui('#index_sign_statics').pullRefresh().pullupLoading();
-//				}, 1000);
-//
-//			});
-//		} else {
-//			mui.ready(function() {
-//				mui('#index_sign_statics').pullRefresh().pullupLoading();
-//			});
-//		}
-
-		var self = plus.webview.currentWebview();
-		var store_id = self.store_id;
-		var vip_id = self.vip_id;
-		var token = self.token;
-		var page_index = 0;
-		var page_size = 20;
-
-		var myDate = new Date();
-		var time_time = myDate.getTime();
-		var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
-		var year_time = myDate.getFullYear();
-		month_time += 1;
-
-		monthShow(month_time);
-
-		var sec_time = time_time / 1000;
-		sec_time = parseInt(sec_time);
-
-		if(month_time < 10) {
-			month_time = '0' + month_time;
-		}
-
-		//		var begin_time = '2016' + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
-		var begin_time = year_time + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
-
-		begin_time = datetime_to_unix(begin_time);
-		var end_time = sec_time;
-
-		GetSignBillDl_url = test_url + '/api/vip/GetSignBillDl';
-
-		function GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size) {
-			mui.ajax(GetSignBillDl_url, {
-				data: {
-					store_id: store_id,
-					vip_id: vip_id,
-					page_index: page_index,
-					page_size: page_size
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log('获取签单统计接口返回数据:' + JSON.stringify(data));
-
-					if(page_index == 1) {
-						var table_div = '<tr><th>名称</th><th>金额</th><th>时间</th></tr>'
-						$('.bill_table').empty();
-						$('.bill_table').append(table_div);
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '',
+						//						contentrefresh: '正在加载...',
+						callback: pullupRefresh
 					}
-					var Bills = data.Data.Bills;
-					var TotolAmount = data.Data.TotolAmount;
-					$('#TotolAmount').text(TotolAmount);
-					for(var i = 0; i < Bills.length; i++) {
-						var staff_name = Bills[i].staff_name;
-						var money = Bills[i].money;
-						var date = Bills[i].date;
-						var sign_div =
-							'<tr><td>' + staff_name + '</td><td>' + money + '</td><td>' + date + '</td></tr>';
-						$('.bill_table').append(sign_div);
-
-					}
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(type);
 				}
 			});
-		}
-		
-		mui.plusReady(function() {
-			GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size); 
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					page_index = 1;
+					GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+					mui('#index_sign_statics').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			//			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
 
-		})
-		
-		
-		//		GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
-		function month_Change(month_begin, month_end, year_time) {
+					page_index++;
+					GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+					mui('#index_sign_statics').pullRefresh().endPullupToRefresh();
 
-			page_index = 1;
-			begin_time = year_time + '-' + month_begin + '-' + '01' + ' ' + '00:00:00';
+				}, 1500);
+			}
+			//		if(mui.os.plus) {
+			//			mui.plusReady(function() {
+			//				setTimeout(function() {
+			//					mui('#index_sign_statics').pullRefresh().pullupLoading();
+			//				}, 1000);
+			//
+			//			});
+			//		} else {
+			//			mui.ready(function() {
+			//				mui('#index_sign_statics').pullRefresh().pullupLoading();
+			//			});
+			//		}
+
+			var self = plus.webview.currentWebview();
+			var store_id = self.store_id;
+			var vip_id = self.vip_id;
+			var token = self.token;
+			var page_index = 0;
+			var page_size = 20;
+
+			var myDate = new Date();
+			var time_time = myDate.getTime();
+			var month_time = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+			var year_time = myDate.getFullYear();
+			month_time += 1;
+
+			monthShow(month_time);
+
+			var sec_time = time_time / 1000;
+			sec_time = parseInt(sec_time);
+
+			if(month_time < 10) {
+				month_time = '0' + month_time;
+			}
+
+			//		var begin_time = '2016' + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+			var begin_time = year_time + '-' + month_time + '-' + '01' + ' ' + '00:00:00';
+
 			begin_time = datetime_to_unix(begin_time);
-			end_time = year_time + '-' + month_end + '-' + '01' + ' ' + '00:00:00';
-			end_time = datetime_to_unix(end_time);
-			GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
-		}
+			var end_time = sec_time;
 
-		mui(".bill_month").on('tap', 'span', function() {
-			var month_text = $(this).text();
-			if(month_text == '1月') {
-				var month_begin = '01';
-				var month_end = '02';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '2月') {
-				var month_begin = '02';
-				var month_end = '03';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '3月') {
-				var month_begin = '03';
-				var month_end = '04';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '4月') {
-				var month_begin = '04';
-				var month_end = '05';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '5月') {
-				var month_begin = '05';
-				var month_end = '06';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '6月') {
-				var month_begin = '06';
-				var month_end = '07';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '7月') {
-				var month_begin = '07';
-				var month_end = '08';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '8月') {
-				var month_begin = '08';
-				var month_end = '09';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '9月') {
-				var month_begin = '09';
-				var month_end = '10';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '10月') {
-				var month_begin = '10';
-				var month_end = '11';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '11月') {
-				var month_begin = '12';
-				var month_end = '12';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '12月') {
-				var month_begin = '12';
-				var month_end = '03';
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				year_time += 1;
-				month_Change(month_begin, month_end, year_time);
-			} else if(month_text == '全部') {
-				$('.bill_month').children().removeClass('bg_cb');
-				$(this).addClass('bg_cb');
-				begin_time = year_time + '-' + '01' + '-' + '01' + ' ' + '00:00:00';
+			GetSignBillDl_url = test_url + '/api/vip/GetSignBillDl';
+
+			function GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size) {
+				mui.ajax(GetSignBillDl_url, {
+					data: {
+						store_id: store_id,
+						vip_id: vip_id,
+						page_index: page_index,
+						page_size: page_size
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取签单统计接口返回数据:' + JSON.stringify(data));
+
+						if(page_index == 1) {
+							var table_div = '<tr><th>名称</th><th>金额</th><th>时间</th></tr>'
+							$('.bill_table').empty();
+							$('.bill_table').append(table_div);
+						}
+						var Bills = data.Data.Bills;
+						var TotolAmount = data.Data.TotolAmount;
+						$('#TotolAmount').text(TotolAmount);
+						for(var i = 0; i < Bills.length; i++) {
+							var staff_name = Bills[i].staff_name;
+							var money = Bills[i].money;
+							var date = Bills[i].date;
+							var sign_div =
+								'<tr><td>' + staff_name + '</td><td>' + money + '</td><td>' + date + '</td></tr>';
+							$('.bill_table').append(sign_div);
+
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+
+			GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+
+			//		GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+			function month_Change(month_begin, month_end, year_time) {
+
+				page_index = 1;
+				begin_time = year_time + '-' + month_begin + '-' + '01' + ' ' + '00:00:00';
 				begin_time = datetime_to_unix(begin_time);
+				end_time = year_time + '-' + month_end + '-' + '01' + ' ' + '00:00:00';
+				end_time = datetime_to_unix(end_time);
 				GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
 			}
+
+			mui(".bill_month").on('tap', 'span', function() {
+				var month_text = $(this).text();
+				if(month_text == '1月') {
+					var month_begin = '01';
+					var month_end = '02';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '2月') {
+					var month_begin = '02';
+					var month_end = '03';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '3月') {
+					var month_begin = '03';
+					var month_end = '04';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '4月') {
+					var month_begin = '04';
+					var month_end = '05';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '5月') {
+					var month_begin = '05';
+					var month_end = '06';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '6月') {
+					var month_begin = '06';
+					var month_end = '07';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '7月') {
+					var month_begin = '07';
+					var month_end = '08';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '8月') {
+					var month_begin = '08';
+					var month_end = '09';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '9月') {
+					var month_begin = '09';
+					var month_end = '10';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '10月') {
+					var month_begin = '10';
+					var month_end = '11';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '11月') {
+					var month_begin = '12';
+					var month_end = '12';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '12月') {
+					var month_begin = '12';
+					var month_end = '03';
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					year_time += 1;
+					month_Change(month_begin, month_end, year_time);
+				} else if(month_text == '全部') {
+					$('.bill_month').children().removeClass('bg_cb');
+					$(this).addClass('bg_cb');
+					begin_time = year_time + '-' + '01' + '-' + '01' + ' ' + '00:00:00';
+					begin_time = datetime_to_unix(begin_time);
+					GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+				}
+
+			})
 
 		})
 	</script>

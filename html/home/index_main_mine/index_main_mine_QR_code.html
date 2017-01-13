@@ -51,6 +51,7 @@
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
+	mui.plusReady(function() {
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
@@ -89,6 +90,7 @@
 			});
 		}
 		GetQRCode(getqrcode_url, member_id, token);
+	})
 	</script>
 	<script>
 		//各个屏幕大小适配

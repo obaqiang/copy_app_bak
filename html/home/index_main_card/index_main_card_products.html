@@ -87,63 +87,62 @@
 	<script src="../../../js/config/web_config.js"></script>
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-
-		function products_pinjie(data) {
-			$('.products_list').empty();
-
-			var store_id = data.Data.store_id;
-			var ClassList = data.Data.ClassList;
-			if(!ClassList) {
-				return;
-			}
-			if(!ClassList) {
-				return;
-			}
-			for(var i = 0; i < ClassList.length; i++) {
-				var class_name = ClassList[i].class_name;
-				var GoodsList = ClassList[i].GoodsList;
-				var products_list_div = '<div class="list_head">' + class_name + '</div>';
-				for(var j = 0; j < GoodsList.length; j++) {
-					var thumb = GoodsList[j].thumb;
-					var goods_name = GoodsList[j].goods_name;
-					var goods_desc = GoodsList[j].goods_desc;
-					var goods_price = GoodsList[j].goods_price;
-					var unit_name = GoodsList[j].unit_name;
-					var prize = goods_price + '元/' + unit_name;
-					products_list_div += '<div class="list_body" goods_name="'+goods_name+'">' +
-						'<img class="list_img" src="' + thumb + '" alt="" />' +
-						'<span class="list_name">' + goods_desc + '</span>' +
-						'<span class="list_prize">' + prize + '</span>' +
-						'<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />' +
-						'</div>';
-				};
-				$('.products_list').append(products_list_div);
-
-			};
-		}
-		
-		
-		mui(".products_list").on('tap','.list_body',function(){
-			var goods_name=$(this).attr('goods_name');
-			var thumb=$(this).children('img').attr('src');
-			var prize=$(this).children('list_prize').text();
-			var goods_desc=$(this).children('.list_name').text();
-			var webview = mui.openWindow({
-				url: 'index_main_card_products_detail.html',
-				extras: {
-					goods_name: goods_name,
-					thumb: thumb,
-					prize: prize,
-					goods_desc: goods_desc
-				}
-			});
-		
-		})
-
 		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			function products_pinjie(data) {
+				$('.products_list').empty();
+
+				var store_id = data.Data.store_id;
+				var ClassList = data.Data.ClassList;
+				if(!ClassList) {
+					return;
+				}
+				if(!ClassList) {
+					return;
+				}
+				for(var i = 0; i < ClassList.length; i++) {
+					var class_name = ClassList[i].class_name;
+					var GoodsList = ClassList[i].GoodsList;
+					var products_list_div = '<div class="list_head">' + class_name + '</div>';
+					for(var j = 0; j < GoodsList.length; j++) {
+						var thumb = GoodsList[j].thumb;
+						var goods_name = GoodsList[j].goods_name;
+						var goods_desc = GoodsList[j].goods_desc;
+						var goods_price = GoodsList[j].goods_price;
+						var unit_name = GoodsList[j].unit_name;
+						var prize = goods_price + '元/' + unit_name;
+						products_list_div += '<div class="list_body" goods_name="' + goods_name + '">' +
+							'<img class="list_img" src="' + thumb + '" alt="" />' +
+							'<span class="list_name">' + goods_desc + '</span>' +
+							'<span class="list_prize">' + prize + '</span>' +
+							'<img class="list_icon" src="../../../images/16px_26px_V.png" alt="" />' +
+							'</div>';
+					};
+					$('.products_list').append(products_list_div);
+
+				};
+			}
+
+			mui(".products_list").on('tap', '.list_body', function() {
+				var goods_name = $(this).attr('goods_name');
+				var thumb = $(this).children('img').attr('src');
+				var prize = $(this).children('list_prize').text();
+				var goods_desc = $(this).children('.list_name').text();
+				var webview = mui.openWindow({
+					url: 'index_main_card_products_detail.html',
+					extras: {
+						goods_name: goods_name,
+						thumb: thumb,
+						prize: prize,
+						goods_desc: goods_desc
+					}
+				});
+
+			})
+
 			var getallgoodsclient_url = test_url + '/api/goods/GetAllGoodsClient';
 			var self = plus.webview.currentWebview();
 			var token = self.token;

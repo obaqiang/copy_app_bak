@@ -78,6 +78,7 @@
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/jquery-1.11.3.js"></script>
 	<script>
+	mui.plusReady(function() {
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
@@ -105,6 +106,7 @@
 			var w = plus.webview.create("index_main_mine_payment.html");
 			w.show(); // 显示窗口
 		})
+	})
 	</script>
 
 </html>

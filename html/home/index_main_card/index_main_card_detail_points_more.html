@@ -85,10 +85,11 @@
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script src="../../../js/common/bdapp.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
 		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
 			isOnline();
 			var self = plus.webview.currentWebview();
 			var Vip_id = self.Vip_id;
@@ -121,23 +122,23 @@
 						for(var i = 0; i < Items.length; i++) {
 							var integral = Items[i].integral;
 							var memo = Items[i].memo;
-							var add_time =Items[i].add_time;
-							add_time=getLocalTime(add_time);
-							var points_div='<div class="points_more_list of_h">'+
-											'<div class="more_list_left">'+
-												'+'+integral+
-											'</div>'+
-											'<div class="more_list_right">'+
-											'<div>'+
-												memo+
-											'</div>'+
-											'<div>'+
-												add_time+
-											'</div>'+
-											'</div>'+
-											'</div>';		
+							var add_time = Items[i].add_time;
+							add_time = getLocalTime(add_time);
+							var points_div = '<div class="points_more_list of_h">' +
+								'<div class="more_list_left">' +
+								'+' + integral +
+								'</div>' +
+								'<div class="more_list_right">' +
+								'<div>' +
+								memo +
+								'</div>' +
+								'<div>' +
+								add_time +
+								'</div>' +
+								'</div>' +
+								'</div>';
 							$('.points_more_body').append(points_div);
-						
+
 						}
 
 					},

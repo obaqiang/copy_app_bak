@@ -55,24 +55,19 @@
 	<script src="../../../js/config/web_config.js"></script>
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-		var self = plus.webview.currentWebview();
-		var goods_name = self.goods_name;
-		var thumb = self.thumb;
-		var prize = self.prize;
-		var goods_desc = self.goods_desc;
-		$('#thumb').attr('src',thumb);
-		$('#goods_name').text(goods_name);
-		$('#prize').text(prize);
-		$('#goods_desc').text(goods_desc);
-
-
-
 		mui.plusReady(function() {
-
-
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			var self = plus.webview.currentWebview();
+			var goods_name = self.goods_name;
+			var thumb = self.thumb;
+			var prize = self.prize;
+			var goods_desc = self.goods_desc;
+			$('#thumb').attr('src', thumb);
+			$('#goods_name').text(goods_name);
+			$('#prize').text(prize);
+			$('#goods_desc').text(goods_desc);
 
 		})
 	</script>

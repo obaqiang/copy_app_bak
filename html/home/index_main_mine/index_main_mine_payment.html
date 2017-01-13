@@ -52,6 +52,7 @@
 	<script src="../../../js/plugin/code128.js"></script>
 	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
+	mui.plusReady(function() {
 //		var qrcode = new QRCode(document.getElementById("qrcode"), {
 //			width: 132, //设置宽高
 //			height: 132
@@ -101,6 +102,8 @@
 			});
 		}
 		BuildTradeCode(buildtradecode_url, member_id, token);
+		
+	})
 	</script>
 	<script>
 		//各个屏幕大小适配

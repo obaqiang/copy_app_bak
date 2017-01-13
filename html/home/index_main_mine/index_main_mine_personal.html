@@ -38,13 +38,13 @@
 						</a>
 					</li>-->
 				<li class="mui-table-view-cell" id="name">
-					<a class="mui-navigate-right mine_list_head personal_name" >
+					<a class="mui-navigate-right mine_list_head personal_name">
 						<span>姓名</span>
 						<span class="personal_name_text name_text">???</span>
 					</a>
 				</li>
 				<li class="mui-table-view-cell" id="phone">
-					<a class="mui-navigate-right mine_list_head personal_name" >
+					<a class="mui-navigate-right mine_list_head personal_name">
 						<span>电话</span>
 						<span class="personal_name_text phone_text">???</span>
 					</a>
@@ -59,42 +59,43 @@
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-		
-		var self = plus.webview.currentWebview();
-		var token = self.token;
-		var member_id = self.member_id;
-		var phone = self.phone;
-		var name = self.name;
-		$('.name_text').text(name);
-		$('.phone_text').text(phone);
-	
-		document.getElementById('name').addEventListener('tap', function() {
-			var webview = mui.openWindow({
-				url: 'index_main_mine_personal_change.html',
-				extras: {
-					member_id: member_id,
-					name: name,
-					phone: phone,
-					token: token
-				}
+		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
 			});
+
+			var self = plus.webview.currentWebview();
+			var token = self.token;
+			var member_id = self.member_id;
+			var phone = self.phone;
+			var name = self.name;
+			$('.name_text').text(name);
+			$('.phone_text').text(phone);
+
+			document.getElementById('name').addEventListener('tap', function() {
+				var webview = mui.openWindow({
+					url: 'index_main_mine_personal_change.html',
+					extras: {
+						member_id: member_id,
+						name: name,
+						phone: phone,
+						token: token
+					}
+				});
+			})
+
+			document.getElementById('phone').addEventListener('tap', function() {
+				var webview = mui.openWindow({
+					url: 'index_main_mine_personal_phone.html',
+					extras: {
+						member_id: member_id,
+						name: name,
+						phone: phone,
+						token: token
+					}
+				});
+			})
 		})
-		
-		document.getElementById('phone').addEventListener('tap', function() {
-			var webview = mui.openWindow({
-				url: 'index_main_mine_personal_phone.html',
-				extras: {
-					member_id: member_id,
-					name: name,
-					phone: phone,
-					token: token
-				}
-			});
-		})
-		
 	</script>
 
 </html>

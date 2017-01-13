@@ -83,64 +83,64 @@
 			</div>
 			<ul class="mui-table-view mui-grid-view mui-grid-9 vip_area">
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_action">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_huodong.png" alt="" />
 						<div class="mui-media-body">活动</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_coupon">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_youhuiquan.png" alt="" />
 						<div class="mui-media-body">优惠券</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="red_packet">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_hongbao.png" alt="" />
 						<div class="mui-media-body">红包</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_prize_list">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_jiangpin.png" alt="" />
 						<div class="mui-media-body">奖品</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_recharge">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_chongzhi.png" alt="" />
 						<div class="mui-media-body">充值记录</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="purchase_history">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_xiaofei.png" alt="" />
 						<div class="mui-media-body">消费记录</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="bill">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_zhangdan.png" alt="" />
 						<div class="mui-media-body">账单</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_sign_statics">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_qiandan.png" alt="" />
 						<div class="mui-media-body">签单</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_deposit">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_tuoguuan.png" alt="" />
 						<div class="mui-media-body">托管</div>
-					</a>
+					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_photo">
-					<a href="#">
+					<!--<a href="#">-->
 						<img src="../../../images/64px_paizhao.png" alt="" />
 						<div class="mui-media-body">交易拍照</div>
-					</a>
+					<!--</a>-->
 				</li>
 			</ul>
 
@@ -248,204 +248,256 @@
 			//			var token = '4058c30e1e7e4333a2ca6120a6d94253';
 			//			var store_id = 688;
 
+			function getvipinfo(getvipinfo_url, vip_id, token) {
+				mui.ajax(getvipinfo_url, {
+					data: {
+						vip_id: vip_id,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						//获得服务器响应
+						console.log('获取会员卡详情接口接口返回数据:' + JSON.stringify(data));
+						var balance = '￥' + data.Data.Vip.end_money; //余额
+						var cardtype_id = data.Data.Vip.cardtype_id;
+						var points = data.Data.Vip.end_integral; //剩余积分
+						$('#balance').text(balance);
+						$('#points').text(points);
+
+						var store_name = data.Data.Store.store_name; //店家名称
+						var open_time = data.Data.Store.open_time;
+						var close_time = data.Data.Store.close_time;
+						var store_time = '营业时间' + open_time + '——' + close_time;
+						var address = data.Data.Store.address;
+						$('#store_name').text(store_name);
+						$('#store_time').text(store_time);
+						$('#address').text(address);
+
+						var location_lng = data.Data.Store.location_lng;
+						var location_lat = data.Data.Store.location_lat;
+
+						var map_url = 'http://uri.amap.com/marker?position=' + location_lng + ',' + location_lat;
+						document.getElementById('map').addEventListener('tap', function() {
+							window.location.href = map_url;
+						});
+
+						//					点击积分兑换事件
+						document.getElementById('points_exchange').addEventListener('tap', function() {
+							var points = $('#points_exchange').text();
+							points = points.replace(/[^0-9]/ig, "");
+							var webview = mui.openWindow({
+								url: 'index_main_card_detail_points.html',
+								id: 'index_main_card_detail_points',
+								extras: {
+									points: points,
+									token: token,
+									vip_id: vip_id,
+									member_id: member_id
+								},
+								createNew: true
+							});
+						});
+
+						//					点击余额事件
+						document.getElementById('account').addEventListener('tap', function() {
+							isOnline();
+							var webview = mui.openWindow({
+								url: 'index_account.html',
+								id: 'index_account',
+								extras: {
+									token: token,
+									vip_id: vip_id,
+									store_id: store_id,
+									prize: data.Data.Vip.end_money
+								},
+								createNew: true
+							});
+						})
+
+						//					点击全部商品事件
+						document.getElementById('products_all').addEventListener('tap', function() {
+							var webview = mui.openWindow({
+								url: 'index_main_card_products.html',
+								id: 'index_main_card_products',
+								extras: {
+									token: token,
+									store_id: store_id,
+								},
+								createNew: true
+							});
+						})
+
+						//					套餐充值
+						document.getElementById('package_charge').addEventListener('tap', function() {
+							var webview = mui.openWindow({
+								url: 'index_main_card_package.html',
+								id: 'index_main_card_package',
+								extras: {
+									token: token,
+									store_id: store_id,
+									cardtype_id: cardtype_id
+								},
+								createNew: true
+							});
+						})
+
+						//					点击活动事件
+						document.getElementById('index_action').addEventListener('tap', function() {
+//								console.log('token:'+token+'&store_id:'+store_id+'&vip_id:'+vip_id);
+								var webview = mui.openWindow({
+									url: 'index_action.html',
+									id: 'index_action',
+									extras: {
+										token: token,
+										store_id: store_id,
+										vip_id: vip_id
+									},
+									createNew: true,
+									waiting: {
+										autoShow: true,
+										//									title:'正在加载'
+									}
+								});
+							})
+							//					优惠券
+						document.getElementById('index_coupon').addEventListener('tap', function() {
+								var webview = mui.openWindow({
+									url: 'index_coupon.html',
+									id: 'index_coupon',
+									extras: {
+										token: token,
+										store_id: store_id,
+										vip_id: vip_id
+									},
+									createNew: true
+								});
+							})
+							//					红包
+						document.getElementById('red_packet').addEventListener('tap', function() {
+								var webview = mui.openWindow({
+									url: 'index_red_packets.html',
+									id: 'index_red_packets',
+									extras: {
+										token: token,
+										vip_id: vip_id
+									},
+									createNew: true
+								});
+							})
+							//					奖品
+						document.getElementById('index_prize_list').addEventListener('tap', function() {
+								var webview = mui.openWindow({
+									url: 'index_prize_list.html',
+									id: 'index_prize_list',
+									extras: {
+										token: token,
+										vip_id: vip_id
+									},
+									createNew: true
+								});
+							})
+							//					充值记录
+						document.getElementById('index_recharge').addEventListener('tap', function() {
+							var webview = mui.openWindow({
+								url: 'index_recharge.html',
+								id: 'index_recharge',
+								extras: {
+									token: token,
+									vip_id: vip_id,
+									store_id: store_id
+								},
+								createNew: true
+							});
+						})
+
+						//					账单
+						document.getElementById('bill').addEventListener('tap', function() {
+							var webview = mui.openWindow({
+								url: 'index_bill.html',
+								id: 'index_bill',
+								extras: {
+									token: token,
+									store_id: store_id,
+									vip_id: vip_id
+								},
+								createNew: true
+							});
+						})
+
+						//					签单
+						document.getElementById('index_sign_statics').addEventListener('tap', function() {
+								var webview = mui.openWindow({
+									url: 'index_sign_statics.html',
+									id: 'index_sign_statics',
+									extras: {
+										token: token,
+										store_id: store_id,
+										vip_id: vip_id
+									},
+									createNew: true
+								});
+							})
+							//					托管
+						document.getElementById('index_deposit').addEventListener('tap', function() {
+								var webview = mui.openWindow({
+									url: 'index_deposit.html',
+									id: 'index_deposit',
+									extras: {
+										token: token,
+										store_id: store_id,
+										member_id: member_id,
+										vip_id: vip_id
+									},
+									createNew: true
+								});
+							})
+							//					交易拍照
+						document.getElementById('index_photo').addEventListener('tap', function() {
+							var webview = mui.openWindow({
+								url: 'index_photo.html',
+								id: 'index_photo',
+								extras: {
+									token: token,
+									store_id: store_id,
+									vip_id: vip_id
+								},
+								createNew: true
+							});
+						})
+
+						document.getElementById('purchase_history').addEventListener('tap', function() {
+							var webview = mui.openWindow({
+								url: 'index_purchase_history.html',
+								id: 'index_purchase_history',
+								extras: {
+									token: token,
+									vip_id: vip_id,
+									store_id: store_id
+								},
+								createNew: true
+							});
+						})
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+
 			//			会员卡详情接口
-			function getvipinfo(vip_id, token) {
-				mui.get(getvipinfo_url, {
-					vip_id: vip_id,
-					token: token
-				}, function(data) {
-					//获得服务器响应
-					console.log('获取会员卡详情接口接口返回数据:' + JSON.stringify(data));
-					var balance = '￥' + data.Data.Vip.end_money; //余额
-					var cardtype_id = data.Data.Vip.cardtype_id;
-					var points = data.Data.Vip.end_integral; //剩余积分
-					$('#balance').text(balance);
-					$('#points').text(points);
-
-					var store_name = data.Data.Store.store_name; //店家名称
-					var open_time = data.Data.Store.open_time;
-					var close_time = data.Data.Store.close_time;
-					var store_time = '营业时间' + open_time + '——' + close_time;
-					var address = data.Data.Store.address;
-					$('#store_name').text(store_name);
-					$('#store_time').text(store_time);
-					$('#address').text(address);
-
-					var location_lng = data.Data.Store.location_lng;
-					var location_lat = data.Data.Store.location_lat;
-
-					var map_url = 'http://uri.amap.com/marker?position=' + location_lng + ',' + location_lat;
-					document.getElementById('map').addEventListener('tap', function() {
-						window.location.href = map_url;
-					});
-
-					//					点击积分兑换事件
-					document.getElementById('points_exchange').addEventListener('tap', function() {
-						var points = $('#points_exchange').text();
-						points = points.replace(/[^0-9]/ig, "");
-						var webview = mui.openWindow({
-							url: 'index_main_card_detail_points.html',
-							extras: {
-								points: points,
-								token: token,
-								vip_id: vip_id,
-								member_id: member_id
-							}
-						});
-					});
-
-					//					点击余额事件
-					document.getElementById('account').addEventListener('tap', function() {
-						isOnline();
-						var webview = mui.openWindow({
-							url: 'index_account.html',
-							extras: {
-								token: token,
-								vip_id: vip_id,
-								store_id: store_id,
-								prize: data.Data.Vip.end_money
-							}
-						});
-					})
-
-					//					点击全部商品事件
-					document.getElementById('products_all').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_main_card_products.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-							}
-						});
-					})
-
-					//					套餐充值
-					document.getElementById('package_charge').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_main_card_package.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-								cardtype_id: cardtype_id
-							}
-						});
-					})
-
-					//					点击活动事件
-					document.getElementById('index_action').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_action.html',
-								extras: {
-									token: token,
-									store_id: store_id,
-									vip_id: vip_id
-								}
-							});
-						})
-						//					优惠券
-					document.getElementById('index_coupon').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_coupon.html',
-								extras: {
-									token: token,
-									store_id: store_id,
-									vip_id: vip_id
-								}
-							});
-						})
-						//					红包
-					document.getElementById('red_packet').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_red_packets.html',
-								extras: {
-									token: token,
-									vip_id: vip_id
-								}
-							});
-						})
-						//					奖品
-					document.getElementById('index_prize_list').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_prize_list.html',
-								extras: {
-									token: token,
-									vip_id: vip_id
-								}
-							});
-						})
-						//					充值记录
-					document.getElementById('index_recharge').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_recharge.html',
-							extras: {
-								token: token,
-								vip_id: vip_id,
-								store_id: store_id
-							}
-						});
-					})
-
-					//					账单
-					document.getElementById('bill').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_bill.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-								vip_id: vip_id
-							}
-						});
-					})
-
-					//					签单
-					document.getElementById('index_sign_statics').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_sign_statics.html',
-								extras: {
-									token: token,
-									store_id: store_id,
-									vip_id: vip_id
-								}
-							});
-						})
-						//					托管
-					document.getElementById('index_deposit').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_deposit.html',
-								extras: {
-									token: token,
-									store_id: store_id,
-									member_id: member_id,
-									vip_id: vip_id
-								}
-							});
-						})
-						//					交易拍照
-					document.getElementById('index_photo').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_photo.html',
-							extras: {
-								token: token,
-								store_id: store_id,
-								vip_id: vip_id
-							}
-						});
-					})
-
-					document.getElementById('purchase_history').addEventListener('tap', function() {
-						var webview = mui.openWindow({
-							url: 'index_purchase_history.html',
-							extras: {
-								token: token,
-								vip_id: vip_id,
-								store_id: store_id
-							}
-						});
-					})
-
-				}, 'json');
-			};
-			getvipinfo(vip_id, token);
+//			function getvipinfo(vip_id, token) {
+//				mui.get(getvipinfo_url, {
+//					vip_id: vip_id,
+//					token: token
+//				}, function(data) {
+//
+//				}, 'json');
+//			};
+			getvipinfo(getvipinfo_url, vip_id, token);
 
 			var GetPickUpTickets_url = test_url + '/api/ticket/GetPickUpTickets';
 			//			优惠券显示接口

@@ -1160,7 +1160,11 @@
 					"html/home/index_main_card/index_account.html",
 					"html/home/index_main_card/index_coupon.html",
 					"html/home/index_main_card/index_action.html",
-					"html/home/index_main_card/index_bill.html"
+					"html/home/index_main_card/index_bill.html",
+					"html/home/index_main_card/index_red_packets.html",
+					"html/home/index_main_card/index_recharge.html",
+					"html/home/index_main_card/index_purchase_history.html",
+					"html/home/index_main_card/index_photo.html"
 				],
 				"priority": 0
 			},
@@ -1200,10 +1204,17 @@
 					"images/48px_48px_card_gray.png",
 					"images/48px_48px_set_red.png",
 					"images/146px_146px_moren.png",
-					"images/48px_48px_me_red.png"
+					"images/48px_48px_me_red.png",
+					"js/jquery-1.11.3.js",
+					"js/common/bdapp.js",
+					"js/mui.min.js",
+					"js/config/web_config.js"
 				],
 				"refer": [
-					"html/home/index_main_card/index_main_card_detail.html"
+					"html/home/index_main_card/index_main_card_detail.html",
+					"html/login/login.html",
+					"html/home/index_main_mine/index_main_mine_payment.html",
+					"html/home/index_main_mine/index_main_mine_QR_code.html"
 				],
 				"priority": 0
 			},
@@ -1253,7 +1264,10 @@
 					"css/mui.min.css",
 					"images/44px_44px_icon1.png"
 				],
-				"refer": [],
+				"refer": [
+					"html/home/index_main_card/index_main_card_detail_points_record.html",
+					"html/home/index_main_card/index_main_card_detail_points_more.html"
+				],
 				"priority": 0
 			},
 			"html/home/index_main_card/index_account.html": {
@@ -1321,7 +1335,8 @@
 					"js/mui.min.js",
 					"js/jquery-1.11.3.js",
 					"js/config/web_config.js",
-					"js/plugin/swiper.min.js"
+					"js/plugin/swiper.min.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1393,6 +1408,138 @@
 					"css/swiper.min.css",
 					"images/34px_34px_icon3.png",
 					"js/plugin/swiper.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_card/index_prize_list.html": {
+				"resources": [
+					"js/common/bdapp.js",
+					"css/index_prize_list.css",
+					"js/mui.min.js",
+					"js/jquery-1.11.3.js",
+					"css/global.css",
+					"fonts/mui.ttf",
+					"js/config/web_config.js",
+					"css/mui.min.css",
+					"js/plugin/swiper.min.js",
+					"css/index_recharge.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_card/index_recharge.html": {
+				"resources": [
+					"js/jquery-1.11.3.js",
+					"fonts/mui.ttf",
+					"js/common/bdapp.js",
+					"images/34px_34px_icon1.png",
+					"images/34px_34px_icon2.png",
+					"js/mui.min.js",
+					"css/global.css",
+					"js/config/web_config.js",
+					"css/mui.min.css",
+					"css/swiper.min.css",
+					"images/34px_34px_icon3.png",
+					"js/plugin/swiper.min.js",
+					"css/index_recharge.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_card/index_deposit.html": {
+				"resources": [
+					"js/common/bdapp.js",
+					"js/mui.min.js",
+					"js/jquery-1.11.3.js",
+					"css/global.css",
+					"fonts/mui.ttf",
+					"js/config/web_config.js",
+					"css/swiper.min.css",
+					"css/mui.min.css",
+					"css/index_deposit.css",
+					"js/plugin/swiper.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_card/index_main_card_detail_points_record.html": {
+				"resources": [
+					"images/34px_34px_icon2.png",
+					"images/34px_34px_icon1.png",
+					"css/index_main_card_detail_points_record.css",
+					"images/34px_34px_icon3.png",
+					"js/jquery-1.11.3.js",
+					"fonts/mui.ttf",
+					"js/common/bdapp.js",
+					"css/index_main_card_detail_points.css",
+					"js/mui.min.js",
+					"css/global.css",
+					"css/index_main_card_detail.css",
+					"js/config/web_config.js",
+					"css/mui.min.css",
+					"css/swiper.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_card/index_main_card_detail_points_more.html": {
+				"resources": [
+					"css/index_main_card_detail_points_more.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_card/index_action_anzhuo.html": {
+				"resources": [
+					"js/common/bdapp.js",
+					"js/mui.min.js",
+					"css/index_action.css",
+					"js/jquery-1.11.3.js",
+					"images/16px_10px_g.png",
+					"css/global.css",
+					"fonts/mui.ttf",
+					"js/config/web_config.js",
+					"css/swiper.min.css",
+					"css/mui.min.css",
+					"js/plugin/swiper.min.js",
+					"images/120px_120px_jinxingzhong.png",
+					"images/120px_120px_over.png",
+					"images/16px_10px_red.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_mine/index_main_mine_payment.html": {
+				"resources": [
+					"js/common/bdapp.js",
+					"images/24px_24px_shuaxin.png",
+					"js/mui.min.js",
+					"js/plugin/code128.js",
+					"js/jquery-1.11.3.js",
+					"css/index_main_mine_payment.css",
+					"fonts/mui.ttf",
+					"js/config/web_config.js",
+					"css/mui.min.css",
+					"css/code128.css",
+					"js/plugin/qrcode.js",
+					"css/index_main_mine.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_mine/index_main_mine_QR_code.html": {
+				"resources": [
+					"js/common/bdapp.js",
+					"css/index_main_mine_QR_code.css",
+					"js/mui.min.js",
+					"js/jquery-1.11.3.js",
+					"fonts/mui.ttf",
+					"js/config/web_config.js",
+					"images/694px_82px_z.png",
+					"css/mui.min.css",
+					"js/plugin/qrcode.js",
+					"css/index_main_mine.css"
 				],
 				"refer": [],
 				"priority": 0

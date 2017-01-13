@@ -55,89 +55,90 @@
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-
-		var self = plus.webview.currentWebview();
-		var phone = self.phone;
-		var token = self.token;
-//		console.log(JSON.stringify(phone));
-
-		var old_pwd_status = false;
-		var new_pwd_status = false;
-		var sure_pwd_status = false;
-		$('input').blur(function() {
-			if($(this).is('#old_pwd')) {
-				if(!(/^[0-9A-Za-z]{6,}$/.test(this.value))) {
-					Alert('密码长度不少于6位,并且由数字和字符组成');
-				} else {
-					old_pwd_status = true;
-				}
-			}
-			if($(this).is('#new_pwd')) {
-				if(!(/^[0-9A-Za-z]{6,}$/.test(this.value))) {
-					Alert('密码长度不少于6位,并且由数字和字符组成');
-				} else {
-					new_pwd_status = true;
-				}
-			}
-			if($(this).is('#sure_pwd')) {
-				var new_pwd = $('#new_pwd').val();
-				var sure_pwd = $('#sure_pwd').val();
-				if(new_pwd == sure_pwd) {
-					sure_pwd_status = true;
-				} else {
-					Alert('两次新密码输入不同，请重试');
-				}
-			}
-
-		})
-
-		var changepwd_url = test_url + '/api/member/ChangePwd';
-		
-	
-		function ChangePwd(changepwd_url, phone, oldpwd, pwd, token) {
-			mui.ajax(changepwd_url, {
-				data: {
-					phone: phone,
-					oldpwd: oldpwd,
-					pwd: pwd,
-					token: token
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log(changepwd_url+'@'+phone+'@'+oldpwd+'@'+pwd+'@'+token);
-					console.log('获取修改密码接口返回数据:' + JSON.stringify(data));
-					if(data.IsError==false){
-						Alert('密码修改成功');
-					}else{
-						var ErrorMessage=data.ErrorMessage;
-						Alert(ErrorMessage);
-						
-					}
-					
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(changepwd_url+'@'+phone+'@'+phone+'@'+oldpwd+'@'+pwd+'@'+token);
-					console.log(errorThrown);
-				}
+		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
 			});
-		}
 
-		document.getElementById('nav_bottom').addEventListener('tap', function() {
-			if(old_pwd_status == true && new_pwd_status == true && sure_pwd_status == true) {
-				var oldpwd = $('#old_pwd').val();
-				var pwd = $('#pwd').val();
-				ChangePwd(changepwd_url, phone, oldpwd, pwd, token);
-			}else{
-				Alert('新密码输入错误');
+			var self = plus.webview.currentWebview();
+			var phone = self.phone;
+			var token = self.token;
+			//		console.log(JSON.stringify(phone));
+
+			var old_pwd_status = false;
+			var new_pwd_status = false;
+			var sure_pwd_status = false;
+			$('input').blur(function() {
+				if($(this).is('#old_pwd')) {
+					if(!(/^[0-9A-Za-z]{6,}$/.test(this.value))) {
+						Alert('密码长度不少于6位,并且由数字和字符组成');
+					} else {
+						old_pwd_status = true;
+					}
+				}
+				if($(this).is('#new_pwd')) {
+					if(!(/^[0-9A-Za-z]{6,}$/.test(this.value))) {
+						Alert('密码长度不少于6位,并且由数字和字符组成');
+					} else {
+						new_pwd_status = true;
+					}
+				}
+				if($(this).is('#sure_pwd')) {
+					var new_pwd = $('#new_pwd').val();
+					var sure_pwd = $('#sure_pwd').val();
+					if(new_pwd == sure_pwd) {
+						sure_pwd_status = true;
+					} else {
+						Alert('两次新密码输入不同，请重试');
+					}
+				}
+
+			})
+
+			var changepwd_url = test_url + '/api/member/ChangePwd';
+
+			function ChangePwd(changepwd_url, phone, oldpwd, pwd, token) {
+				mui.ajax(changepwd_url, {
+					data: {
+						phone: phone,
+						oldpwd: oldpwd,
+						pwd: pwd,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log(changepwd_url + '@' + phone + '@' + oldpwd + '@' + pwd + '@' + token);
+						console.log('获取修改密码接口返回数据:' + JSON.stringify(data));
+						if(data.IsError == false) {
+							Alert('密码修改成功');
+						} else {
+							var ErrorMessage = data.ErrorMessage;
+							Alert(ErrorMessage);
+
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(changepwd_url + '@' + phone + '@' + phone + '@' + oldpwd + '@' + pwd + '@' + token);
+						console.log(errorThrown);
+					}
+				});
 			}
 
+			document.getElementById('nav_bottom').addEventListener('tap', function() {
+				if(old_pwd_status == true && new_pwd_status == true && sure_pwd_status == true) {
+					var oldpwd = $('#old_pwd').val();
+					var pwd = $('#pwd').val();
+					ChangePwd(changepwd_url, phone, oldpwd, pwd, token);
+				} else {
+					Alert('新密码输入错误');
+				}
+
+			})
 		})
 	</script>
 	<script>

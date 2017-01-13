@@ -82,66 +82,69 @@
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/config/web_config.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-
-		var self = plus.webview.currentWebview();
-		var vip_id = self.vip_id;
-		var token = self.token;
-
-		var getvipdrawlotteryitems_url = test_url + '/api/lottery/GetVipDrawLotteryItems';
-
-		function GetVipDrawLotteryItems(getvipdrawlotteryitems_url, vip_id, token) {
-			mui.ajax(getvipdrawlotteryitems_url, {
-				data: {
-					vip_id: vip_id,
-					token: token
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log('获取奖品列表接口返回数据:' + JSON.stringify(data));
-					var Items = data.Data.Items;
-					for(var i = 0; i < Items.length; i++) {
-						var gift_name = Items[i].gift_name;
-						var activity_name = Items[i].activity_name;
-						var last_time = Items[i].last_time;
-						var add_time = Items[i].add_time;
-						add_time = unix_to_datetime(add_time);
-						var status_text;
-						var prize_div =
-							'<div class="recharge_list_content of_h">' +
-							'<div class="recharge_list_left">' +
-							'<div class="recharge_list_left_head prize_list_left_head">' +
-							gift_name +
-							'</div>' +
-							'<div class="recharge_list_left_body">' +
-							activity_name +
-							'</div>' +
-							'</div>' +
-							'<div class="recharge_list_right">' +
-							'<div class="recharge_list_right_head prize_list_right_head">' +
-							status_text +
-							'</div>' +
-							'<div class="recharge_list_right_body prize_list_right_body">' +
-							add_time +
-							'</div>' +
-							'</div>' +
-							'</div>';
-						$('.recharge_list').append(prize_div);
-
-					}
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(type);
-				}
+		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
 			});
-		}
-		GetVipDrawLotteryItems(getvipdrawlotteryitems_url, vip_id, token);
+
+			var self = plus.webview.currentWebview();
+			var vip_id = self.vip_id;
+			var token = self.token;
+
+			var getvipdrawlotteryitems_url = test_url + '/api/lottery/GetVipDrawLotteryItems';
+
+			function GetVipDrawLotteryItems(getvipdrawlotteryitems_url, vip_id, token) {
+				mui.ajax(getvipdrawlotteryitems_url, {
+					data: {
+						vip_id: vip_id,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取奖品列表接口返回数据:' + JSON.stringify(data));
+						var Items = data.Data.Items;
+						for(var i = 0; i < Items.length; i++) {
+							var gift_name = Items[i].gift_name;
+							var activity_name = Items[i].activity_name;
+							var last_time = Items[i].last_time;
+							var add_time = Items[i].add_time;
+							add_time = unix_to_datetime(add_time);
+							var status_text;
+							var prize_div =
+								'<div class="recharge_list_content of_h">' +
+								'<div class="recharge_list_left">' +
+								'<div class="recharge_list_left_head prize_list_left_head">' +
+								gift_name +
+								'</div>' +
+								'<div class="recharge_list_left_body">' +
+								activity_name +
+								'</div>' +
+								'</div>' +
+								'<div class="recharge_list_right">' +
+								'<div class="recharge_list_right_head prize_list_right_head">' +
+								status_text +
+								'</div>' +
+								'<div class="recharge_list_right_body prize_list_right_body">' +
+								add_time +
+								'</div>' +
+								'</div>' +
+								'</div>';
+							$('.recharge_list').append(prize_div);
+
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+			GetVipDrawLotteryItems(getvipdrawlotteryitems_url, vip_id, token);
+
+		})
 	</script>
 
 	<script>

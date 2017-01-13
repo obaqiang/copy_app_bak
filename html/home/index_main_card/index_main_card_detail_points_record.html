@@ -100,11 +100,10 @@
 	<script src="../../../js/jquery-1.11.3.js"></script>
 	<script src="../../../js/common/bdapp.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-
 		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
 
 			var self = plus.webview.currentWebview();
 			var Vip_id = self.Vip_id;
@@ -114,8 +113,7 @@
 			var page_num = 1;
 			var page_size = 10;
 			var type = 1;
-			
-			
+
 			var getexchanges_url = test_url + '/api/exchange/GetExchanges';
 
 			function GetExchanges(getexchanges_url, store_id, Vip_id, page_num, page_size, type, token, status) {
@@ -173,7 +171,7 @@
 								extras: {
 									token: token,
 									exchange_id: exchange_id,
-									member_id:member_id
+									member_id: member_id
 								}
 							});
 						})

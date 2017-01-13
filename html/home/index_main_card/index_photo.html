@@ -93,6 +93,8 @@
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/config/web_config.js"></script>
 	<script>
+	
+	mui.plusReady(function() {
 		mui.init({
 			pullRefresh: {
 				container: '#index_photo',
@@ -131,18 +133,18 @@
 
 			}, 1500);
 		}
-		if(mui.os.plus) {
-			mui.plusReady(function() {
-				setTimeout(function() {
-					mui('#index_photo').pullRefresh().pullupLoading();
-				}, 1000);
-
-			});
-		} else {
-			mui.ready(function() {
-				mui('#index_photo').pullRefresh().pullupLoading();
-			});
-		}
+//		if(mui.os.plus) {
+//			mui.plusReady(function() {
+//				setTimeout(function() {
+//					mui('#index_photo').pullRefresh().pullupLoading();
+//				}, 1000);
+//
+//			});
+//		} else {
+//			mui.ready(function() {
+//				mui('#index_photo').pullRefresh().pullupLoading();
+//			});
+//		}
 
 		var self = plus.webview.currentWebview();
 		var store_id = self.store_id;
@@ -300,6 +302,8 @@
 			GetTradePhotos(gettradephotos_url, store_id, vip_id, type, page_num, page_size, hasitems, token);
 
 		});
+		
+	})
 	</script>
 
 	<script>

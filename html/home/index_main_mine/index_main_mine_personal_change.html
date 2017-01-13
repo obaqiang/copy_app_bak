@@ -45,52 +45,54 @@
 	<script src="../../../js/common/bdapp.js"></script>
 	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-		var self = plus.webview.currentWebview();
-		var token = self.token;
-		var member_id = self.member_id;
-		var phone = self.phone;
-		var name = self.name;
-		$('#name').val(name);
-		console.log(token);
-		var changename_url = test_url + '/api/member/ChangeName';
+		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			var self = plus.webview.currentWebview();
+			var token = self.token;
+			var member_id = self.member_id;
+			var phone = self.phone;
+			var name = self.name;
+			$('#name').val(name);
+			console.log(token);
+			var changename_url = test_url + '/api/member/ChangeName';
 
-		function ChangeName(changename_url, member_id, name, token) {
-			mui.ajax(changename_url, {
-				data: {
-					member_id: member_id,
-					name: name,
-					token: token
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log('获取修改名字信息接口返回数据:' + JSON.stringify(data));
-					var IsError=data.Data.IsError;
-					if(IsError==false){
-						Alert('修改成功');
-					}else{
+			function ChangeName(changename_url, member_id, name, token) {
+				mui.ajax(changename_url, {
+					data: {
+						member_id: member_id,
+						name: name,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取修改名字信息接口返回数据:' + JSON.stringify(data));
+						var IsError = data.Data.IsError;
+						if(IsError == false) {
+							Alert('修改成功');
+						} else {
+							Alert('修改失败');
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
 						Alert('修改失败');
 					}
-					
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(type);
-					Alert('修改失败');
-				}
-			});
-		}
+				});
+			}
 
-		document.getElementById('btn_sure').addEventListener('tap', function() {
-			name=$('#name').val();
-			console.log(name);
-			ChangeName(changename_url, member_id, name, token);
-			
+			document.getElementById('btn_sure').addEventListener('tap', function() {
+				name = $('#name').val();
+				console.log(name);
+				ChangeName(changename_url, member_id, name, token);
+
+			})
 		})
 	</script>
 	<script>
