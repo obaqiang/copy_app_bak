@@ -10,11 +10,13 @@
 
 		<link rel="stylesheet" href="../../../css/mui.min.css">
 		<link rel="stylesheet" href="../../../css/global.css" />
-		<link rel="stylesheet" href="../../../css/index_main_card_products_detail.css" />
+		<link rel="stylesheet" href="../../../css/index_account.css" />
+		<link rel="stylesheet" href="../../../css/swiper.min.css">
+		<link rel="stylesheet" href="../../../css/index_feedbacks.css">
 		<style>
 			html,
 			body {
-				background-color: #efeff4;
+				background-color: ;
 			}
 			
 			.title {
@@ -29,24 +31,32 @@
 		<div class="mui-content">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">产品详情</h1>
+				<h1 class="mui-title">意见反馈</h1>
 			</header>
 
-			<img class="detail_logo" id="thumb" src="" alt="" />
-			<div class="detail_data">
-				<span class="data_left">名称</span>
-				<span class="data_right" id="goods_name">???</span>
+			<div class="text_bg">
+				<textarea class="text_area" rows='3' placeholder="请输入反馈，我们将为您不断改进！"></textarea>
+				<img class="img_upload" src="../../../images/140px_120px_background.png" alt="" />
+				<img class="img_upload_icon" src="../../../images/70px_54px_p.png" alt="" />
+				
 			</div>
-			<div class="detail_data">
-				<span class="data_left">价格</span>
-				<span class="data_right" id="prize">???</span>
+			
+			<div class="suggestion">
+				详细描述您遇到的问题，有助于我们快速了解并解决问题，或留下您宝贵的意见和建议，我们会加速改进
 			</div>
-
-			<div class="detail_des_title">
-				产品描述
+			
+			<button class="btn">问题提交</button>
+			
+			<div class="list_head">
+				我的反馈
 			</div>
-			<div class="detail_des" id="goods_desc">
-				独角兽卡拉胶第十六课就发生的了空间苏打绿看风景林肯郡大神快结婚卡萨接电话卡萨丁和空间哈SD卡结婚
+			<div class="list_area">
+				<span class="question">活动太少了，老板</span>
+				<span class="question_status">已回复</span>
+			</div>
+			<div class="list_area">
+				<span class="question">活动太少了，老板</span>
+				<span class="question_status">已回复</span>
 			</div>
 
 		</div>
@@ -60,18 +70,10 @@
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
-			var self = plus.webview.currentWebview();
-			var goods_name = self.goods_name;
-			var thumb = self.thumb;
-			var prize = self.prize;
-			var goods_desc = self.goods_desc;
-			$('#thumb').attr('src', thumb);
-			$('#goods_name').text(goods_name);
-			$('#prize').text(prize);
-			$('#goods_desc').text(goods_desc);
 
 		})
 	</script>
+
 	<script>
 		//各个屏幕大小适配
 		(function(doc, win) {

@@ -3,12 +3,14 @@
 		"resources": [
 			"html/login/login.html",
 			"index_main_card_detail_points_record.html",
-			"index_main_setting_about.html"
+			"index_main_setting_about.html",
+			"html/home/index_main_card/index_main_card_detail.html"
 		],
 		"refer": [
 			"html/login/login.html",
 			"index_main_card_detail_points_record.html",
-			"index_main_setting_about.html"
+			"index_main_setting_about.html",
+			"html/home/index_main_card/index_main_card_detail.html"
 		]
 	},
 	"html/login/login.html": {
@@ -140,7 +142,8 @@
 			"js/common/bdapp.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"js/config/web_config.js"
+			"js/config/web_config.js",
+			"index.html"
 		],
 		"refer": [
 			"html/home/index_main_card/index_main_card_products.html",
@@ -156,7 +159,9 @@
 			"html/home/index_main_card/index_photo.html",
 			"html/home/index_main_card/index_prize_list.html",
 			"html/home/index_main_card/index_deposit.html",
-			"html/home/index_main_card/index_sign_statics.html"
+			"html/home/index_main_card/index_sign_statics.html",
+			"index.html",
+			"html/home/index_main_card/index_main_card_detail_shop.html"
 		]
 	},
 	"html/home/index_main_anzhuo.html": {
@@ -224,7 +229,12 @@
 			"js/mui.min.js",
 			"js/jquery-1.11.3.js",
 			"fonts/mui.ttf",
-			"js/config/web_config.js"
+			"js/config/web_config.js",
+			"js/common/bdapp.js"
+		],
+		"refer": [
+			"html/home/index_main_card/index_main_card_detail.html",
+			"html/home/index_main_card/index_main_card_products_detail.html"
 		]
 	},
 	"html/home/index_main_card/index_main_card_package.html": {
@@ -237,7 +247,8 @@
 			"js/config/web_config.js",
 			"css/mui.min.css",
 			"images/56px_42px_fff.png",
-			"images/16px_26px_V.png"
+			"images/16px_26px_V.png",
+			"js/common/bdapp.js"
 		]
 	},
 	"html/home/index_main_card/index_main_card_detail_points.html": {
@@ -453,7 +464,11 @@
 	},
 	"html/home/index_main_card/index_main_card_detail_points_more.html": {
 		"resources": [
-			"css/index_main_card_detail_points_more.css"
+			"css/index_main_card_detail_points_more.css",
+			"css/index_main_card_detail_points.css",
+			"css/global.css",
+			"css/index_main_card_detail.css",
+			"css/mui.min.css"
 		]
 	},
 	"html/home/index_main_card/index_action_anzhuo.html": {
@@ -561,6 +576,36 @@
 		"resources": [
 			"css/index_main_setting_question.css",
 			"images/46px_46px_banben.png"
+		]
+	},
+	"html/home/index_main_card/index_main_card_products_detail.html": {
+		"resources": [
+			"css/index_main_card_products_detail.css",
+			"js/mui.min.js",
+			"js/jquery-1.11.3.js",
+			"js/config/web_config.js",
+			"css/mui.min.css",
+			"js/common/bdapp.js",
+			"css/global.css"
+		]
+	},
+	"html/home/index_main_card/index_main_card_detail_shop.html": {
+		"resources": [
+			"images/140px_120px_background.png",
+			"css/global.css",
+			"css/index_main_card_detail.css",
+			"css/swiper.min.css",
+			"css/mui.min.css",
+			"images/38px_38px_icon2.png",
+			"images/38px_38px_icon1.png",
+			"images/38px_38px_icon3.png",
+			"css/index_main_card_detail_shop.css",
+			"js/jquery-1.11.3.js",
+			"fonts/mui.ttf",
+			"js/common/bdapp.js",
+			"js/mui.min.js",
+			"js/config/web_config.js",
+			"js/plugin/swiper.min.js"
 		]
 	}
 }

@@ -8,11 +8,11 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		<link rel="stylesheet" href="css/mui.min.css">
-		<link rel="stylesheet" href="css/global.css" />
-		<link rel="stylesheet" href="css/index_main_card_detail.css" />
-		<link rel="stylesheet" href="css/index_main_card_detail_shop.css" />
-		<link rel="stylesheet" href="css/swiper.min.css">
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<link rel="stylesheet" href="../../../css/global.css" />
+		<link rel="stylesheet" href="../../../css/index_main_card_detail.css" />
+		<link rel="stylesheet" href="../../../css/index_main_card_detail_shop.css" />
+		<link rel="stylesheet" href="../../../css/swiper.min.css">
 		<style>
 			html,
 			body {
@@ -33,57 +33,71 @@
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">商家简介</h1>
 			</header>
-			
+
 			<div class="list_area">
 				<div class="list_info">
-					<img class="list_info_img" src="images/38px_38px_icon3.png" alt="" />
+					<img class="list_info_img" src="../../../images/38px_38px_icon3.png" alt="" />
 					<span class="list_info_title">行业类型:</span>
-					<span class="list_info_name">华坊绿植</span>
+					<span class="list_info_name" id="store_name">???</span>
 				</div>
-				
+
 				<div class="list_info">
-					<img class="list_info_img" src="images/38px_38px_icon2.png" alt="" />
+					<img class="list_info_img" src="../../../images/38px_38px_icon2.png" alt="" />
 					<span class="list_info_title">商家简介</span>
-					<div class="list_info_content">
-						会凋谢的鲜花和会落幕的人生，才能教会我们更懂得珍惜！！
+					<div class="list_info_content" id="store_desc">
+						????
 					</div>
 				</div>
-				
+
 				<div class="list_info_last">
-					<img class="list_info_img" src="images/38px_38px_icon1.png" alt="" />
+					<img class="list_info_img" src="../../../images/38px_38px_icon1.png" alt="" />
 					<span class="list_info_title">商家环境</span>
 					<div class="list_info_see">
-						<img src="images/140px_120px_background.png" alt="" />
-						<img src="images/140px_120px_background.png" alt="" />
-						<img src="images/140px_120px_background.png" alt="" />
-						<img src="images/140px_120px_background.png" alt="" />
+						<div class="swiper-container">
+							<div class="swiper-wrapper" id="image_div">
+								<!--<img src="../../../images/140px_120px_background.png" alt="" />
+								<img src="../../../images/140px_120px_background.png" alt="" />
+								<img src="../../../images/140px_120px_background.png" alt="" />
+								<img src="../../../images/140px_120px_background.png" alt="" />-->
+
+							</div>
+						</div>
+
 					</div>
 				</div>
-				
-				
-				
+
 			</div>
 
-			
-
-			
-			
-			
-
-			
-			
-			
-			
-			
-			
 		</div>
 	</body>
-	<script src="js/mui.min.js"></script>
-	<script src="js/swiper.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/config/web_config.js"></script>
+	<script src="../../../js/jquery-1.11.3.js"></script>
+	<script src="../../../js/common/bdapp.js"></script>
+	<script src="../../../js/plugin/swiper.min.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
+		mui.plusReady(function() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			var self = plus.webview.currentWebview();
+			var data = self.data;
+			console.log(JSON.stringify(data));
+
+			var Store = data.Data.Store;
+			var store_name = Store.store_name;
+			$('#store_name').text(store_name);
+			var store_desc = Store.store_desc;
+			$('#store_desc').text(store_desc);
+			var Images = data.Data.Images;
+			for(var i = 0; i < Images.length; i++) {
+				var thumb_url = Images[i].thumb_url;
+				var image_div = '<img src="' + thumb_url + '" alt="" />';
+				$('#image_div').append(image_div);
+			}
+
+		})
 	</script>
 	<script>
 		var swiper = new Swiper('.swiper-container', {
@@ -93,8 +107,6 @@
 			slidesPerView: 3.5,
 
 		});
-	</script>
-	<script>
 		//各个屏幕大小适配
 		(function(doc, win) {
 			var docEl = doc.documentElement,

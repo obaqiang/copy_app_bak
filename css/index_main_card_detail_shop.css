@@ -42,7 +42,8 @@
 	padding-top: 0.1rem;
 }
 .list_info_see img{
-	width: 0.7rem;
+	width: 1.4rem;
+	height:1rem !important;
 	margin-left: 0.1rem;
 	border-radius: 0.05rem;
 }

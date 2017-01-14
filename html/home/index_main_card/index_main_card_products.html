@@ -29,7 +29,7 @@
 		<div class="mui-content">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">所有商品</h1>
+				<h1 class="mui-title" id="back">所有商品</h1>
 			</header>
 			<div class="products_search">
 				<div class="search_area">
@@ -86,6 +86,7 @@
 	<script src="../../../js/mui.min.js"></script>
 	<script src="../../../js/config/web_config.js"></script>
 	<script src="../../../js/jquery-1.11.3.js"></script>
+	<script src="../../../js/common/bdapp.js"></script>
 	<script>
 		mui.plusReady(function() {
 			mui.init({
@@ -207,6 +208,11 @@
 				}
 
 			});
+			
+				//			document.getElementById('back').addEventListener('tap', function() {
+				//				alert(11);
+				//				history.go(-1);
+				//			})
 
 		})
 	</script>

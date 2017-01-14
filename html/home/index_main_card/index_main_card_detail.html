@@ -148,7 +148,7 @@
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right mine_list_head card_detail_name">
 						<span>商家简介</span>
-						<span class="detail_name_text">查看详情</span>
+						<span class="detail_name_text" id="see_shop_detail">查看详情</span>
 					</a>
 				</li>
 
@@ -264,6 +264,10 @@
 						var balance = '￥' + data.Data.Vip.end_money; //余额
 						var cardtype_id = data.Data.Vip.cardtype_id;
 						var points = data.Data.Vip.end_integral; //剩余积分
+						var vip_phone = data.Data.Vip.vip_phone;
+						document.getElementById('tel').addEventListener('tap', function() {
+							window.location.href='tel:13032119695';
+						});
 						$('#balance').text(balance);
 						$('#points').text(points);
 
@@ -480,6 +484,19 @@
 								createNew: true
 							});
 						})
+//						商家简介
+						document.getElementById('see_shop_detail').addEventListener('tap', function() {
+							var webview = mui.openWindow({
+								url: 'index_main_card_detail_shop.html',
+								id: 'index_main_card_detail_shop',
+								extras: {
+									data: data,
+								},
+							});
+						})
+						
+						
+						
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；

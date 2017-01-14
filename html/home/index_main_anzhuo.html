@@ -588,7 +588,7 @@
 						success: function(data) {
 							//服务器返回响应，根据响应结果，分析是否登录成功；
 							console.log('获取消息接口返回数据:' + JSON.stringify(data));
-							if(page_num==1){
+							if(page_num == 1) {
 								$('.message_div').empty();
 							}
 							var Messages = data.Data.Messages;
@@ -758,12 +758,12 @@
 						GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
 
 						document.getElementById('message_left').addEventListener('tap', function() {
-							page_num=1;
+							page_num = 1;
 							var type = '001';
 							GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
 						})
 						document.getElementById('message_right').addEventListener('tap', function() {
-							page_num=1;
+							page_num = 1;
 							var type = '002';
 							GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
 						})
@@ -886,6 +886,7 @@
 			document.getElementById('icon_close').addEventListener('tap', function() {
 				$('.service_area').hide();
 			})
+
 		</script>
 	</body>
 	<script>
