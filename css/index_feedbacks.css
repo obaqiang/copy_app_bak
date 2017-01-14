@@ -8,6 +8,9 @@
 }
 .text_area{
 	border: none;
+	margin-bottom: 0.15rem;
+	padding: 0.1rem 0.15rem;
+	line-height: 0.21rem;
 }
 .img_upload{
 	width: 0.7rem;
@@ -20,7 +23,7 @@
 	height: 0.55rem;
 	margin-right: 0.1rem;
 	margin-top:0.2rem;
-	
+	float: right;
 }
 .suggestion{
 	color: #b2b2b2;
