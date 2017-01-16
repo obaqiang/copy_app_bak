@@ -1,0 +1,16 @@
+.feedback_nav_bottom{
+	border-top: 1px solid #dbdbdb;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding-top: 0.1rem;
+}
+.text_area{
+	display: inline-block;
+	width: 75% !important;
+	margin-left: 5%;
+}
+.btn_send{
+	margin-top: 0.02rem;
+	margin-left: 0.1rem;
+}

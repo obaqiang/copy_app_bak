@@ -154,3 +154,9 @@
 	color: #fff;
 	font-size: 0.12rem;
 }
+.scroll_area{
+	margin-top: 60px;
+}
+.index_main_message{
+	z-index: 10;
+}

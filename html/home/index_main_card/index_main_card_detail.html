@@ -168,7 +168,7 @@
 			</div>
 
 			<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted card_detail_bg">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="feedbacks">
 					<a class="mui-navigate-right mine_list_head card_detail_name">
 						我要反馈
 					</a>
@@ -276,6 +276,8 @@
 						var close_time = data.Data.Store.close_time;
 						var store_time = '营业时间' + open_time + '——' + close_time;
 						var address = data.Data.Store.address;
+						var logo_img=data.Data.Store.logo_img;
+						$('#feedbacks').attr('logo_img',logo_img);
 						$('#store_name').text(store_name);
 						$('#store_time').text(store_time);
 						$('#address').text(address);
@@ -491,6 +493,20 @@
 								id: 'index_main_card_detail_shop',
 								extras: {
 									data: data,
+								},
+							});
+						})
+//						意见反馈
+						document.getElementById('feedbacks').addEventListener('tap', function() {
+							var logo_img=$(this).attr('logo_img');
+							var webview = mui.openWindow({
+								url: 'index_feedbacks.html',
+								id: 'index_feedbacks',
+								extras: {
+									store_id: store_id,
+									member_id:member_id,
+									token:token,
+									logo_img:logo_img
 								},
 							});
 						})
