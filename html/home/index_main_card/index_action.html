@@ -35,17 +35,17 @@
 
 			<div class="action_accordin of_h">
 				<div class="action_accordin_left" id="act_left">
-					<span>全部活动</span>
+					<span class="act_left_text">全部活动</span>
 					<img class="action_accordin_icon" src="../../../images/16px_10px_g.png" alt="" />
 				</div>
 				<div class="action_accordin_right" id="act_right">
-					<span>所有类型</span>
+					<span class="act_right_text">所有类型</span>
 					<img class="action_accordin_icon" src="../../../images/16px_10px_g.png" alt="" />
 				</div>
 
 			</div>
 			<div class="action_accordin_list" style="display: none;">
-				<div>全部活动</div>
+				<div class="li_active">全部活动</div>
 				<div>进行中</div>
 				<div>未开始</div>
 			</div>
@@ -223,9 +223,9 @@
 			mui(".mui-scroll").on('tap', '.action_content', function() {
 				var link_url = $(this).attr('link_url');
 				var webview = mui.openWindow({
-					url: link_url,
+					url: 'index_action_list.html',
 					extras: {
-
+						link_url:link_url
 					}
 				});
 			})
@@ -280,16 +280,28 @@
 				page_num = 1;
 				if(act_text == '全部活动') {
 					activity_status = 0;
+					$('.act_left_text').text(act_text);
+					$('#act_left .action_accordin_icon').attr('src', '../../../images/16px_10px_g.png');
 				} else if(act_text == '进行中') {
 					activity_status = 6;
+					$('.act_left_text').text(act_text);
+					$('#act_left .action_accordin_icon').attr('src', '../../../images/16px_10px_g.png');
 				} else if(act_text == '未开始') {
 					activity_status = 5;
+					$('.act_left_text').text(act_text);
+					$('#act_left .action_accordin_icon').attr('src', '../../../images/16px_10px_g.png');
 				} else if(act_text == '全部') {
 					activity_type = '000';
+					$('.act_right_text').text(act_text);
+					$('#act_right .action_accordin_icon').attr('src', '../../../images/16px_10px_g.png');
 				} else if(act_text == '红包') {
 					activity_type = '001';
+					$('.act_right_text').text(act_text);
+					$('#act_right .action_accordin_icon').attr('src', '../../../images/16px_10px_g.png');
 				} else if(act_text == '转盘') {
 					activity_type = '002';
+					$('.act_right_text').text(act_text);
+					$('#act_right .action_accordin_icon').attr('src', '../../../images/16px_10px_g.png');
 				}
 				GetActivityCommonList(getactivitycommonlist_url, store_id, vip_id, activity_type, activity_status, page_num, page_size, token);
 				$('.action_accordin_list').hide();

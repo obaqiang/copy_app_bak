@@ -41,6 +41,7 @@
 	position: absolute;
 	top: 0.7rem;
 	right: 0;
+	z-index: 10;
 }
 .search_choose li{
 	list-style: none;
@@ -89,4 +90,8 @@
 	width: 0.08rem;
 	top: 0.5rem;
 	right: 0.1rem;
+}
+.li_active{
+	background: #CB2920;
+	color: #fff;
 }

@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/global.css" />
 		<link rel="stylesheet" href="../../css/index_main.css" />
 		<link rel="stylesheet" href="../../css/index_main_card.css" />
 		<link rel="stylesheet" href="../../css/index_main_message.css" />
@@ -31,7 +32,7 @@
 				<span>扫一扫</span>
 			</div>
 
-			<div class="main_head_pay">
+			<div class="main_head_pay" id="main_head_pay">
 				<img src="../../images/40px_40px_pay.png" alt="图片不存在" />
 				<span>付款码</span>
 			</div>
@@ -74,7 +75,7 @@
 				<span class="mui-tab-label set_text">设置</span>
 			</a>
 		</nav>
-
+			
 		<div class="mui-content  index_main_card">
 			<div class="message_head index_main_message" style="display: none;">
 				<div class="head_pay" id="message_left">
@@ -292,6 +293,19 @@
 				var page_size = 10;
 				var store_id = 693;
 
+//				付款码
+				document.getElementById('main_head_pay').addEventListener('tap', function() {
+					var webview = mui.openWindow({
+						url: 'index_main_mine/index_main_mine_payment.html',
+						extras: {
+							member_id: member_id,
+							token: token,
+						},
+						createNew: true
+					});
+				})
+
+
 				function main_pinjie(data) {
 					if(page_num == 1) {
 						$('.card_area').empty();
@@ -416,7 +430,7 @@
 				//				GetUnreadCount(member_id, token);
 
 				//				搜索功能接口
-
+				
 				function GetVipDimInfo(getvipdiminfo_url, member_id, member_name, token) {
 					mui.ajax(getvipdiminfo_url, {
 						data: {
@@ -434,8 +448,10 @@
 							main_pinjie(data);
 						},
 						error: function(xhr, type, errorThrown) {
+							Alert('网络异常，请重试');
 							//异常处理；
 							console.log(type);
+							
 						}
 					});
 				};

@@ -239,3 +239,28 @@ mui.back = function() {
 	mui.currentWebview.opener().show('none');
 	oldback();
 }
+
+function showTel(data) {
+	$('.show_tel').remove();
+	var tel_div=
+	'<div class="show_tel"></div>';
+	$('body').append(tel_div);
+	
+	for(var i = 0; i < data.length; i++) {
+		var tel_span =
+			'<span class="tel">' + data[i] + '</span>';
+		$('.show_tel').append(tel_span);
+
+	}
+	var cancel_div = '<span id="tel_cancel">取消</span>';
+	$('.show_tel').append(cancel_div);
+	
+	mui(".show_tel").on('tap', '.tel', function() {
+		var tel_href = $(this).text();
+		window.location.href = 'tel:' + tel_href;
+	})
+	document.getElementById('tel_cancel').addEventListener('tap', function() {
+		$('.show_tel').hide();
+	});
+
+}

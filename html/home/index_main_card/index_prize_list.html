@@ -98,7 +98,6 @@
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
-			
 
 			var self = plus.webview.currentWebview();
 			var vip_id = self.vip_id;
@@ -126,7 +125,17 @@
 							var add_time = Items[i].add_time;
 							add_time = unix_to_datetime(add_time);
 							var gift_code = Items[i].gift_code;
-							var status_text = '兑换';
+							var status = Items[i].status;
+							if(status == 1) { //显示兑换
+								var status_text = '兑换';
+							} else if(status == 2) { //已经领取
+								var status_text = '已领取';
+								gift_code = '';
+							} else if(status == 3) { //过期
+								var status_text = '已过期';
+								gift_code = '';
+							}
+
 							var prize_div =
 								'<div class="recharge_list_content of_h" gift_code="' + gift_code + '">' +
 								'<div class="recharge_list_left">' +
@@ -151,14 +160,16 @@
 						mui(".prize_list").on('tap', '.recharge_list_content', function() {
 
 							var QRCodeData = $(this).attr('gift_code');
+							if(QRCodeData!='') {
+								$('.qrcode_span').text(QRCodeData);
+								var qrcode = new QRCode(document.getElementById("qrcode"), {
+									width: 300, //设置宽高
+									height: 300
+								});
+								qrcode.makeCode(QRCodeData);
+								$('.qr_area').show();
+							}
 
-							$('.qrcode_span').text(QRCodeData);
-							var qrcode = new QRCode(document.getElementById("qrcode"), {
-								width: 300, //设置宽高
-								height: 300
-							});
-							qrcode.makeCode(QRCodeData);
-							$('.qr_area').show();
 						})
 						document.getElementById('mask').addEventListener('tap', function() {
 							$('.qr_area').empty();

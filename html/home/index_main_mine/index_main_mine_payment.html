@@ -37,7 +37,7 @@
 				<div class="barcode2" id="Barcode"></div>
 				<!--<img class="payment_area_code" src="../../../images/364px_364px_fu.png" alt="图片不存在" />-->
 				<div class="qrcode" id="qrcode"></div>
-				<div class="payment_area_refresh">
+				<div class="payment_area_refresh" id="payment_area_refresh">
 					<img src="../../../images/24px_24px_shuaxin.png" alt="图片不存在" />
 					<span>每分钟自动更新</span>
 				</div>
@@ -52,58 +52,75 @@
 	<script src="../../../js/plugin/code128.js"></script>
 	<script src="../../../js/plugin/qrcode.js"></script>
 	<script>
-	mui.plusReady(function() {
-//		var qrcode = new QRCode(document.getElementById("qrcode"), {
-//			width: 132, //设置宽高
-//			height: 132
-//		});
-//		qrcode.makeCode('啦啦啦啦');
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-		//		createBarcode('Barcode','251322301300730880','B')
+		//				var qrcode = new QRCode(document.getElementById("qrcode"), {
+		//					width: 132, //设置宽高
+		//					height: 132
+		//				});
+		//				qrcode.makeCode('啦啦啦啦');
+		//				var qrcode = new QRCode(document.getElementById("qrcode"), {
+		//					width: 132, //设置宽高
+		//					height: 132
+		//				});
+		//				qrcode.makeCode('啦啦啦啦');
+		mui.plusReady(function() {
 
-		var self = plus.webview.currentWebview();
-		var member_id = self.member_id;
-		var token = self.token;
-
-		console.log(member_id);
-		console.log(token);
-		var buildtradecode_url = test_url + '/api/member/BuildTradeCode';
-
-		function BuildTradeCode(buildtradecode_url, member_id, token) {
-			mui.ajax(buildtradecode_url, {
-				data: {
-					member_id: member_id,
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'post', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
-				headers: {
-					'Content-Type': 'application/json',
-					token: token
-				},
-				success: function(data) {
-					//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log('获取我的付款码接口返回数据:' + JSON.stringify(data));
-					var TradeCode = data.Data.TradeCode;
-					createBarcode('Barcode', TradeCode, 'B');
-					var qrcode = new QRCode(document.getElementById("qrcode"), {
-						width: 132, //设置宽高
-						height: 132
-					});
-					qrcode.makeCode(TradeCode);
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理；
-					console.log(type);
-					console.log(errorThrown);
-				}
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
 			});
-		}
-		BuildTradeCode(buildtradecode_url, member_id, token);
-		
-	})
+			//		createBarcode('Barcode','251322301300730880','B')
+
+			var self = plus.webview.currentWebview();
+			var member_id = self.member_id;
+			var token = self.token;
+
+			console.log(member_id);
+			console.log(token);
+			var buildtradecode_url = test_url + '/api/member/BuildTradeCode';
+			var qrcode;
+
+			function BuildTradeCode(buildtradecode_url, member_id, token) {
+				mui.ajax(buildtradecode_url, {
+					data: {
+						member_id: member_id,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					headers: {
+						'Content-Type': 'application/json',
+						'token': token
+					},
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取我的付款码接口返回数据:' + JSON.stringify(data));
+						var TradeCode = data.Data.TradeCode;
+						createBarcode('Barcode', TradeCode, 'B');
+						qrcode = new QRCode(document.getElementById("qrcode"), {
+							width: 132, //设置宽高
+							height: 132
+						});
+						qrcode.makeCode(TradeCode);
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+						console.log(errorThrown);
+					}
+				});
+			}
+			BuildTradeCode(buildtradecode_url, member_id, token);
+
+			setInterval(function() {
+				$('.qrcode').empty();
+				BuildTradeCode(buildtradecode_url, member_id, token);
+			}, 60000);
+
+			document.getElementById('payment_area_refresh').addEventListener('tap', function() {
+				$('.qrcode').empty();
+				BuildTradeCode(buildtradecode_url, member_id, token);
+			})
+
+		})
 	</script>
 	<script>
 		//各个屏幕大小适配

@@ -27,7 +27,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content  mui-scroll-wrapper" id="index_recharge">
+		<div class="mui-content  ">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">充值记录</h1>
@@ -49,8 +49,9 @@
 
 			</div>
 
-			<div class="recharge_list mui-scroll">
-				<!--<div class="recharge_list_content of_h">
+			<div class="mui-scroll-wrapper" id="index_recharge">
+				<div class="recharge_list mui-scroll">
+					<!--<div class="recharge_list_content of_h">
 					<div class="recharge_list_left">
 						<div class="recharge_list_left_head">
 							测试商品100x2份
@@ -69,7 +70,7 @@
 					</div>
 				</div>-->
 
-				<!--<div class="recharge_list_content of_h">
+					<!--<div class="recharge_list_content of_h">
 					<div class="recharge_list_left">
 						<div class="recharge_list_left_head">
 							测试商品100x2份
@@ -88,6 +89,7 @@
 					</div>
 				</div>-->
 
+				</div>
 			</div>
 
 		</div>
@@ -119,7 +121,8 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-
+					page_num = 1;
+					GetRecharges(getrecharges_url, store_id, vip_id, type, page_num, page_size, hasitems, token);
 					mui('#index_recharge').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
@@ -181,7 +184,7 @@
 						console.log('获取充值记录接口返回数据:' + JSON.stringify(data));
 
 						if(page_num == 1) {
-							$('.page_num').empty();
+							$('.recharge_list').empty();
 						}
 						var Recharges = data.Data.Recharges;
 						var type_text;
@@ -193,7 +196,7 @@
 							type_text = '已取消';
 						}
 
-						for(var i = 0; i < Recharges.lenth; i++) {
+						for(var i = 0; i < Recharges.length; i++) {
 							var package_names = Recharges[i].package_names;
 							var add_time = Recharges[i].add_time;
 							add_time = unix_to_datetime(add_time);
@@ -208,19 +211,18 @@
 								money_payable + '元' +
 								'</div>' +
 								'</div>' +
-								'<div class="recharge_list_right">'
-							'<div class="recharge_list_right_head">' +
-							add_time +
+								'<div class="recharge_list_right">' +
+								'<div class="recharge_list_right_head">' +
+								add_time +
 								'</div>' +
 								'<div class="recharge_list_right_body">' +
 								type_text +
 								'</div>' +
 								'</div>' +
 								'</div>';
-//							$('.recharge_list').append(recharge_div);
+							$('.recharge_list').append(recharge_div);
 
 						}
-						
 
 					},
 					error: function(xhr, type, errorThrown) {

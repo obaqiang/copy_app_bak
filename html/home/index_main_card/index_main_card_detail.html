@@ -84,62 +84,62 @@
 			<ul class="mui-table-view mui-grid-view mui-grid-9 vip_area">
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_action">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_huodong.png" alt="" />
-						<div class="mui-media-body">活动</div>
+					<img src="../../../images/64px_huodong.png" alt="" />
+					<div class="mui-media-body">活动</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_coupon">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_youhuiquan.png" alt="" />
-						<div class="mui-media-body">优惠券</div>
+					<img src="../../../images/64px_youhuiquan.png" alt="" />
+					<div class="mui-media-body">优惠券</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="red_packet">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_hongbao.png" alt="" />
-						<div class="mui-media-body">红包</div>
+					<img src="../../../images/64px_hongbao.png" alt="" />
+					<div class="mui-media-body">红包</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_prize_list">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_jiangpin.png" alt="" />
-						<div class="mui-media-body">奖品</div>
+					<img src="../../../images/64px_jiangpin.png" alt="" />
+					<div class="mui-media-body">奖品</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_recharge">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_chongzhi.png" alt="" />
-						<div class="mui-media-body">充值记录</div>
+					<img src="../../../images/64px_chongzhi.png" alt="" />
+					<div class="mui-media-body">充值记录</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="purchase_history">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_xiaofei.png" alt="" />
-						<div class="mui-media-body">消费记录</div>
+					<img src="../../../images/64px_xiaofei.png" alt="" />
+					<div class="mui-media-body">消费记录</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="bill">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_zhangdan.png" alt="" />
-						<div class="mui-media-body">账单</div>
+					<img src="../../../images/64px_zhangdan.png" alt="" />
+					<div class="mui-media-body">账单</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_sign_statics">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_qiandan.png" alt="" />
-						<div class="mui-media-body">签单</div>
+					<img src="../../../images/64px_qiandan.png" alt="" />
+					<div class="mui-media-body">签单</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_deposit">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_tuoguuan.png" alt="" />
-						<div class="mui-media-body">托管</div>
+					<img src="../../../images/64px_tuoguuan.png" alt="" />
+					<div class="mui-media-body">托管</div>
 					<!--</a>-->
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="index_photo">
 					<!--<a href="#">-->
-						<img src="../../../images/64px_paizhao.png" alt="" />
-						<div class="mui-media-body">交易拍照</div>
+					<img src="../../../images/64px_paizhao.png" alt="" />
+					<div class="mui-media-body">交易拍照</div>
 					<!--</a>-->
 				</li>
 			</ul>
@@ -178,6 +178,10 @@
 			<img style="width: 100%;" src="../../../images/750px_187px_background.png" alt="" />
 
 		</div>
+		<!--<div class="show_tel">
+			<span>13032119695</span>
+			<span>取消</span>
+		</div>-->
 
 	</body>
 	<script src="../../../js/mui.min.js"></script>
@@ -265,9 +269,18 @@
 						var cardtype_id = data.Data.Vip.cardtype_id;
 						var points = data.Data.Vip.end_integral; //剩余积分
 						var vip_phone = data.Data.Vip.vip_phone;
+						var tel = data.Data.Store.tel;
+						var tel_status = tel.indexOf(',');
 						document.getElementById('tel').addEventListener('tap', function() {
-							window.location.href='tel:13032119695';
+							if(tel_status > 0) { //此状态表示有两个号码
+								tel = tel.split(',');
+								showTel(tel);
+							} else {
+								window.location.href = 'tel:' + tel;
+							}
+
 						});
+
 						$('#balance').text(balance);
 						$('#points').text(points);
 
@@ -276,8 +289,8 @@
 						var close_time = data.Data.Store.close_time;
 						var store_time = '营业时间' + open_time + '——' + close_time;
 						var address = data.Data.Store.address;
-						var logo_img=data.Data.Store.logo_img;
-						$('#feedbacks').attr('logo_img',logo_img);
+						var logo_img = data.Data.Store.logo_img;
+						$('#feedbacks').attr('logo_img', logo_img);
 						$('#store_name').text(store_name);
 						$('#store_time').text(store_time);
 						$('#address').text(address);
@@ -352,7 +365,7 @@
 
 						//					点击活动事件
 						document.getElementById('index_action').addEventListener('tap', function() {
-//								console.log('token:'+token+'&store_id:'+store_id+'&vip_id:'+vip_id);
+								//								console.log('token:'+token+'&store_id:'+store_id+'&vip_id:'+vip_id);
 								var webview = mui.openWindow({
 									url: 'index_action.html',
 									id: 'index_action',
@@ -475,44 +488,42 @@
 						})
 
 						document.getElementById('purchase_history').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_purchase_history.html',
-								id: 'index_purchase_history',
-								extras: {
-									token: token,
-									vip_id: vip_id,
-									store_id: store_id
-								},
-								createNew: true
-							});
-						})
-//						商家简介
+								var webview = mui.openWindow({
+									url: 'index_purchase_history.html',
+									id: 'index_purchase_history',
+									extras: {
+										token: token,
+										vip_id: vip_id,
+										store_id: store_id
+									},
+									createNew: true
+								});
+							})
+							//						商家简介
 						document.getElementById('see_shop_detail').addEventListener('tap', function() {
-							var webview = mui.openWindow({
-								url: 'index_main_card_detail_shop.html',
-								id: 'index_main_card_detail_shop',
-								extras: {
-									data: data,
-								},
-							});
-						})
-//						意见反馈
+								var webview = mui.openWindow({
+									url: 'index_main_card_detail_shop.html',
+									id: 'index_main_card_detail_shop',
+									extras: {
+										data: data,
+									},
+								});
+							})
+							//						意见反馈
 						document.getElementById('feedbacks').addEventListener('tap', function() {
-							var logo_img=$(this).attr('logo_img');
+							var logo_img = $(this).attr('logo_img');
 							var webview = mui.openWindow({
 								url: 'index_feedbacks.html',
 								id: 'index_feedbacks',
 								extras: {
 									store_id: store_id,
-									member_id:member_id,
-									token:token,
-									logo_img:logo_img
+									member_id: member_id,
+									token: token,
+									logo_img: logo_img
 								},
 							});
 						})
-						
-						
-						
+
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
@@ -522,14 +533,14 @@
 			}
 
 			//			会员卡详情接口
-//			function getvipinfo(vip_id, token) {
-//				mui.get(getvipinfo_url, {
-//					vip_id: vip_id,
-//					token: token
-//				}, function(data) {
-//
-//				}, 'json');
-//			};
+			//			function getvipinfo(vip_id, token) {
+			//				mui.get(getvipinfo_url, {
+			//					vip_id: vip_id,
+			//					token: token
+			//				}, function(data) {
+			//
+			//				}, 'json');
+			//			};
 			getvipinfo(getvipinfo_url, vip_id, token);
 
 			var GetPickUpTickets_url = test_url + '/api/ticket/GetPickUpTickets';

@@ -328,10 +328,17 @@
 				var image = new Image();
 				image.src = $('.img_upload').attr('src');
 				var imgData;
+
 				image.onload = function() {
 					imgData = getBase64Image(image);
 					content += imgData;
-					console.log(device_info);
+					console.log('addfeedback_url+' + addfeedback_url);
+					console.log('member_id:' + member_id);
+					console.log('store_id:' + store_id);
+					console.log('content:' + content);
+					console.log('device_info:' + device_info);
+					console.log('type:' + type);
+					console.log('token:' + token);
 					AddFeedBack(addfeedback_url, member_id, store_id, content, device_info, type, token);
 				}
 

@@ -30,7 +30,7 @@
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">套餐管理</h1>
-				<img class="nav_icon_right" src="../../../images/56px_42px_fff.png" alt="" />
+				<img id="nav_icon_right" class="nav_icon_right" src="../../../images/56px_42px_fff.png" alt="" />
 			</header>
 
 			<ul class="nav_ul" style="display: none;">
@@ -39,39 +39,40 @@
 				<li>储值</li>
 				<li>全部</li>
 			</ul>
-
-			<!--<div class="package_list list_head">
-				<div class="list_a">
-					买赠
-				</div>
-				<div class="list_b">
-					<div class="list_b_name">
-						超级优惠套餐
+			<div class="package_area">
+				<!--<div class="package_list">
+					<div class="list_a">
+						买赠
 					</div>
-					<div class="list_b_prize">
-						399.00元
+					<div class="list_b">
+						<div class="list_b_name">
+							超级优惠套餐
+						</div>
+						<div class="list_b_prize">
+							399.00元
+						</div>
+
 					</div>
+					<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />
 
 				</div>
-				<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />
+				<div class="package_list">
+					<div class="list_a">
+						买赠
+					</div>
+					<div class="list_b">
+						<div class="list_b_name">
+							超级优惠套餐
+						</div>
+						<div class="list_b_prize">
+							399.00元
+						</div>
 
+					</div>
+					<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />
+
+				</div>-->
 			</div>
-			<div class="package_list">
-				<div class="list_a">
-					买赠
-				</div>
-				<div class="list_b">
-					<div class="list_b_name">
-						超级优惠套餐
-					</div>
-					<div class="list_b_prize">
-						399.00元
-					</div>
-
-				</div>
-				<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />
-
-			</div>-->
 
 		</div>
 	</body>
@@ -114,47 +115,31 @@
 							var type_text;
 							if(type == '001') {
 								type_text = '买赠';
+								type = 'one';
 							} else if(type == '002') {
-								type_text = '买赠';
+								type_text = '储值';
+								type = 'two';
 							} else if(type == '003') {
 								type_text = '计时';
+								type = 'three';
 							}
-							if(i == 0) {
 
-								var package_div =
-									'<div class="package_list list_head">' +
-									'<div class="list_a">' +
-									type_text +
-									'</div>' +
-									'<div class="list_b">' +
-									'<div class="list_b_name">' +
-									package_name +
-									'</div>' +
-									'<div class="list_b_prize">' +
-									money + '元' +
-									'</div>' +
-									'</div>' +
-									'<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />' +
-									'</div>';
-								$('.mui-content').append(package_div);
-							} else {
-								var package_div =
-									'<div class="package_list">' +
-									'<div class="list_a">' +
-									type_text +
-									'</div>' +
-									'<div class="list_b">' +
-									'<div class="list_b_name">' +
-									package_name +
-									'</div>' +
-									'<div class="list_b_prize">' +
-									money + '元' +
-									'</div>' +
-									'</div>' +
-									'<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />' +
-									'</div>';
-								$('.mui-content').append(package_div);
-							}
+							var package_div =
+								'<div class="package_list ' + type + '">' +
+								'<div class="list_a">' +
+								type_text +
+								'</div>' +
+								'<div class="list_b">' +
+								'<div class="list_b_name">' +
+								package_name +
+								'</div>' +
+								'<div class="list_b_prize">' +
+								money + '元' +
+								'</div>' +
+								'</div>' +
+								'<img class="list_img" src="../../../images/16px_26px_V.png" alt="" />' +
+								'</div>';
+							$('.package_area').append(package_div);
 
 						}
 
@@ -166,6 +151,44 @@
 				});
 			}
 			GetPacakges(getpacakges_url, store_id, cardtype_id, token);
+
+			document.getElementById('nav_icon_right').addEventListener('tap', function() {
+				if($('.nav_ul').is(':visible') == true) {
+					$('.nav_ul').hide();
+				} else {
+					$('.nav_ul').show();
+
+				}
+			})
+
+			mui(".nav_ul").on('tap', 'li', function() {
+				console.log(1111);
+				var type_text = $(this).text();
+				console.log(type_text);
+				if(type_text == '买赠') {
+					console.log(1);
+					type = '001';
+					$('.package_list').hide();
+					$('.one').show();
+				} else if(type_text == '储值') {
+					console.log(2);
+					type = '002';
+					$('.package_list').hide();
+					$('.two').show();
+				} else if(type_text == '计时') {
+					console.log(3);
+					type = '003';
+					$('.package_list').hide();
+					$('.three').show();
+				} else {
+					$('.package_list').show();
+				}
+
+				$('.nav_ul li').removeClass('li_active');
+				$(this).addClass('li_active');
+				$('.nav_ul').hide();
+
+			})
 
 		})
 	</script>

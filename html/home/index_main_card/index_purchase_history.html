@@ -27,7 +27,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content mui-scroll-wrapper" id="purchase_history">
+		<div class="mui-content ">
 			<header class="mui-bar mui-bar-nav nav_header">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">消费记录</h1>
@@ -49,8 +49,9 @@
 
 			</div>
 
-			<div class="recharge_list mui-scroll">
-				<!--<div class="recharge_list_content of_h">
+			<div class="mui-scroll-wrapper" id="purchase_history">
+				<div class="recharge_list mui-scroll">
+					<!--<div class="recharge_list_content of_h">
 					<div class="recharge_list_left">
 						<div class="recharge_list_left_head">
 							测试商品100x2份小淘气大数据库家里看书的将拉开加深对林肯郡
@@ -88,6 +89,7 @@
 					</div>
 				</div>-->
 
+				</div>
 			</div>
 
 		</div>
@@ -134,18 +136,18 @@
 
 				}, 1500);
 			}
-//			if(mui.os.plus) {
-//				mui.plusReady(function() {
-//					setTimeout(function() {
-//						mui('#purchase_history').pullRefresh().pullupLoading();
-//					}, 1000);
-//
-//				});
-//			} else {
-//				mui.ready(function() {
-//					mui('#purchase_history').pullRefresh().pullupLoading();
-//				});
-//			}
+			//			if(mui.os.plus) {
+			//				mui.plusReady(function() {
+			//					setTimeout(function() {
+			//						mui('#purchase_history').pullRefresh().pullupLoading();
+			//					}, 1000);
+			//
+			//				});
+			//			} else {
+			//				mui.ready(function() {
+			//					mui('#purchase_history').pullRefresh().pullupLoading();
+			//				});
+			//			}
 
 			var page_num = 1;
 			var page_size = 10;

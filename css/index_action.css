@@ -41,8 +41,8 @@
 .action_accordin_list div {
 	font-size: 0.13rem;
 	border-bottom: 1px solid #d0d0d0;
-	padding-left: 0.01rem;
-	margin-left: 0.45rem;
+	padding-left: 0.3rem;
+	/*margin-left: 0.45rem;*/
 	line-height: 0.44rem;
 }
 
@@ -99,4 +99,8 @@
 }
 .mui-scroll-wrapper{
 	top: 90px !important;
+}
+.li_active{
+	background: #CB2920;
+	color: #fff;
 }

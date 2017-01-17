@@ -36,14 +36,14 @@
 					<img src="../../../images/26px_26px_search.png" alt="" />
 					<input id="search" type="text" name="" id="" value="" placeholder="搜索产品" />
 				</div>
-				<img class="search_img" src="../../../images/56px_42px_fenlei.png" alt="" />
+				<img id="search_img" class="search_img" src="../../../images/56px_42px_fenlei.png" alt="" />
 
 			</div>
 			<ul class="search_choose" style="display: none;">
-				<li>移动硬盘</li>
+				<!--<li class="li_active">移动硬盘</li>
 				<li>显示器</li>
 				<li>电源</li>
-				<li>固态硬盘</li>
+				<li>固态硬盘</li>-->
 			</ul>
 
 			<div class="products_list">
@@ -101,9 +101,6 @@
 				if(!ClassList) {
 					return;
 				}
-				if(!ClassList) {
-					return;
-				}
 				for(var i = 0; i < ClassList.length; i++) {
 					var class_name = ClassList[i].class_name;
 					var GoodsList = ClassList[i].GoodsList;
@@ -123,6 +120,10 @@
 							'</div>';
 					};
 					$('.products_list').append(products_list_div);
+
+					var search_choose_li =
+						'<li>' + ClassList[i].class_name + '</li>';
+					$('.search_choose').append(search_choose_li);
 
 				};
 			}
@@ -167,6 +168,7 @@
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
 						console.log(type);
+						Alert('网络异常，请重试');
 					}
 				});
 
@@ -194,6 +196,7 @@
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
 						console.log(type);
+						Alert('网络异常，请重试');
 					}
 				});
 			}
@@ -208,11 +211,29 @@
 				}
 
 			});
-			
-				//			document.getElementById('back').addEventListener('tap', function() {
-				//				alert(11);
-				//				history.go(-1);
-				//			})
+
+			//			document.getElementById('back').addEventListener('tap', function() {
+			//				alert(11);
+			//				history.go(-1);
+			//			})
+
+			document.getElementById('search_img').addEventListener('tap', function() {
+				if($('.search_choose').is(':visible')==true){
+					$('.search_choose').hide();
+				}else{
+					$('.search_choose').show();
+					
+				}
+			})
+
+			mui(".search_choose").on('tap', 'li', function() {
+				var goods_name=$(this).text();
+				$('.search_choose li').removeClass('li_active');
+				$(this).addClass('li_active');
+				GetGoods(getgoods_url, store_id, goods_name, token);
+				$('.search_choose').hide();
+				
+			})
 
 		})
 	</script>

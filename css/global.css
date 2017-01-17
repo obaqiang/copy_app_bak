@@ -23,6 +23,8 @@
 	background: #fff;
 	padding-top: 0.1rem;
 	padding-bottom: 0.1rem;
+	position: relative;
+	z-index: 200;
 }
 .record_list{
 	display: inline-block;
@@ -100,4 +102,23 @@
 }
 .bd_h{
 	display: none;
+}
+.show_tel{
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	top: 2rem;
+	z-index: 10;
+}
+.show_tel span{
+	background: #000000;
+	display: block;
+	width: 70%;
+	height:0.5rem;
+	margin: auto;
+	opacity:0.5;
+	color: #fff;
+	font-size: 0.2rem;
+	border-radius: 0.1rem;
+	padding: 0.1rem 0.2rem;
 }
