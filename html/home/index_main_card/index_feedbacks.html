@@ -45,20 +45,20 @@
 				详细描述您遇到的问题，有助于我们快速了解并解决问题，或留下您宝贵的意见和建议，我们会加速改进
 			</div>
 
-			<button class="btn">问题提交</button>
+			<button class="btn" id="btn">问题提交</button>
 
 			<div class="list_head">
 				我的反馈
 			</div>
 			<div class="feedbacks_div">
-				<div class="list_area">
+				<!--<div class="list_area">
 					<span class="question">活动太少了，老板</span>
 					<span class="question_status">已回复</span>
 				</div>
 				<div class="list_area">
 					<span class="question">活动太少了，老板</span>
 					<span class="question_status">已回复</span>
-				</div>
+				</div>-->
 			</div>
 
 		</div>
@@ -248,10 +248,12 @@
 						for(var i = 0; i < FeedBacks.length; i++) {
 							var content = FeedBacks[i].content;
 							var reply_content = FeedBacks[i].reply_content;
+							var add_time = FeedBacks[i].add_time;
 							var member_thumb = FeedBacks[i].member_thumb;
 							var add_time = FeedBacks[i].add_time;
+							var reply_time = FeedBacks[i].reply_time;
 							var feedbacks_div =
-								'<div class="list_area" FeedBacks="' + FeedBacks + '">' +
+								'<div class="list_area" content="' + content + '" reply_content="' + reply_content + '" add_time="' + add_time + '" reply_time="' + reply_time + '">' +
 								'<span class="question">' + content + '</span>' +
 								'<span class="question_status">已回复</span>' +
 								'</div>';
@@ -259,12 +261,21 @@
 						}
 
 						mui(".feedbacks_div").on('tap', '.list_area', function() {
-							var FeedBacks = this.getAttribute("FeedBacks");
+							var content = $(this).attr('content');
+							var reply_content = $(this).attr('reply_content');
+							var add_time = $(this).attr('add_time');
+							var member_thumb = $(this).attr('member_thumb');
+							var add_time = $(this).attr('add_time');
+							var reply_time = $(this).attr('reply_time');
 							var webview = mui.openWindow({
 								url: 'index_feedbacks_detail.html',
 								id: 'index_feedbacks_detail',
 								extras: {
-									FeedBacks: FeedBacks,
+									logo_img: logo_img,
+									content: content,
+									reply_content: reply_content,
+									add_time: add_time,
+									reply_time: reply_time
 								},
 								createNew: true
 							});
@@ -280,6 +291,51 @@
 			}
 
 			GetFeedBack(getfeedback_url, store_id, type, member_id, page_num, page_size, token);
+
+			var addfeedback_url = test_url + '/api/store/AddFeedBack';
+			var type = 0;
+
+			function AddFeedBack(addfeedback_url, member_id, store_id, content, device_info, type, token) {
+				mui.ajax(addfeedback_url, {
+					data: {
+						member_id: member_id,
+						store_id: store_id,
+						content: content,
+						device_info: device_info,
+						type: type
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					headers: {
+						'Content-Type': 'application/json',
+						'token': token
+					},
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log('获取发送意见接口返回数据:' + JSON.stringify(data));
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+			var device_info = plus.device.vendor;
+			document.getElementById('btn').addEventListener('tap', function() {
+				var content = $('.text_area').val();
+				var lala_image = $('.img_upload');
+				var image = new Image();
+				image.src = $('.img_upload').attr('src');
+				var imgData;
+				image.onload = function() {
+					imgData = getBase64Image(image);
+					content += imgData;
+					console.log(device_info);
+					AddFeedBack(addfeedback_url, member_id, store_id, content, device_info, type, token);
+				}
+
+			})
 
 		})
 	</script>

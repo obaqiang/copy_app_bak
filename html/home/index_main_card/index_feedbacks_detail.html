@@ -34,8 +34,22 @@
 				<h1 class="mui-title">意见反馈</h1>
 			</header>
 
-			<div>
-				<span class=""></span>
+			<div class="chat_area">
+				<!--<span class="add_time">上午9：46</span>
+				<div class="reply_user">
+					<img class="logo_img" src="../../../images/touxiang.jpg" alt="" />
+					<span class="reply_user_content">
+						我利空释放大量进口水力发电关键费德勒看过来抗击非典快乐就
+					</span>
+				</div>
+				<span class="reply_time">下午9：45</span>
+				<div class="content">
+					<img class="thumb" src="../../../images/touxiang.jpg" alt="" />
+					<span class="content_content">
+						我利空释放大量进口水力发电关键费德勒看过来抗击非典快乐就
+					</span>
+
+				</div>-->
 			</div>
 
 			<div class="feedback_nav_bottom">
@@ -56,13 +70,29 @@
 			});
 
 			var self = plus.webview.currentWebview();
-			var FeedBacks = self.FeedBacks;
-			for(var i = 0; i < FeedBacks.length; i++) {
-				var content = FeedBacks[i].content;
-				var reply_content = FeedBacks[i].reply_content;
-				var member_thumb = FeedBacks[i].member_thumb;
-				var add_time = FeedBacks[i].add_time;
-			}
+			var logo_img = self.logo_img;
+			var	content=self.content;
+			var	reply_content=self.reply_content;
+			var	add_time=self.add_time;
+			var	reply_time=self.reply_time;
+			add_time = unix_to_datetime(add_time);
+			reply_time = unix_to_datetime(reply_time);
+			var chat_div =
+				'<span class="add_time">' + add_time + '</span>' +
+				'<div class="reply_user">' +
+				'<img class="logo_img" src="' + logo_img + '" alt="" />' +
+				'<span class="reply_user_content">' +
+				reply_content +
+				'</span>' +
+				'</div>' +
+				'<span class="reply_time">' + reply_time + '</span>' +
+				'<div class="content">' +
+				'<img class="thumb" src="' + reply_time + '" alt="" />' +
+				'<span class="content_content">' +
+				content +
+				'</span>' +
+				'</div>';
+			$('.chat_area').append(chat_div);
 
 		})
 	</script>
