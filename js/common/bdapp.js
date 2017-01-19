@@ -242,10 +242,10 @@ mui.back = function() {
 
 function showTel(data) {
 	$('.show_tel').remove();
-	var tel_div=
-	'<div class="show_tel"></div>';
+	var tel_div =
+		'<div class="show_tel"></div>';
 	$('body').append(tel_div);
-	
+
 	for(var i = 0; i < data.length; i++) {
 		var tel_span =
 			'<span class="tel">' + data[i] + '</span>';
@@ -254,7 +254,7 @@ function showTel(data) {
 	}
 	var cancel_div = '<span id="tel_cancel">取消</span>';
 	$('.show_tel').append(cancel_div);
-	
+
 	mui(".show_tel").on('tap', '.tel', function() {
 		var tel_href = $(this).text();
 		window.location.href = 'tel:' + tel_href;
@@ -263,4 +263,41 @@ function showTel(data) {
 		$('.show_tel').hide();
 	});
 
+}
+
+//计算图片md5
+function img_MD5(img_path, callback) {
+	plus.io.resolveLocalFileSystemURL(img_path, function(entry) {
+		var fileReader = new plus.io.FileReader();
+		fileReader.readAsDataURL(entry);
+		fileReader.onloadend = function(evt) {
+			var format = "image/jpeg";
+			//抽取DataURL中的数据部分，从Base64格式转换为二进制格式
+			var bin = atob(evt.target.result.split(',')[1]);
+			//创建空的Uint8Array
+			var buffer = new Uint8Array(bin.length);
+			//将图像数据逐字节放入Uint8Array中
+			for(var i = 0; i < bin.length; i++) {
+				buffer[i] = bin.charCodeAt(i);
+			};
+			//利用Uint8Array创建Blob对象
+			blob = new Blob([buffer.buffer], {
+				type: format
+			});
+			var fileReader1 = new FileReader();
+			fileReader1.readAsBinaryString(blob);
+			fileReader1.onload = function(evt) {
+				if(evt.target.readyState == FileReader.DONE) {
+					var imgblob = evt.target.result;
+					var sparkMD5 = new SparkMD5();
+					sparkMD5.appendBinary(imgblob);
+					var MD5 = sparkMD5.end();
+					console.log("MD5:" + MD5);
+					callback(MD5)
+				}
+			};
+		}
+	}, function(e) {
+		console.log("Resolve file URL failed: " + e.message);
+	});
 }

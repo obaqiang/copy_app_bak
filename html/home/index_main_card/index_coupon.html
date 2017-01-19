@@ -55,52 +55,52 @@
 			<div class="mui-scroll-wrapper" id="index_coupon">
 				<div class="coupon_area_div mui-scroll">
 					<!--<div class="coupon_list of_h">
-					<div class="coupon_list_left">
-						<div class="coupon_list_left_prize">
-							10
+						<div class="coupon_list_left">
+							<div class="coupon_list_left_prize">
+								10
+							</div>
+							<div class="coupon_list_left_time">
+								使用期限
+							</div>
+							<div class="coupon_list_left_limit">
+								满￥100可用
+							</div>
 						</div>
-						<div class="coupon_list_left_time">
-							使用期限
-						</div>
-						<div class="coupon_list_left_limit">
-							满￥100可用
-						</div>
+						<img class="coupon_list_img" src="../../../images/180px_180px_1.png" alt="" />
+						<div class="coupon_list_num">￥10.00</div>
 					</div>
-					<img class="coupon_list_img" src="../../../images/180px_180px_1.png" alt="" />
-					<div class="coupon_list_num">￥10.00</div>
-				</div>
 
-				<div class="coupon_list of_h">
-					<div class="coupon_list_left">
-						<div class="coupon_list_left_prize">
-							10
+					<div class="coupon_list of_h">
+						<div class="coupon_list_left">
+							<div class="coupon_list_left_prize">
+								10
+							</div>
+							<div class="coupon_list_left_time">
+								使用期限 2016-03-05~2016-03-05
+							</div>
+							<div class="coupon_list_left_limit">
+								满￥100可用
+							</div>
 						</div>
-						<div class="coupon_list_left_time">
-							使用期限 2016-03-05~2016-03-05
-						</div>
-						<div class="coupon_list_left_limit">
-							满￥100可用
-						</div>
+						<img class="coupon_list_img" src="../../../images/180px_180px_2.png" alt="" />
+						<div class="coupon_list_num">￥10.00</div>
 					</div>
-					<img class="coupon_list_img" src="../../../images/180px_180px_2.png" alt="" />
-					<div class="coupon_list_num">￥10.00</div>
-				</div>
 
-				<div class="coupon_list of_h">
-					<div class="coupon_list_left">
-						<div class="coupon_list_left_prize">
-							10
+					<div class="coupon_list of_h">
+						<div class="coupon_list_left">
+							<div class="coupon_list_left_prize">
+								10
+							</div>
+							<div class="coupon_list_left_time">
+								使用期限
+							</div>
+							<div class="coupon_list_left_limit">
+								满￥100可用
+							</div>
 						</div>
-						<div class="coupon_list_left_time">
-							使用期限
-						</div>
-						<div class="coupon_list_left_limit">
-							满￥100可用
-						</div>
-					</div>
-					<img class="coupon_list_img" src="../../../images/180px_180px_3.png" alt="" />
-					<div class="coupon_list_num">￥10.00</div>
-				</div>-->
+						<img class="coupon_list_img" src="../../../images/180px_180px_3.png" alt="" />
+						<div class="coupon_list_num">￥10.00</div>
+					</div>-->
 				</div>
 			</div>
 
@@ -117,7 +117,6 @@
 				pullRefresh: {
 					container: '#index_coupon',
 					down: {
-
 						callback: pulldownRefresh
 					},
 					up: {
@@ -133,7 +132,7 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					page_num=1;
+					page_num = 1;
 					GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
 					mui('#index_coupon').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);

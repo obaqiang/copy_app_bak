@@ -640,9 +640,12 @@
 
 				//			我要发卡
 				document.getElementById('my_send_card').addEventListener('tap', function() {
+					var link_url='http://www.bdvip.net/mobile/faka.html';
 					var webview = mui.openWindow({
-						url: 'http://www.bdvip.net/mobile/faka.html',
-						createNew: true
+						url: 'index_main_mine/index_main_mine_send_card.html',
+						extras: {
+							link_url: link_url,
+						},
 					});
 				})
 

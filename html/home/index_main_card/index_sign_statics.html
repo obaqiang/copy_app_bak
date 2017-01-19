@@ -34,33 +34,34 @@
 				<h1 class="mui-title">签单统计</h1>
 			</header>
 
-			<div class="swiper-container">
-				<div class="swiper-wrapper bill_month statics_head">
-					<span class="swiper-slide">1月</span>
-					<span class="swiper-slide">2月</span>
-					<span class="swiper-slide">3月</span>
-					<span class="swiper-slide">4月</span>
-					<span class="swiper-slide">5月</span>
-					<span class="swiper-slide">6月</span>
-					<span class="swiper-slide">7月</span>
-					<span class="swiper-slide">8月</span>
-					<span class="swiper-slide">9月</span>
-					<span class="swiper-slide">10月</span>
-					<span class="swiper-slide">11月</span>
-					<span class="swiper-slide">12月</span>
-					<span class="swiper-slide">全部</span>
-				</div>
-			</div>
-
-			<div class="bill_charge statics_mid">
-				<span>累计签单：</span>
-				<span id="TotolAmount">??</span>
-				<span>元</span>
-			</div>
-
 			<div class="mui-scroll-wrapper" id="index_sign_statics">
 				<div class="mui-scroll">
-					<table class="bill_table " border="0" cellspacing="" cellpadding="">
+
+					<div class="swiper-container">
+						<div class="swiper-wrapper bill_month statics_head">
+							<span class="swiper-slide">1月</span>
+							<span class="swiper-slide">2月</span>
+							<span class="swiper-slide">3月</span>
+							<span class="swiper-slide">4月</span>
+							<span class="swiper-slide">5月</span>
+							<span class="swiper-slide">6月</span>
+							<span class="swiper-slide">7月</span>
+							<span class="swiper-slide">8月</span>
+							<span class="swiper-slide">9月</span>
+							<span class="swiper-slide">10月</span>
+							<span class="swiper-slide">11月</span>
+							<span class="swiper-slide">12月</span>
+							<span class="swiper-slide">全部</span>
+						</div>
+					</div>
+
+					<div class="bill_charge statics_mid">
+						<span>累计签单：</span>
+						<span id="TotolAmount">??</span>
+						<span>元</span>
+					</div>
+
+					<table class="bill_table bill_table_sign" border="0" cellspacing="" cellpadding="">
 						<tr>
 							<th>名称</th>
 							<th>金额</th>
@@ -214,9 +215,10 @@
 				});
 			}
 
+			//			GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
+
 			GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
 
-			//		GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
 			function month_Change(month_begin, month_end, year_time) {
 
 				page_index = 1;
@@ -226,9 +228,9 @@
 				end_time = datetime_to_unix(end_time);
 				GetSignBillDl(GetSignBillDl_url, store_id, vip_id, page_index, page_size);
 			}
-
 			mui(".bill_month").on('tap', 'span', function() {
 				var month_text = $(this).text();
+
 				if(month_text == '1月') {
 					var month_begin = '01';
 					var month_end = '02';

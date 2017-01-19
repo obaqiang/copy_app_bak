@@ -300,7 +300,14 @@
 
 						var map_url = 'http://uri.amap.com/marker?position=' + location_lng + ',' + location_lat;
 						document.getElementById('map').addEventListener('tap', function() {
-							window.location.href = map_url;
+							var webview = mui.openWindow({
+								url: 'index_map.html',
+								id: 'index_map',
+								extras: {
+									map_url: map_url
+								},
+								createNew: true
+							});
 						});
 
 						//					点击积分兑换事件
@@ -634,6 +641,8 @@
 					}
 				});
 			}
+			var out_num = $(this).attr('out_num');
+			var avg_num = $(this).attr('avg_num');
 			//			给领取优惠券增加点击事件
 			mui(".swiper-wrapper").on('tap', '.swiper-slide', function() {
 
@@ -647,10 +656,10 @@
 				//				console.log('需要的token:' + token);
 				console.log(pickupticket_url + '?member_id=' + member_id + '&store_id=' + store_id + '&ticket_id=' + ticket_id + '&vip_id=' + vip_id + '&token=' + token);
 				PickupTicket(pickupticket_url, member_id, store_id, ticket_id, vip_id, token);
-				var out_num = $(this).attr('out_num');
-				var avg_num = $(this).attr('avg_num');
+
 				if(out_num == avg_num) {
 					$(this).hide();
+					Alert('此优惠券已全部领取');
 				} else {
 					out_num++;
 				}

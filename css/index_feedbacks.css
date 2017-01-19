@@ -39,6 +39,9 @@
 	color: #fff;
 	padding: 0.1rem;
 }
+.btn_wait{
+	background: #dbdbdb;
+}
 .list_head{
 	margin: 0.1rem;
 	font-weight: bold;
