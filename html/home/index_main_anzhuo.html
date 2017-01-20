@@ -661,58 +661,6 @@
 					});
 				})
 
-				//			点击名字修改个人信息
-				document.getElementById('member_name').addEventListener('tap', function() {
-						var name = $('#member_name').text();
-						var phone = $('#phone').text();
-						var webview = mui.openWindow({
-							url: 'index_main_mine/index_main_mine_personal.html',
-							extras: {
-								member_id: member_id,
-								name: name,
-								phone: phone,
-								token: token
-							},
-							createNew: true
-						});
-					})
-					//点击头像上传头像
-				document.getElementById('thumb').addEventListener('tap', function() {
-					if(mui.os.plus) {
-						var a = [{
-							title: "拍照"
-						}, {
-							title: "从手机相册选择"
-						}];
-						plus.nativeUI.actionSheet({
-							title: "修改用户头像",
-							cancel: "取消",
-							buttons: a
-						}, function(b) { /*actionSheet 按钮点击事件*/
-							switch(b.index) {
-								case 0:
-									break;
-								case 1:
-									getImage(); /*拍照*/
-									break;
-								case 2:
-									galleryImg(); /*打开相册*/
-									break;
-								default:
-									break;
-							}
-						})
-					}
-					
-					var image = new Image();
-					image.src = $('.img_upload').attr('src');
-					image.onload = function() {
-						
-					}
-					
-					
-				}, false);
-
 				//			退出登陸
 				document.getElementById('setting_out').addEventListener('tap', function() {
 					UserInfo.clear();
@@ -803,6 +751,22 @@
 						$('#phone').text(phone);
 						$('#birthday').text(birthday);
 						$('#thumb').attr('src', thumb);
+						//			点击名字修改个人信息
+						document.getElementById('thumb').addEventListener('tap', function() {
+							var name = $('#member_name').text();
+							var phone = $('#phone').text();
+							var webview = mui.openWindow({
+								url: 'index_main_mine/index_main_mine_personal.html',
+								extras: {
+									member_id: member_id,
+									name: name,
+									phone: phone,
+									token: token,
+									thumb:thumb
+								},
+								createNew: true
+							});
+						})
 
 					} else if(label_name == '设置') {
 						$('.mui-title').text('设置');
