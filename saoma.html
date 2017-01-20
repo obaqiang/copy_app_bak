@@ -43,8 +43,11 @@
 				scan.cancel();
 			}
 
-			function setFlash() {
-				scan.setFlash();
+			function setFlash(status) {
+				scan.setFlash(status);
+			}
+			function closeScan(){
+				mui.back();
 			}
 		</script>
 		<style type="text/css">
@@ -68,10 +71,13 @@
 	</head>
 
 	<body>
+		<div id="scan"></div>
 		<input type='button' onclick='startRecognize()' value='创建扫描控件' />
 		<input type='button' onclick='startScan()' value='开始扫描' />
 		<input type='button' onclick='cancelScan()' value='取消扫描' />
-		<input type='button' onclick='setFlash()' value='开启闪光灯' />
+		<input type='button' onclick='setFlash(true)' value='开启闪光灯' />
+		<input type='button' onclick='setFlash(false)' value='关闭闪光灯' />
+		<button onclick='closeScan()'>关闭</button>
 		<div id="bcid"></div>
 		<input type='text' id='text' />
 	</body>

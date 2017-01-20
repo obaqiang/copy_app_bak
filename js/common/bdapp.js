@@ -75,6 +75,7 @@ UserInfo.clear = function() {
 UserInfo.auto_login = function() {
 	var username = UserInfo.username();
 	var pwd = UserInfo.password();
+	var pwd_hook_status = UserInfo.pwd_hook_status();
 	if(!username || !pwd) {
 		return false;
 	}
@@ -87,6 +88,7 @@ UserInfo.has_login = function() {
 	var pwd = UserInfo.password();
 	var token = UserInfo.token();
 	var member_id = UserInfo.member_id();
+	var pwd_hook_status = UserInfo.pwd_hook_status();
 	if(!username || !pwd || !token) {
 		console.log('未登陆过');
 		return false;
@@ -136,6 +138,16 @@ UserInfo.member_id = function() {
 		return;
 	}
 	plus.storage.setItem('member_id', arguments[0]);
+};
+UserInfo.pwd_hook_status = function() {
+	if(arguments.length == 0) {
+		return plus.storage.getItem('pwd_hook_status');
+	}
+	if(arguments[0] === '') {
+		plus.storage.removeItem('pwd_hook_status');
+		return;
+	}
+	plus.storage.setItem('pwd_hook_status', arguments[0]);
 };
 
 function getLocalTime(nS) {
@@ -255,49 +267,137 @@ function showTel(data) {
 	var cancel_div = '<span id="tel_cancel">取消</span>';
 	$('.show_tel').append(cancel_div);
 
-	mui(".show_tel").on('tap', '.tel', function() {
-		var tel_href = $(this).text();
-		window.location.href = 'tel:' + tel_href;
+}
+
+//拍照及选择图片start
+function getImage() {
+	var c = plus.camera.getCamera();
+	c.captureImage(function(e) {
+		plus.io.resolveLocalFileSystemURL(e, function(entry) {
+			var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+			uploadHead(s); /*上传图片*/
+		}, function(e) {
+			console.log("读取拍照文件错误：" + e.message);
+		});
+	}, function(s) {
+		console.log("error" + s);
+	}, {
+		filename: "_doc/head.png"
 	})
-	document.getElementById('tel_cancel').addEventListener('tap', function() {
-		$('.show_tel').hide();
-	});
-
 }
 
-//计算图片md5
-function img_MD5(img_path, callback) {
-	plus.io.resolveLocalFileSystemURL(img_path, function(entry) {
-		var fileReader = new plus.io.FileReader();
-		fileReader.readAsDataURL(entry);
-		fileReader.onloadend = function(evt) {
-			var format = "image/jpeg";
-			//抽取DataURL中的数据部分，从Base64格式转换为二进制格式
-			var bin = atob(evt.target.result.split(',')[1]);
-			//创建空的Uint8Array
-			var buffer = new Uint8Array(bin.length);
-			//将图像数据逐字节放入Uint8Array中
-			for(var i = 0; i < bin.length; i++) {
-				buffer[i] = bin.charCodeAt(i);
-			};
-			//利用Uint8Array创建Blob对象
-			blob = new Blob([buffer.buffer], {
-				type: format
-			});
-			var fileReader1 = new FileReader();
-			fileReader1.readAsBinaryString(blob);
-			fileReader1.onload = function(evt) {
-				if(evt.target.readyState == FileReader.DONE) {
-					var imgblob = evt.target.result;
-					var sparkMD5 = new SparkMD5();
-					sparkMD5.appendBinary(imgblob);
-					var MD5 = sparkMD5.end();
-					console.log("MD5:" + MD5);
-					callback(MD5)
-				}
-			};
+//本地相册选择 
+function galleryImg() {
+	plus.gallery.pick(function(a) {
+		plus.io.resolveLocalFileSystemURL(a, function(entry) {
+			plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+				root.getFile("head.png", {}, function(file) {
+					//文件已存在 
+					file.remove(function() {
+						console.log("file remove success");
+						entry.copyTo(root, 'head.png', function(e) {
+								var e = e.fullPath + "?version=" + new Date().getTime();
+								uploadHead(e); /*上传图片*/
+								//变更大图预览的src 
+								//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现 
+							},
+							function(e) {
+								console.log('copy image fail:' + e.message);
+							});
+					}, function() {
+						console.log("delete image fail:" + e.message);
+					});
+				}, function() {
+					//文件不存在 
+					entry.copyTo(root, 'head.png', function(e) {
+							var path = e.fullPath + "?version=" + new Date().getTime();
+							uploadHead(path); /*上传图片*/
+						},
+						function(e) {
+							console.log('copy image fail:' + e.message);
+						});
+				});
+			}, function(e) {
+				console.log("get _www folder fail");
+			})
+		}, function(e) {
+			console.log("读取拍照文件错误：" + e.message);
+		});
+	}, function(a) {}, {
+		filter: "image"
+	})
+};
+
+function compressImage(imgPath) {
+	plus.zip.compressImage({
+			src: imgPath,
+			dst: imgPath,
+			quality: 20
+		},
+		function() {
+			alert("Compress success!");
+		},
+		function(error) {
+			alert("Compress error!");
+		});
+}
+//上传头像图片 
+function uploadHead(imgPath) {
+
+	var mainImage = $('.img_upload')[0];
+	console.log(mainImage);
+
+	console.log("imgPath = " + imgPath);
+	mainImage.src = imgPath;
+	mainImage.style.width = "60px";
+	mainImage.style.height = "60px";
+
+	var image = new Image();
+	console.log('imgPath:' + imgPath);
+	image.src = imgPath;
+	image.onload = function() {
+		var imgData = getBase64Image(image);
+
+		/*在这里调用上传接口*/
+		//              mui.ajax("图片上传接口", { 
+		//                  data: { 
+		//                       
+		//                  }, 
+		//                  dataType: 'json', 
+		//                  type: 'post', 
+		//                  timeout: 10000, 
+		//                  success: function(data) { 
+		//                      console.log('上传成功'); 
+		//                  }, 
+		//                  error: function(xhr, type, errorThrown) { 
+		//                      mui.toast('网络异常，请稍后再试！'); 
+		//                  } 
+		//              }); 
+	}
+}
+//将图片压缩转成base64 
+function getBase64Image(img) {
+	var canvas = document.createElement("canvas");
+	var width = img.width;
+	var height = img.height;
+	// calculate the width and height, constraining the proportions 
+	if(width > height) {
+		if(width > 100) {
+			height = Math.round(height *= 100 / width);
+			width = 100;
 		}
-	}, function(e) {
-		console.log("Resolve file URL failed: " + e.message);
-	});
+	} else {
+		if(height > 100) {
+			width = Math.round(width *= 100 / height);
+			height = 100;
+		}
+	}
+	canvas.width = width; /*设置新的图片的宽度*/
+	canvas.height = height; /*设置新的图片的长度*/
+	var ctx = canvas.getContext("2d");
+	ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+	var dataURL = canvas.toDataURL("image/png", 0.8);
+	return dataURL.replace("data:image/png;base64,", "");
 }
+
+//拍照及选择图片end

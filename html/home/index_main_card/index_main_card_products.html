@@ -107,6 +107,9 @@
 					var products_list_div = '<div class="list_head">' + class_name + '</div>';
 					for(var j = 0; j < GoodsList.length; j++) {
 						var thumb = GoodsList[j].thumb;
+						if(thumb==''){
+							thumb='../../../images/164px_164px_chanpin_xing.png';
+						}
 						var goods_name = GoodsList[j].goods_name;
 						var goods_desc = GoodsList[j].goods_desc;
 						var goods_price = GoodsList[j].goods_price;
@@ -228,6 +231,7 @@
 
 			mui(".search_choose").on('tap', 'li', function() {
 				var goods_name=$(this).text();
+				console.log(goods_name);
 				$('.search_choose li').removeClass('li_active');
 				$(this).addClass('li_active');
 				GetGoods(getgoods_url, store_id, goods_name, token);

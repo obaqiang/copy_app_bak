@@ -15,7 +15,7 @@
 		<style>
 			html,
 			body {
-				background-color: #fff;
+				background-color: #efeff4;
 			}
 			
 			.title {
@@ -139,18 +139,18 @@
 
 				}, 1500);
 			}
-			//		if(mui.os.plus) {
-			//			mui.plusReady(function() {
-			//				setTimeout(function() {
-			//					mui('#index_recharge').pullRefresh().pullupLoading();
-			//				}, 1000);
-			//
-			//			});
-			//		} else {
-			//			mui.ready(function() {
-			//				mui('#index_recharge').pullRefresh().pullupLoading();
-			//			});
-			//		}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#index_recharge').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#index_recharge').pullRefresh().pullupLoading();
+				});
+			}
 
 			var self = plus.webview.currentWebview();
 			var store_id = self.store_id;
@@ -195,33 +195,39 @@
 						} else if(type == 4) {
 							type_text = '已取消';
 						}
+						if(Recharges == ''&&page_num == 1) {
+							
+							var no_data_div=
+							'<div class="no_data">暂无数据</div>';
+							$('.recharge_list').append(no_data_div);
+						} else {
+							for(var i = 0; i < Recharges.length; i++) {
+								var package_names = Recharges[i].package_names;
+								var add_time = Recharges[i].add_time;
+								add_time = unix_to_datetime(add_time);
+								var money_payable = Recharges[i].money_payable;
+								var recharge_div =
+									'<div class="recharge_list_content of_h">' +
+									'<div class="recharge_list_left">' +
+									'<div class="recharge_list_left_head">' +
+									package_names +
+									'</div>' +
+									'<div class="recharge_list_left_body">' +
+									money_payable + '元' +
+									'</div>' +
+									'</div>' +
+									'<div class="recharge_list_right">' +
+									'<div class="recharge_list_right_head">' +
+									add_time +
+									'</div>' +
+									'<div class="recharge_list_right_body">' +
+									type_text +
+									'</div>' +
+									'</div>' +
+									'</div>';
+								$('.recharge_list').append(recharge_div);
 
-						for(var i = 0; i < Recharges.length; i++) {
-							var package_names = Recharges[i].package_names;
-							var add_time = Recharges[i].add_time;
-							add_time = unix_to_datetime(add_time);
-							var money_payable = Recharges[i].money_payable;
-							var recharge_div =
-								'<div class="recharge_list_content of_h">' +
-								'<div class="recharge_list_left">' +
-								'<div class="recharge_list_left_head">' +
-								package_names +
-								'</div>' +
-								'<div class="recharge_list_left_body">' +
-								money_payable + '元' +
-								'</div>' +
-								'</div>' +
-								'<div class="recharge_list_right">' +
-								'<div class="recharge_list_right_head">' +
-								add_time +
-								'</div>' +
-								'<div class="recharge_list_right_body">' +
-								type_text +
-								'</div>' +
-								'</div>' +
-								'</div>';
-							$('.recharge_list').append(recharge_div);
-
+							}
 						}
 
 					},

@@ -121,7 +121,7 @@
 					},
 					up: {
 						contentrefresh: '',
-						//						contentrefresh: '正在加载...',
+						//												contentrefresh: '正在加载...',
 						callback: pullupRefresh
 					}
 				}
@@ -143,25 +143,24 @@
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-
 					page_num++;
 					GetVipTickets(getviptickets_url, store_id, vip_id, type, page_num, page_size);
 					mui('#index_coupon').pullRefresh().endPullupToRefresh();
 
 				}, 1500);
 			}
-			//			if(mui.os.plus) {
-			//				mui.plusReady(function() {
-			//					setTimeout(function() {
-			//						mui('#index_coupon').pullRefresh().pullupLoading();
-			//					}, 1000);
-			//
-			//				});
-			//			} else {
-			//				mui.ready(function() {
-			//					mui('#index_coupon').pullRefresh().pullupLoading();
-			//				});
-			//			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#index_coupon').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#index_coupon').pullRefresh().pullupLoading();
+				});
+			}
 
 			var self = plus.webview.currentWebview();
 			var store_id = self.store_id;
@@ -193,48 +192,54 @@
 							$('.coupon_area_div').empty();
 						}
 						var Tickets = data.Data.Tickets;
-						for(var i = 0; i < Tickets.length; i++) {
-							var status = Tickets[i].status;
-							var add_time = Tickets[i].add_time;
-							if(add_time != 0) {
-								add_time = add_time.slice(0, 9);
-							}
+						if(Tickets == ''&&page_num == 1) {
+							var no_data_div =
+								'<div class="no_data">暂无数据</div>';
+							$('.coupon_area_div').append(no_data_div);
+						} else {
+							for(var i = 0; i < Tickets.length; i++) {
+								var status = Tickets[i].status;
+								var add_time = Tickets[i].add_time;
+								if(add_time != 0) {
+									add_time = add_time.slice(0, 9);
+								}
 
-							var last_time = Tickets[i].last_time;
-							if(last_time != 0) {
-								last_time = last_time.slice(0, 9);
-							}
+								var last_time = Tickets[i].last_time;
+								if(last_time != 0) {
+									last_time = last_time.slice(0, 9);
+								}
 
-							var ticket_name = Tickets[i].ticket_name;
-							var ticket_money = Tickets[i].ticket_money;
-							var ticket_id = Tickets[i].ticket_id;
-							var condition_money = Tickets[i].condition_money;
-							var type_img;
-							if(type == '1') {
-								type_img = '../../../images/180px_180px_1.png';
-							} else if(type == '2') {
-								type_img = '../../../images/180px_180px_2.png';
-							} else if(type == '3') {
-								type_img = '../../../images/180px_180px_3.png';
-							}
-							var coupon_div =
-								'<div class="coupon_list of_h" ticket_id="' + ticket_id + '">' +
-								'<div class="coupon_list_left">' +
-								'<div class="coupon_list_left_prize">' +
-								ticket_money +
-								'</div>' +
-								'<div class="coupon_list_left_time">' +
-								'使用期限 ' + add_time + '~' + last_time +
-								'</div>' +
-								'<div class="coupon_list_left_limit">' +
-								'满￥' + condition_money + '可用' +
-								'</div>' +
-								'</div>' +
-								'<img class="coupon_list_img" src="' + type_img + '" alt="" />' +
-								'<div class="coupon_list_num">￥' + ticket_money + '</div>' +
-								'</div>';
-							$('.coupon_area_div').append(coupon_div);
+								var ticket_name = Tickets[i].ticket_name;
+								var ticket_money = Tickets[i].ticket_money;
+								var ticket_id = Tickets[i].ticket_id;
+								var condition_money = Tickets[i].condition_money;
+								var type_img;
+								if(type == '1') {
+									type_img = '../../../images/180px_180px_1.png';
+								} else if(type == '2') {
+									type_img = '../../../images/180px_180px_2.png';
+								} else if(type == '3') {
+									type_img = '../../../images/180px_180px_3.png';
+								}
+								var coupon_div =
+									'<div class="coupon_list of_h" ticket_id="' + ticket_id + '">' +
+									'<div class="coupon_list_left">' +
+									'<div class="coupon_list_left_prize">' +
+									ticket_money +
+									'</div>' +
+									'<div class="coupon_list_left_time">' +
+									'使用期限 ' + add_time + '~' + last_time +
+									'</div>' +
+									'<div class="coupon_list_left_limit">' +
+									'满￥' + condition_money + '可用' +
+									'</div>' +
+									'</div>' +
+									'<img class="coupon_list_img" src="' + type_img + '" alt="" />' +
+									'<div class="coupon_list_num">￥' + ticket_money + '</div>' +
+									'</div>';
+								$('.coupon_area_div').append(coupon_div);
 
+							}
 						}
 
 						mui(".coupon_area_div").on('tap', '.coupon_list', function() {

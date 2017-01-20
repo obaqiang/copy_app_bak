@@ -1,5 +1,5 @@
 .recharge_list{
-	background: #fff;
+	background: #efeff4;
 	margin-top: 1rem;
 }
 .recharge_list_left{
@@ -21,8 +21,9 @@
 	line-height: 0.3rem;
 }
 .recharge_list_content{
-	margin-left: 0.11rem;
 	border-bottom: 1px solid #d0d0d0;
+	background: #fff;
+	padding-left:0.11rem;
 }
 .recharge_list_right_head{
 	color: #aaaaaa;

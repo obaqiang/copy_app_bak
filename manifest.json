@@ -5,7 +5,7 @@
 		"iPad"
 	],
 	"id": "H592130F9",/*必选，应用的标识*/
-	"name": "Hbuilder_mui",/*必选，应用名称*/
+	"name": "BD贵宾卡",/*必选，应用名称*/
 	"version": {
 		"name": "1.0",/*必选，版本名称*/
 		"code": ""
@@ -105,34 +105,34 @@
 					"prerendered": "", /*必选，是否高亮显示*/
 					"auto": "", /*可选，512x512，用于自动生成各种尺寸图标的大分辨率程序图标*/
 					"iphone": {
-						"normal": "",/*可选，57x57，iPhone普通屏幕程序图标*/
-						"retina": "",/*可选，114x114，iPhone高分屏程序图标*/
-						"retina7": "",/*可选，120x120，iPhone iOS7高分屏程序图标*/
-						"spotlight-normal": "", /*可选，29x29，iPhone Spotlight搜索程序图标*/
-						"spotlight-retina": "", /*可选，58x58，iPhone高分屏Spotlight搜索程序图标*/
-						"spotlight-retina7": "",/*可选，80x80，iPhone iOS7高分屏Spotlight搜索程序图标*/
-						"settings-normal": "", /*可选，29x29，iPhone设置页面程序图标*/
-						"settings-retina": ""
+						"normal": "unpackage/res/icons/57x57.png",/*可选，57x57，iPhone普通屏幕程序图标*/
+						"retina": "unpackage/res/icons/114x114.png",/*可选，114x114，iPhone高分屏程序图标*/
+						"retina7": "unpackage/res/icons/120x120.png",/*可选，120x120，iPhone iOS7高分屏程序图标*/
+						"spotlight-normal": "unpackage/res/icons/29x29.png", /*可选，29x29，iPhone Spotlight搜索程序图标*/
+						"spotlight-retina": "unpackage/res/icons/58x58.png", /*可选，58x58，iPhone高分屏Spotlight搜索程序图标*/
+						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*可选，80x80，iPhone iOS7高分屏Spotlight搜索程序图标*/
+						"settings-normal": "unpackage/res/icons/29x29.png", /*可选，29x29，iPhone设置页面程序图标*/
+						"settings-retina": "unpackage/res/icons/58x58.png","retina8":"unpackage/res/icons/180x180.png","settings-retina8":"unpackage/res/icons/87x87.png"
 					},
 					"ipad": {
-						"normal": "", /*可选，72x72，iPad普通屏幕程序图标*/
-						"retina": "", /*可选，144x144，iPad高分屏程序图标*/
-						"normal7": "", /*可选，76x76，iPad iOS7程序图标*/
-						"retina7": "", /*可选，152x152，iPad iOS7高分屏程序图标*/
-						"spotlight-normal": "", /*可选，50x50，iPad Spotlight搜索程序图标*/
-						"spotlight-retina": "", /*可选，100x100，iPad高分屏Spotlight搜索程序图标*/
-						"spotlight-normal7": "",/*可选，40x40，iPad iOS7 Spotlight搜索程序图标*/
-						"spotlight-retina7": "",/*可选，80x80，iPad iOS7高分屏Spotlight搜索程序图标*/
-						"settings-normal": "",/*可选，29x29，iPad设置页面程序图标*/
-						"settings-retina": ""
+						"normal": "unpackage/res/icons/72x72.png", /*可选，72x72，iPad普通屏幕程序图标*/
+						"retina": "unpackage/res/icons/144x144.png", /*可选，144x144，iPad高分屏程序图标*/
+						"normal7": "unpackage/res/icons/76x76.png", /*可选，76x76，iPad iOS7程序图标*/
+						"retina7": "unpackage/res/icons/152x152.png", /*可选，152x152，iPad iOS7高分屏程序图标*/
+						"spotlight-normal": "unpackage/res/icons/50x50.png", /*可选，50x50，iPad Spotlight搜索程序图标*/
+						"spotlight-retina": "unpackage/res/icons/100x100.png", /*可选，100x100，iPad高分屏Spotlight搜索程序图标*/
+						"spotlight-normal7": "unpackage/res/icons/40x40.png",/*可选，40x40，iPad iOS7 Spotlight搜索程序图标*/
+						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*可选，80x80，iPad iOS7高分屏Spotlight搜索程序图标*/
+						"settings-normal": "unpackage/res/icons/29x29.png",/*可选，29x29，iPad设置页面程序图标*/
+						"settings-retina": "unpackage/res/icons/58x58.png"
 					}
 				},
 				"android": {
-					"mdpi": "", /*必选，48x48，普通屏程序图标*/
-					"ldpi": "", /*必选，48x48，大屏程序图标*/
-					"hdpi": "", /*必选，72x72，高分屏程序图标*/
-					"xhdpi": "",/*必选，96x96，720P高分屏程序图标*/
-					"xxhdpi": ""
+					"mdpi": "unpackage/res/icons/48x48.png", /*必选，48x48，普通屏程序图标*/
+					"ldpi": "unpackage/res/icons/48x48.png", /*必选，48x48，大屏程序图标*/
+					"hdpi": "unpackage/res/icons/72x72.png", /*必选，72x72，高分屏程序图标*/
+					"xhdpi": "unpackage/res/icons/96x96.png",/*必选，96x96，720P高分屏程序图标*/
+					"xxhdpi": "unpackage/res/icons/144x144.png"
 				}
 			},
 			"splashscreen": {
@@ -155,11 +155,11 @@
 					}
 				},
 				"android": {
-					"mdpi": "", /*必选，240x282，普通屏启动图片*/
-					"ldpi": "", /*必选，320x442，大屏启动图片*/
-					"hdpi": "", /*必选，480x762，高分屏启动图片*/
-					"xhdpi": "", /*必选，720x1242，720P高分屏启动图片*/
-					"xxhdpi": ""
+					"mdpi": "C:/Users/Administrator/Desktop/BD_app_tu/启动页切图/1.png", /*必选，240x282，普通屏启动图片*/
+					"ldpi": "C:/Users/Administrator/Desktop/BD_app_tu/启动页切图/1.png", /*必选，320x442，大屏启动图片*/
+					"hdpi": "C:/Users/Administrator/Desktop/BD_app_tu/启动页切图/1.png", /*必选，480x762，高分屏启动图片*/
+					"xhdpi": "C:/Users/Administrator/Desktop/BD_app_tu/启动页切图/1.png", /*必选，720x1242，720P高分屏启动图片*/
+					"xxhdpi": "C:/Users/Administrator/Desktop/BD_app_tu/启动页切图/1.png"
 				}
 			}
 		}
@@ -1170,7 +1170,8 @@
 					"html/home/index_main_card/index_prize_list.html",
 					"html/home/index_main_card/index_deposit.html",
 					"html/home/index_main_card/index_sign_statics.html",
-					"html/home/index_main_card/index_main_card_detail_shop.html"
+					"html/home/index_main_card/index_main_card_detail_shop.html",
+					"html/home/index_main_card/index_feedbacks.html"
 				],
 				"priority": 0
 			},
@@ -1214,7 +1215,8 @@
 					"js/jquery-1.11.3.js",
 					"js/common/bdapp.js",
 					"js/mui.min.js",
-					"js/config/web_config.js"
+					"js/config/web_config.js",
+					"css/global.css"
 				],
 				"refer": [
 					"html/home/index_main_card/index_main_card_detail.html",
@@ -1225,7 +1227,8 @@
 					"html/home/index_main_setting/index_main_setting_security.html",
 					"html/home/index_main_setting/index_main_setting_message.html",
 					"html/home/index_main_setting/index_main_setting_about.html",
-					"html/home/index_main_setting/index_main_setting_question.html"
+					"html/home/index_main_setting/index_main_setting_question.html",
+					"html/home/saoma.html"
 				],
 				"priority": 0
 			},
@@ -1666,6 +1669,36 @@
 					"js/mui.min.js",
 					"js/config/web_config.js",
 					"js/plugin/swiper.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/index_main_card/index_feedbacks.html": {
+				"resources": [
+					"images/70px_54px_p.png",
+					"js/plugin/spark-md5.js",
+					"css/index_feedbacks.css",
+					"css/index_account.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/home/saoma.html": {
+				"resources": [
+					"css/saoma.css",
+					"css/index_main_card.css",
+					"js/jquery-1.11.3.js",
+					"fonts/mui.ttf",
+					"css/index_main.css",
+					"css/index_main_mine.css",
+					"js/plugin/qrcode.js",
+					"js/common/bdapp.js",
+					"js/mui.min.js",
+					"css/global.css",
+					"js/config/web_config.js",
+					"css/mui.min.css",
+					"css/index_main_setting.css",
+					"css/index_main_message.css"
 				],
 				"refer": [],
 				"priority": 0

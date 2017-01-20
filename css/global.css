@@ -122,3 +122,8 @@
 	border-radius: 0.1rem;
 	padding: 0.1rem 0.2rem;
 }
+.no_data{
+	text-align: center;
+	font-size: 0.12rem;
+	margin-top: 1rem;
+}

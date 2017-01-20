@@ -273,8 +273,16 @@
 						var tel_status = tel.indexOf(',');
 						document.getElementById('tel').addEventListener('tap', function() {
 							if(tel_status > 0) { //此状态表示有两个号码
-								tel = tel.split(',');
-								showTel(tel);
+								
+								var see_tel = tel.split(',');
+								showTel(see_tel);
+								mui(".show_tel").on('tap', '.tel', function() {
+									var tel_href = $(this).text();
+									window.location.href = 'tel:' + tel_href;
+								})
+								document.getElementById('tel_cancel').addEventListener('tap', function() {
+									$('.show_tel').hide();
+								});
 							} else {
 								window.location.href = 'tel:' + tel;
 							}

@@ -15,7 +15,7 @@
 		<style>
 			html,
 			body {
-				background-color: #fff;
+				background-color: #efeff4;
 			}
 			
 			.title {
@@ -136,18 +136,18 @@
 
 				}, 1500);
 			}
-			//			if(mui.os.plus) {
-			//				mui.plusReady(function() {
-			//					setTimeout(function() {
-			//						mui('#purchase_history').pullRefresh().pullupLoading();
-			//					}, 1000);
-			//
-			//				});
-			//			} else {
-			//				mui.ready(function() {
-			//					mui('#purchase_history').pullRefresh().pullupLoading();
-			//				});
-			//			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#purchase_history').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#purchase_history').pullRefresh().pullupLoading();
+				});
+			}
 
 			var page_num = 1;
 			var page_size = 10;
@@ -183,45 +183,52 @@
 						if(page_num == 1) {
 							$('.recharge_list').empty();
 						}
-						var Orders = data.Data.Orders;
-						for(var i = 0; i < Orders.length; i++) {
-							var goods_names = Orders[i].goods_names;
-							goods_names = cutstr(goods_names, 20);
-							var last_time = Orders[i].last_time;
-							var year = last_time.slice(0, 10);
-							var time = last_time.slice(12, 19);
-							var amount_payable = Orders[i].amount_payable;
-							if(type == 1) {
-								type_class = 'type_wait';
-								type_text = '未确认';
-							} else if(type == 2) {
-								type_class = '';
-								type_text = '已确认';
-							} else if(type == 4) {
-								type_class = '';
-								type_text = '已取消';
-							}
-							var his_div =
-								'<div class="recharge_list_content of_h">' +
-								'<div class="recharge_list_left">' +
-								'<div class="recharge_list_left_head">' +
-								goods_names +
-								'</div>' +
-								'<div class="recharge_list_left_body">' +
-								amount_payable + '元' +
-								'</div>' +
-								'</div>' +
-								'<div class="recharge_list_right">' +
-								'<div class="recharge_list_right_head">' +
-								year + ' ' + time +
-								'</div>' +
-								'<div class="recharge_list_right_body ' + type_class + '">' +
-								type_text +
-								'</div>' +
-								'</div>' +
-								'</div>';
-							$('.recharge_list ').append(his_div);
 
+						var Orders = data.Data.Orders;
+						if(Orders == '' && page_num == 1) {
+							var no_data_div=
+							'<div class="no_data">暂无数据</div>';
+							$('.recharge_list').append(no_data_div);
+						} else {
+							for(var i = 0; i < Orders.length; i++) {
+								var goods_names = Orders[i].goods_names;
+								goods_names = cutstr(goods_names, 20);
+								var last_time = Orders[i].last_time;
+								var year = last_time.slice(0, 10);
+								var time = last_time.slice(12, 19);
+								var amount_payable = Orders[i].amount_payable;
+								if(type == 1) {
+									type_class = 'type_wait';
+									type_text = '未确认';
+								} else if(type == 2) {
+									type_class = '';
+									type_text = '已确认';
+								} else if(type == 4) {
+									type_class = '';
+									type_text = '已取消';
+								}
+								var his_div =
+									'<div class="recharge_list_content of_h">' +
+									'<div class="recharge_list_left">' +
+									'<div class="recharge_list_left_head">' +
+									goods_names +
+									'</div>' +
+									'<div class="recharge_list_left_body">' +
+									amount_payable + '元' +
+									'</div>' +
+									'</div>' +
+									'<div class="recharge_list_right">' +
+									'<div class="recharge_list_right_head">' +
+									year + ' ' + time +
+									'</div>' +
+									'<div class="recharge_list_right_body ' + type_class + '">' +
+									type_text +
+									'</div>' +
+									'</div>' +
+									'</div>';
+								$('.recharge_list ').append(his_div);
+
+							}
 						}
 
 					},
