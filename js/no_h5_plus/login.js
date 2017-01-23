@@ -54,24 +54,28 @@ if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
 			function(data) {
 				console.log(data);
 				if(data.Data.ErrorCode == 0) {
-//					普通浏览器不支持此类跳转，原因：参数无法传送
-//					var webview = mui.openWindow({
-//						url: '../home/index_main_anzhuo.html',
-//						id: 'index_main_anzhuo',
-//						extras: {
-//							member_id: data.Data.Member.id,
-//							token: data.Data.Token,
-//							Member: data.Data.Member
-//						},
-//						createNew: true
-//					});
-					var member_id=data.Data.Member.id;
-					var token=data.Data.Token;
+					//					普通浏览器不支持此类跳转，原因：参数无法传送
+					//					var webview = mui.openWindow({
+					//						url: '../home/index_main_anzhuo.html',
+					//						id: 'index_main_anzhuo',
+					//						extras: {
+					//							member_id: data.Data.Member.id,
+					//							token: data.Data.Token,
+					//							Member: data.Data.Member
+					//						},
+					//						createNew: true
+					//					});
+					var member_id = data.Data.Member.id;
+					var token = data.Data.Token;
 					var Member=data.Data.Member;
-//					console.log('../home/index_main_anzhuo.html?member_id='+member_id+'&token='+token+'&Member='+Member);
-					window.location.href='../home/index_main_anzhuo.html?member_id='+member_id+'&token='+token+'&Member='+Member;
-
-
+					var member_name = Member.member_name;
+					var phone = Member.phone;
+					var birthday = Member.birthday;
+					birthday = birthday.slice(0, 10);
+					var thumb = Member.thumb;
+					console.log(member_name)
+					//					console.log('../home/index_main_anzhuo.html?member_id='+member_id+'&token='+token+'&Member='+Member);
+					window.location.href = '../home/index_main_anzhuo.html?member_id=' + member_id + '&token=' + token + '&member_name=' + member_name + '&birthday=' + birthday + '&thumb=' + thumb;
 
 				} else if(data.ErrorCode == 4) {
 					var errorMsg = data.ErrorMessage;
@@ -87,13 +91,11 @@ if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
 						var identify_url = tel_url + tel + '&t=' + new Date().getTime();
 						$('.identify_img').attr('src', identify_url);
 					});
-				}else{
+				} else {
 					var errorMsg = data.ErrorMessage;
 					Alert(errorMsg);
 				}
-				
-				
-				
+
 			});
 	}
 

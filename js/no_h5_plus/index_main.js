@@ -60,19 +60,16 @@ if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
 				mui(".card_area").on('tap', '.card_list,.card_list_c', function() {
 					var vip_id = $(this).attr('vip_id');
 					var store_id = $(this).attr('store_id');
-//					var webview = mui.openWindow({
-//						url: 'index_main_card/index_main_card_detail.html',
-//						extras: {
-//							member_id: member_id,
-//							vip_id: vip_id,
-//							token: token,
-//							store_id: store_id
-//						}
-//					});
-					window.location.href='index_main_card/index_main_card_detail.html?member_id='+member_id+'&token='+token+'&vip_id='+vip_id+'&store_id='+store_id;
-
-
-
+					//					var webview = mui.openWindow({
+					//						url: 'index_main_card/index_main_card_detail.html',
+					//						extras: {
+					//							member_id: member_id,
+					//							vip_id: vip_id,
+					//							token: token,
+					//							store_id: store_id
+					//						}
+					//					});
+					window.location.href = 'index_main_card/index_main_card_detail.html?member_id=' + member_id + '&token=' + token + '&vip_id=' + vip_id + '&store_id=' + store_id;
 
 				})
 
@@ -84,7 +81,7 @@ if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
 	function GetVips(getvips_url, member_id, page_num, page_size, token) {
 		$.getJSON(getvips_url + '?member_id=' + member_id + '&page_num=' + page_num + '&page_size=' + page_size + '&token=' + token,
 			function(data) {
-//				console.log(data);
+				//				console.log(data);
 				main_pinjie(data);
 			})
 
@@ -106,6 +103,271 @@ if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
 	$('#search').change(function() {
 		var member_name = $('#search').val();
 		GetVipDimInfo(getvipdiminfo_url, member_id, member_name, token);
+	});
+
+	var getmsgcount_url = test_url + '/api/member/GetMsgCount';
+	//	获取消息数量
+	function GetMsgCount(getmsgcount_url, member_id, token) {
+		$.getJSON(getmsgcount_url + '?member_id=' + member_id + '&token=' + token,
+			function(data) {
+				console.log(data);
+				var TradeCount = data.Data.TradeCount;
+				var ActivityCount = data.Data.ActivityCount;
+				if(TradeCount > 9) {
+					TradeCount = '...';
+				}
+				if(ActivityCount > 9) {
+					ActivityCount = '...';
+				}
+				$('#TradeCount').text(TradeCount);
+				$('#ActivityCount').text(ActivityCount);
+			})
+	}
+
+	var getmsglist_url = test_url + '/api/member/GetMsgList';
+	//	获取消息列表
+	function GetMsgList(getmsglist_url, member_id, type, page_num, page_size) {
+		$.getJSON(getmsglist_url + '?member_id=' + member_id + '&token=' + token + '&type=' + type + '&page_num=' + page_num + '&page_size=' + page_size,
+			function(data) {
+				console.log(data);
+				if(page_num == 1) {
+					$('.message_div').empty();
+				}
+				var Messages = data.Data.Messages;
+				if(Messages == '' && page_num == 1) {
+					var no_data_div =
+						'<div class="no_data">暂无数据</div>';
+					$('.message_div').append(no_data_div);
+				} else {
+					for(var i = 0; i < Messages.length; i++) {
+						var Title = Messages[i].Title;
+						var HeightLightTxt = Messages[i].HeightLightTxt;
+						var ExtenVals = Messages[i].ExtenVals;
+						var ExtenVals_a_key = ExtenVals[0].key;
+						var ExtenVals_a_val = ExtenVals[0].val;
+						var ExtenVals_b_key = ExtenVals[1].key;
+						var ExtenVals_b_val = ExtenVals[1].val;
+						var ExtenVals_c_key = ExtenVals[2].key;
+						var ExtenVals_c_val = ExtenVals[2].val;
+						var message_div =
+							'<div class="message_time">' +
+							'<span>7月13日 上午11:50</span>' +
+							'</div>' +
+							'<div class="message_square">' +
+							'<div class="square_head">' +
+							Title +
+							'</div>' +
+							'<div class="square_prize">' +
+							'<span class="square_prize_num">' +
+							HeightLightTxt +
+							'</span>' +
+							'<span class="square_prize_unit">元</span>' +
+							'</div>' +
+							'<div class="square_body">' +
+							'<div class="body_list">' +
+							'<span>' +
+							ExtenVals_a_key +
+							'</span>' +
+							'<span>:</span>' +
+							'<span>' +
+							ExtenVals_a_val +
+							'</span>' +
+							'</div>' +
+							'<div class="body_list">' +
+							'<span>' +
+							ExtenVals_b_key +
+							'</span>' +
+							'<span>:</span>' +
+							'<span>' +
+							ExtenVals_b_val +
+							'</span>' +
+							'</div>' +
+							'<div class="body_list">' +
+							'<span>' +
+							ExtenVals_c_key +
+							'</span>' +
+							'<span>:</span>' +
+							'<span>' +
+							ExtenVals_c_val +
+							'</span>' +
+							'</div>' +
+							'</div>' +
+							'<div class="square_detial">' +
+							'<span>查看详情</span>' +
+							'<img src="../../images/16px_26px_V.png" alt="" />' +
+							'</div>' +
+							'</div>';
+						$('.message_div').append(message_div);
+					}
+				}
+			})
+	}
+
+	//	选项卡点击事件
+	mui('.mui-bar-tab').on('tap', 'a', function(e) {
+
+		var label_name = this.querySelector('.mui-tab-label').innerHTML;
+		if(label_name == '卡包') {
+			$('.mui-scroll').empty();
+			scroll_status = '卡包';
+			$('.main_head').show();
+			$('.main_nav').hide();
+			$('.kabao_icon').attr('src', '../../images/48px_48px_card_red.png');
+			$('.message_icon').attr('src', '../../images/48px_48px_news_gray.png');
+			$('.mine_icon').attr('src', '../../images/48px_48px_me_gray.png');
+			$('.set_icon').attr('src', '../../images/48px_48px_set_gray.png');
+			$('.mui-tab-label').css('color', '#7d7c82');
+			$('.kabao_text').css('color', '#cb2920');
+			$('.mui-content').hide();
+			$('.index_main_card').show();
+			$('.index_main_message').hide();
+			page_num = 1;
+			GetVips(getvips_url, member_id, page_num, page_size, token);
+			//					var w = plus.webview.create( "index_main_card.html" );
+			//					w.show(); // 显示窗口
+		} else if(label_name == '消息') {
+			$('.mui-scroll').empty();
+			scroll_status = '消息';
+			$('.mui-title').text('消息中心');
+			$('.main_head').hide();
+			$('.main_nav').show();
+			$('.kabao_icon').attr('src', '../../images/48px_48px_card_gray.png');
+			$('.message_icon').attr('src', '../../images/48px_48px_news_red.png');
+			$('.mine_icon').attr('src', '../../images/48px_48px_me_gray.png');
+			$('.set_icon').attr('src', '../../images/48px_48px_set_gray.png');
+			$('.mui-tab-label').css('color', '#7d7c82');
+			$('.message_text').css('color', '#cb2920');
+			$('.mui-content').hide();
+			$('.index_main_card').show();
+			$('.index_main_message').show();
+			//						page_num = 1;
+			//						GetMemberNotice(getmembernotice_url, member_id, page_num, page_size, token);
+			GetMsgCount(getmsgcount_url, member_id, token);
+			var type = '001';
+			var page_num = 1;
+			var page_size = 20;
+			GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
+
+			document.getElementById('message_left').addEventListener('tap', function() {
+				page_num = 1;
+				var type = '001';
+				GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
+			})
+			document.getElementById('message_right').addEventListener('tap', function() {
+				page_num = 1;
+				var type = '002';
+				GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
+			})
+
+		} else if(label_name == '我的') {
+			$('.mui-title').text('个人中心');
+			$('.main_head').hide();
+			$('.main_nav').show();
+			$('.kabao_icon').attr('src', '../../images/48px_48px_card_gray.png');
+			$('.message_icon').attr('src', '../../images/48px_48px_news_gray.png');
+			$('.mine_icon').attr('src', '../../images/48px_48px_me_red.png');
+			$('.set_icon').attr('src', '../../images/48px_48px_set_gray.png');
+			$('.mui-tab-label').css('color', '#7d7c82');
+			$('.mine_text').css('color', '#cb2920');
+			$('.mui-content').hide();
+			$('.index_main_mine').show();
+//			var member_name = Member.member_name;
+//			var phone = Member.phone;
+//			var birthday = Member.birthday;
+//			birthday = birthday.slice(0, 10);
+//			var thumb = Member.thumb;
+
+			if(thumb == "" || !thumb) {
+				thumb = '../../images/146px_146px_moren.png';
+			}
+			$('#member_name').text(member_name);
+			$('#phone').text(phone);
+			$('#birthday').text(birthday);
+			$('#thumb').attr('src', thumb);
+			//			点击名字修改个人信息
+			document.getElementById('thumb').addEventListener('tap', function() {
+				var name = $('#member_name').text();
+				var phone = $('#phone').text();
+				var webview = mui.openWindow({
+					url: 'index_main_mine/index_main_mine_personal.html',
+					extras: {
+						member_id: member_id,
+						name: name,
+						phone: phone,
+						token: token,
+						thumb: thumb
+					},
+					createNew: true
+				});
+			})
+
+		} else if(label_name == '设置') {
+			$('.mui-title').text('设置');
+			$('.main_head').hide();
+			$('.main_nav').show();
+			$('.kabao_icon').attr('src', '../../images/48px_48px_card_gray.png');
+			$('.message_icon').attr('src', '../../images/48px_48px_news_gray.png');
+			$('.mine_icon').attr('src', '../../images/48px_48px_me_gray.png');
+			$('.set_icon').attr('src', '../../images/48px_48px_set_red.png');
+			$('.mui-tab-label').css('color', '#7d7c82');
+			$('.set_text').css('color', '#cb2920');
+			$('.mui-content').hide();
+			$('.index_main_setting').show();
+			var phone = Member.phone;
+			//					安全设置
+			document.getElementById('setting_security').addEventListener('tap', function() {
+					var webview = mui.openWindow({
+						url: 'index_main_setting/index_main_setting_security.html',
+						extras: {
+							member_id: member_id,
+							name: name,
+							phone: phone,
+							token: token
+						}
+					});
+				})
+				//			消息设置
+			document.getElementById('setting_message').addEventListener('tap', function() {
+				var webview = mui.openWindow({
+					url: 'index_main_setting/index_main_setting_message.html',
+					extras: {
+						member_id: member_id,
+						name: name,
+						phone: phone,
+						token: token
+					},
+					createNew: true
+				});
+			})
+
+			//			问题解决
+			document.getElementById('setting_question').addEventListener('tap', function() {
+					var webview = mui.openWindow({
+						url: 'index_main_setting/index_main_setting_question.html',
+						extras: {
+							member_id: member_id,
+							name: name,
+							phone: phone,
+							token: token
+						},
+						createNew: true
+					});
+				})
+				//			关于BD
+			document.getElementById('setting_about').addEventListener('tap', function() {
+				var webview = mui.openWindow({
+					url: 'index_main_setting/index_main_setting_about.html',
+					extras: {
+						member_id: member_id,
+						name: name,
+						phone: phone,
+						token: token
+					},
+					createNew: true
+				});
+			})
+
+		}
 	});
 
 }
