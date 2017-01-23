@@ -271,7 +271,6 @@ function showTel(data) {
 
 //拍照及选择图片start
 
-
 function compressImage(imgPath) {
 	plus.zip.compressImage({
 			src: imgPath,
@@ -312,3 +311,11 @@ function getBase64Image(img) {
 }
 
 //拍照及选择图片end
+
+//接收页面之间传值
+function GetQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if(r != null) return(r[2]);
+	return null;
+}
