@@ -1,5 +1,4 @@
 if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
-
 	var account = 'false';
 	var pwd = 'false';
 	var identify;

@@ -166,7 +166,7 @@
 
 		</div>
 		<script src="../../js/config/web_config.js"></script>
-		<script src="../../js/mui.js"></script>
+		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.jsonp.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
 		<script src="../../js/app.js"></script>
@@ -185,7 +185,7 @@
 
 		<script>
 		
-			
+		
 		
 			if(navigator.userAgent.indexOf("Html5Plus") > 0) { //支持5+ API
 //				alert("支持5+ API");

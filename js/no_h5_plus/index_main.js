@@ -1,4 +1,56 @@
 if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
+
+	mui.init({
+		pullRefresh: {
+			container: '.scroll_area',
+			down: {
+				auto: false,
+				callback: pulldownRefresh
+			},
+			up: {
+				//						contentrefresh: '正在加载...',
+				callback: pullupRefresh
+			}
+		}
+	});
+
+	var scroll_status = '卡包';
+
+	/**
+	 * 下拉刷新具体业务实现
+	 */
+	function pulldownRefresh() {
+		setTimeout(function() {
+			page_num = 1;
+			if(scroll_status == '卡包') {
+				GetVips(getvips_url, member_id, page_num, page_size, token);
+			} else if(scroll_status == '消息') {
+				GetMsgCount(getmsgcount_url, member_id, token);
+				GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
+			}
+
+			mui('.scroll_area').pullRefresh().endPulldownToRefresh(); //refresh completed
+		}, 1500);
+	}
+	//			var count = 0;
+	/**
+	 * 上拉加载具体业务实现
+	 */
+	function pullupRefresh() {
+		setTimeout(function() {
+			page_num++;
+			if(scroll_status == '卡包') {
+				GetVips(getvips_url, member_id, page_num, page_size, token);
+			} else if(scroll_status == '消息') {
+				GetMsgCount(getmsgcount_url, member_id, token);
+				GetMsgList(getmsglist_url, member_id, type, page_num, page_size);
+			}
+
+			mui('.scroll_area').pullRefresh().endPullupToRefresh();
+
+		}, 1500);
+	}
+
 	var member_id = GetQueryString('member_id');
 	var token = GetQueryString('token');
 	var Member = GetQueryString('Member');
@@ -271,11 +323,11 @@ if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
 			$('.mine_text').css('color', '#cb2920');
 			$('.mui-content').hide();
 			$('.index_main_mine').show();
-//			var member_name = Member.member_name;
-//			var phone = Member.phone;
-//			var birthday = Member.birthday;
-//			birthday = birthday.slice(0, 10);
-//			var thumb = Member.thumb;
+			//			var member_name = Member.member_name;
+			//			var phone = Member.phone;
+			//			var birthday = Member.birthday;
+			//			birthday = birthday.slice(0, 10);
+			//			var thumb = Member.thumb;
 
 			if(thumb == "" || !thumb) {
 				thumb = '../../images/146px_146px_moren.png';

@@ -248,8 +248,13 @@ function Alert(alert_text) {
 }
 var oldback = mui.back;
 mui.back = function() {
-	mui.currentWebview.opener().show('none');
-	oldback();
+	if(navigator.userAgent.indexOf("Html5Plus") > 0) {
+		mui.currentWebview.opener().show('none');
+		oldback();
+	}
+	if(navigator.userAgent.indexOf("Html5Plus") < 0) { //不支持5+ API
+		history.back(-1);
+	}
 }
 
 function showTel(data) {

@@ -2122,6 +2122,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				callback();
 			}, false);
 		}
+		
+
 		return this;
 	};
 	/**
